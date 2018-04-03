@@ -212,7 +212,8 @@ $(document).ready(function(){
                 }
               }
               $("#chatTabBody").append("<div class='chatCard padded' id=" + dbUserName + "><div class='connectionDP'></div><div class='chatCardText'><p class='connectionName'>"+dbUserName+"</p><p class='lastMessage'>"+ lastMessage +"</p></div></div>");
-              $("#"+dbUserName).css("background-color", profileColor);
+              $("<style>").text("#" + dbUserName + " { background-color: "+ profileColor +" }").appendTo("head");
+              // $("#"+dbUserName).css("background-color", profileColor);
             }
           }
         }
