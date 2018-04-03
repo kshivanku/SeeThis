@@ -8,8 +8,9 @@ var allChatPairsRef = database.ref('allData/allChatPairs');
 var allData;
 var thisUserName = undefined;
 var profileColor;
-// var serverUrl = "http://localhost:8000";
-var serverUrl = "https://seethis.herokuapp.com/";
+var serverUrl = "http://localhost:8000";
+// var serverUrl = "https://seethis.herokuapp.com/";
+var currentPage = null;
 
 allDataRef.on('value', function(data) {
   allData = data.val();
@@ -26,6 +27,7 @@ $(document).ready(function(){
   }
 
   //INTRO PAGE
+
       $("#signUpLabel").click(function(){
         showForm("signUpForm");
       })
@@ -115,7 +117,7 @@ $(document).ready(function(){
             if(dbUserName != thisUserName) {
               var newPair = {
                 pairName: thisUserName + " - " + dbUserName,
-                messages : []
+                messages : [null]
               }
               allChatPairsRef.push(newPair);
             }
@@ -146,6 +148,7 @@ $(document).ready(function(){
       }
 
       function showForm(formID) {
+        currentPage = "introPage";
         if(formID == "signUpForm") {
           $("#signUpForm").css("display", "block");
           $("#signInForm").css("display", "none");
@@ -167,14 +170,17 @@ $(document).ready(function(){
 
       function showTab(tabID){
         if(tabID == "chatTab") {
+          currentPage = "chatTab";
           $("#chatTab").css("opacity", "1.0");
           $("#chatTab").css("border-bottom", "2px solid #fff");
           $("#publicFeedTab").css("opacity", "0.54");
           $("#publicFeedTab").css("border-bottom", "none");
           $("#chatTabBody").css("display", "block");
           $("#publicFeedTabBody").css("display", "none");
+          populateChatTabBody();
         }
         else {
+          currentPage = "publicFeedTab";
           $("#chatTab").css("opacity", "0.54");
           $("#chatTab").css("border-bottom", "none");
           $("#publicFeedTab").css("opacity", "1.0");
@@ -184,6 +190,33 @@ $(document).ready(function(){
         }
       }
 
+      function populateChatTabBody(){
+        $("#chatTabBody").empty();
+        var allUsersRefIDs = Object.keys(allData.allUsers);
+        if(allUsersRefIDs.length > 1) {
+          for (var i = 0 ; i < allUsersRefIDs.length ; i++) {
+            var dbUserName = allData.allUsers[allUsersRefIDs[i]].fullName;
+            if(dbUserName != thisUserName) {
+              var profileColor = allData.allUsers[allUsersRefIDs[i]].profileColor;
+              var lastMessage = "";
+              var allChatPairsRefIDs = Object.keys(allData.allChatPairs);
+              for(var j = 0 ; j < allChatPairsRefIDs.length; j++) {
+                var pairName = allData.allChatPairs[allChatPairsRefIDs[i]].pairName;
+                if(pairName.indexOf(dbUserName) != -1 && pairName.indexOf(thisUserName) != -1) {
+                  if(allData.allChatPairs[allChatPairsRefIDs[i]].messages[0] != null) {
+                    lastMessage = allData.allChatPairs[allChatPairsRefIDs[i]].messages[0].text;
+                  }
+                  else {
+                    lastMessage = "no chats yet"
+                  }
+                }
+              }
+              $("#chatTabBody").append("<div class='chatCard padded' id=" + dbUserName + "><div class='connectionDP'></div><div class='chatCardText'><p class='connectionName'>"+dbUserName+"</p><p class='lastMessage'>"+ lastMessage +"</p></div></div>");
+              $("#"+dbUserName).css("background-color", profileColor);
+            }
+          }
+        }
+      }
 
 
 });

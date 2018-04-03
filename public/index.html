@@ -20,7 +20,7 @@
     <!-- FIREBASE STUFF ENDS -->
     <!-- SOCKET STUFF -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js"></script>
-    
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" src="js/sketch.js"></script>
     <link rel="stylesheet" href="/css/reset.css">
@@ -64,10 +64,12 @@
           <div>
         </header>
         <div id="chatTabBody">
-          <div id="chatCard">
-            <div class="connectionDP"></div>
-            <p class="connectionName"></p>
-            <p class="lastMessage"></p>
+          <div class="chatCard padded">
+            <div class="connectionDP"></div><!--
+         --><div class="chatCardText">
+              <p class="connectionName">Test Name</p>
+              <p class="lastMessage">last message sent by this user</p>
+            </div>
           </div>
         </div>
         <div id="publicFeedTabBody">
