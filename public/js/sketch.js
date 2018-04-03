@@ -14,105 +14,140 @@ allDataRef.on('value', function(data) {
 })
 
 $(document).ready(function(){
-  showPage("introPage");
+  showPage("landingPage");
+  showTab("chatTab");
   showForm("signUpForm");
-  $("#signUpLabel").click(function(){
-    showForm("signUpForm");
-  })
-  $("#signInLabel").click(function(){
-    showForm("signInForm");
-  })
 
-  $("#signUpForm").submit(function(e){
-    e.preventDefault();
-    var fullName = $("#fullName").val();
-    var email = $("#signUpForm .email").val();
-    // var password = $("#signUpForm .password").val();
-    var newUser = {
-      fullName: fullName,
-      email: email,
-      // password: password,
-      profileColor: profileColor
-    }
-    signUp(newUser);
-  })
+  //INTRO PAGE
+      $("#signUpLabel").click(function(){
+        showForm("signUpForm");
+      })
+      $("#signInLabel").click(function(){
+        showForm("signInForm");
+      })
 
-  $("#signInForm").submit(function(e){
-    e.preventDefault();
-    var email = $("#signInForm .email").val();
-    // var password = $("#signInForm .password").val();
-    var userDetails = {
-      email: email
-      // password: password
-    }
-    signIn(userDetails);
-  })
+      $("#signUpForm").submit(function(e){
+        e.preventDefault();
+        var fullName = $("#fullName").val();
+        var email = $("#signUpForm .email").val();
+        // var password = $("#signUpForm .password").val();
+        var newUser = {
+          fullName: fullName,
+          email: email,
+          // password: password,
+          profileColor: profileColor
+        }
+        signUp(newUser);
+      })
 
-  function showPage(pageID) {
-    $("#" + pageID).css("display", "block");
-    for(var i = 0 ; i < pageIDs.length ; i++) {
-      if(pageIDs[i] != pageID) {
-        $("#" + pageIDs[i]).css("display", "none");
-      }
-    }
-  }
+      $("#signInForm").submit(function(e){
+        e.preventDefault();
+        var email = $("#signInForm .email").val();
+        // var password = $("#signInForm .password").val();
+        var userDetails = {
+          email: email
+          // password: password
+        }
+        signIn(userDetails);
+      })
 
-  function showForm(formID) {
-    if(formID == "signUpForm") {
-      $("#signUpForm").css("display", "block");
-      $("#signInForm").css("display", "none");
-      $("#signUpLabel").css("opacity", "1.0");
-      $("#signInLabel").css("opacity", "0.54");
-      profileColor = getRandomColor();
-      $("#profileColor").css("background-color", profileColor);
-    }
-    else {
-      $("#signUpForm").css("display", "none");
-      $("#signInForm").css("display", "block");
-      $("#signUpLabel").css("opacity", "0.54");
-      $("#signInLabel").css("opacity", "1.0");
-    }
-  }
-
-  function signUp(newUser){
-    var newUserAlreadyPresent = false;
-    if(allData) {
-      var allUsersRefIDs = Object.keys(allData.allUsers);
-      for(var i = 0 ; i < allUsersRefIDs.length ; i++) {
-        if(allData.allUsers[allUsersRefIDs[i]].fullName == newUser.fullName) {
-          newUserAlreadyPresent = true;
-          alert("User already present. Please Sign In");
+      function signUp(newUser){
+        var newUserAlreadyPresent = false;
+        if(allData) {
+          var allUsersRefIDs = Object.keys(allData.allUsers);
+          for(var i = 0 ; i < allUsersRefIDs.length ; i++) {
+            if(allData.allUsers[allUsersRefIDs[i]].fullName == newUser.fullName) {
+              newUserAlreadyPresent = true;
+              alert("User already present. Please Sign In");
+            }
+          }
+        }
+        if(!newUserAlreadyPresent) {
+          allUsersRef.push(newUser);
+          activeUser = newUser.fullName;
+          showPage("landingPage");
+          showTab("chatTab");
         }
       }
-    }
-    if(!newUserAlreadyPresent) {
-      allUsersRef.push(newUser);
-      activeUser = newUser.fullName;
-      showPage("landingPage");
-    }
-  }
 
-  function signIn(userDetails) {
-    var userFound = false;
-    if(allData) {
-      var allUsersRefIDs = Object.keys(allData.allUsers);
-      for(var i = 0 ; i < allUsersRefIDs.length ; i++) {
-        if(allData.allUsers[allUsersRefIDs[i]].email == userDetails.email) {
-          userFound = true;
-          // if(allData.allUsers[allUsersRefIDs[i]].password == userDetails.password) {
-            activeUser = allData.allUsers[allUsersRefIDs[i]].fullName;
-            showPage("landingPage");
-          // }
-          // else {
-          //   alert("Password is incorrect");
-          // }
+      function signIn(userDetails) {
+        var userFound = false;
+        if(allData) {
+          var allUsersRefIDs = Object.keys(allData.allUsers);
+          for(var i = 0 ; i < allUsersRefIDs.length ; i++) {
+            if(allData.allUsers[allUsersRefIDs[i]].email == userDetails.email) {
+              userFound = true;
+              // if(allData.allUsers[allUsersRefIDs[i]].password == userDetails.password) {
+                activeUser = allData.allUsers[allUsersRefIDs[i]].fullName;
+                showPage("landingPage");
+                showTab("chatTab");
+              // }
+              // else {
+              //   alert("Password is incorrect");
+              // }
+            }
+          }
+        }
+        if(!userFound) {
+          alert("This user does not exist, please sign up");
         }
       }
-    }
-    if(!userFound) {
-      alert("This user does not exist, please sign up");
-    }
-  }
+
+
+  //LANDING PAGE
+
+  $("#chatTab").click(function(){
+    showTab("chatTab");
+  })
+
+  $("#publicFeedTab").click(function(){
+    showTab("publicFeedTab");
+  })
+
+  //NAVIGATION
+
+      function showPage(pageID) {
+        $("#" + pageID).css("display", "block");
+        for(var i = 0 ; i < pageIDs.length ; i++) {
+          if(pageIDs[i] != pageID) {
+            $("#" + pageIDs[i]).css("display", "none");
+          }
+        }
+      }
+
+      function showForm(formID) {
+        if(formID == "signUpForm") {
+          $("#signUpForm").css("display", "block");
+          $("#signInForm").css("display", "none");
+          $("#signUpLabel").css("opacity", "1.0");
+          $("#signInLabel").css("opacity", "0.54");
+          profileColor = getRandomColor();
+          $("#profileColor").css("background-color", profileColor);
+        }
+        else {
+          $("#signUpForm").css("display", "none");
+          $("#signInForm").css("display", "block");
+          $("#signUpLabel").css("opacity", "0.54");
+          $("#signInLabel").css("opacity", "1.0");
+        }
+      }
+
+      function showTab(tabID){
+        if(tabID == "chatTab") {
+          $("#chatTab").css("opacity", "1.0");
+          $("#chatTab").css("border-bottom", "2px solid #fff");
+          $("#publicFeedTab").css("opacity", "0.54");
+          $("#publicFeedTab").css("border-bottom", "none");
+        }
+        else {
+          $("#chatTab").css("opacity", "0.54");
+          $("#chatTab").css("border-bottom", "none");
+          $("#publicFeedTab").css("opacity", "1.0");
+          $("#publicFeedTab").css("border-bottom", "2px solid #fff");
+        }
+      }
+
+
 
 });
 

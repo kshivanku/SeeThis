@@ -27,6 +27,13 @@ $primary-white: #fff;
     line-height: 18px;
     font-size: 14px;
 }
+
+%UI_Left_100 {
+  font-size: 16px;
+  font-weight: 700;
+  text-align: left;
+}
+
 //CUSTOM FONT
 @font-face {
     font-family: "CircularStd";
@@ -72,12 +79,11 @@ body {
     color: $primary-white;
     width: 100vw;
     height: 100vh;
-}
-
-#logo {
-    font-weight: 700;
-    font-size: 28px;
-    padding: 24px 0 16px;
+    #logo {
+        font-weight: 700;
+        font-size: 28px;
+        padding: 24px 0 16px;
+    }
 }
 
 #introNav {
@@ -139,4 +145,23 @@ input {
     p {
       margin-left: 32px;
     }
+}
+
+#landingPage {
+  header {
+    background-color: $primary-blue;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.12), 0px 4px 4px 0px rgba(0, 0, 0, 0.24);
+    color: $primary-white;
+    #logo {
+      @extend %UI_Left_100;
+      line-height: 56px;
+    }
+    p {
+      @extend %body_left_100;
+      display: inline-block;
+      width: 50%;
+      line-height: 48px;
+      text-align: center;
+    }
+  }
 }

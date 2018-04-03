@@ -1,4 +1,4 @@
-input, #introNav p {
+#landingPage header p, input, #introNav p {
   font-weight: 300;
   font-size: 14px;
   line-height: 18px;
@@ -20,6 +20,12 @@ input, #introNav p {
   font-weight: 500;
   line-height: 18px;
   font-size: 14px;
+}
+
+#landingPage header #logo {
+  font-size: 16px;
+  font-weight: 700;
+  text-align: left;
 }
 
 @font-face {
@@ -66,8 +72,7 @@ body {
   width: 100vw;
   height: 100vh;
 }
-
-#logo {
+#introPage #logo {
   font-weight: 700;
   font-size: 28px;
   padding: 24px 0 16px;
@@ -125,4 +130,19 @@ input {
 }
 #profileColor p {
   margin-left: 32px;
+}
+
+#landingPage header {
+  background-color: #4463F7;
+  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.12), 0px 4px 4px 0px rgba(0, 0, 0, 0.24);
+  color: #fff;
+}
+#landingPage header #logo {
+  line-height: 56px;
+}
+#landingPage header p {
+  display: inline-block;
+  width: 50%;
+  line-height: 48px;
+  text-align: center;
 }
