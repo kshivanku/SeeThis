@@ -201,7 +201,7 @@ $(document).ready(function(){
               var lastMessage = "";
               var allChatPairsRefIDs = Object.keys(allData.allChatPairs);
               for(var j = 0 ; j < allChatPairsRefIDs.length; j++) {
-                var pairName = allData.allChatPairs[allChatPairsRefIDs[i]].pairName;
+                var pairName = allData.allChatPairs[allChatPairsRefIDs[j]].pairName;
                 if(pairName.indexOf(dbUserName) != -1 && pairName.indexOf(thisUserName) != -1) {
                   if(allData.allChatPairs[allChatPairsRefIDs[i]].messages[0] != "null") {
                     lastMessage = allData.allChatPairs[allChatPairsRefIDs[i]].messages[0].text;
