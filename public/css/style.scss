@@ -196,6 +196,7 @@ input {
   }
   .connectionName {
     @extend %body_left_100;
+    font-weight: 700;
   }
   .lastMessage {
     @extend %small_left;

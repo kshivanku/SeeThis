@@ -212,7 +212,7 @@ $(document).ready(function(){
                 }
               }
               $("#chatTabBody").append("<div class='chatCard padded' id=" + dbUserName.split(" ")[0] + "><div class='connectionDP'></div><div class='chatCardText'><p class='connectionName'>"+dbUserName+"</p><p class='lastMessage'>"+ lastMessage +"</p></div></div>");
-              $("<style>").text("#" + dbUserName.split(" ")[0] + " { background-color: "+ profileColor +" }").appendTo("head");
+              $("<style>").text("#" + dbUserName.split(" ")[0] + " .connectionDP { background-color: "+ profileColor +" }").appendTo("head");
               // $("#"+dbUserName).css("background-color", profileColor);
             }
           }

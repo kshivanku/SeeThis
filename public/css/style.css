@@ -173,6 +173,9 @@ input {
   margin-left: 8px;
   margin-top: 22px;
 }
+#landingPage .connectionName {
+  font-weight: 700;
+}
 #landingPage .lastMessage {
   opacity: 0.54;
 }
