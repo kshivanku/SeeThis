@@ -14,7 +14,7 @@ allDataRef.on('value', function(data) {
 })
 
 $(document).ready(function(){
-  showPage("landingPage");
+  showPage("introPage");
   showTab("chatTab");
   showForm("signUpForm");
 
@@ -138,12 +138,16 @@ $(document).ready(function(){
           $("#chatTab").css("border-bottom", "2px solid #fff");
           $("#publicFeedTab").css("opacity", "0.54");
           $("#publicFeedTab").css("border-bottom", "none");
+          $("#chatTabBody").css("display", "block");
+          $("#publicFeedTabBody").css("display", "none");
         }
         else {
           $("#chatTab").css("opacity", "0.54");
           $("#chatTab").css("border-bottom", "none");
           $("#publicFeedTab").css("opacity", "1.0");
           $("#publicFeedTab").css("border-bottom", "2px solid #fff");
+          $("#chatTabBody").css("display", "none");
+          $("#publicFeedTabBody").css("display", "block");
         }
       }
 
