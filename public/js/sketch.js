@@ -153,7 +153,7 @@ $(document).ready(function(){
                   }
                 }
               }
-              var cardId = dbUserName.split(" ")[0] + String(Math.floor(Math.random() * 100));
+              var cardId = dbUserName.split(" ")[0] + "_" + String(Math.floor(Math.random() * 100));
               $("#chatTabBody").append("<div class='chatCard padded' id=" + cardId + "><div class='connectionDP'></div><div class='chatCardText'><p class='connectionName'>"+dbUserName+"</p><p class='lastMessage'>"+ lastMessage +"</p></div></div>");
               $("<style>").text("#" + cardId + " .connectionDP { background-color: "+ profileColor +" }").appendTo("head");
             }
@@ -166,6 +166,11 @@ $(document).ready(function(){
         showPage("chatDetail");
         showMessages(this.id);
       })
+
+      $("#sendTextButton").click(function(){
+        var textInput = $("#chatInputField input").val();
+        $("#chatInputField input").val('');
+      });
 
       $("#publicFeedTab").click(function(){
         showTab("publicFeedTab");
