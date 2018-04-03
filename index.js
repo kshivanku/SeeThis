@@ -14,12 +14,20 @@ app.use(express.static("public"));
 var path = require('path');
 var fs = require('fs');
 
-app.post('/uploadDP', function (req, res) {
-  var avatar = req.body.avatar;
-  console.log(req.body);
-  // var targetPath = path.resolve('/public/displayPictures/image.png');
-  // fs.rename(tempPath, targetPath, function(err) {
-  //   if (err) throw err;
-  //   console.log("Upload completed!");
-  // });
+var socket = require('socket.io');
+var io = socket(server);
+
+io.sockets.on('connection', function(socket){
+  console.log(socket.id);
 });
+
+
+// app.post('/uploadDP', function (req, res) {
+//   var avatar = req.body.avatar;
+//   console.log(req.body);
+//   // var targetPath = path.resolve('/public/displayPictures/image.png');
+//   // fs.rename(tempPath, targetPath, function(err) {
+//   //   if (err) throw err;
+//   //   console.log("Upload completed!");
+//   // });
+// });

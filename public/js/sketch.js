@@ -1,12 +1,15 @@
 var pageIDs = ["introPage", "landingPage"];
 var database = firebase.database();
+var socket;
 var allDataRef = database.ref('allData');
 var allUsersRef = database.ref('allData/allUsers');
 var allLinksRef = database.ref('allData/allLinks');
 var allChatPairsRef = database.ref('allData/allChatPairs');
 var allData;
-var activeUser = undefined;
+var thisUserName = undefined;
 var profileColor;
+var serverUrl = "http://localhost:8000";
+// var serverUrl = "https://seethis.herokuapp.com/";
 
 allDataRef.on('value', function(data) {
   allData = data.val();
@@ -70,10 +73,11 @@ $(document).ready(function(){
         }
         if(!newUserAlreadyPresent) {
           allUsersRef.push(newUser);
-          activeUser = newUser.fullName;
-          makeChatPairs(newUser.fullName);
+          thisUserName = newUser.fullName;
+          makeChatPairs();
           showPage("landingPage");
           showTab("chatTab");
+          socket = io.connect(serverUrl);
         }
       }
 
@@ -85,11 +89,12 @@ $(document).ready(function(){
             if(allData.allUsers[allUsersRefIDs[i]].email == userDetails.email) {
               userFound = true;
               // if(allData.allUsers[allUsersRefIDs[i]].password == userDetails.password) {
-                activeUser = allData.allUsers[allUsersRefIDs[i]].fullName;
+                thisUserName = allData.allUsers[allUsersRefIDs[i]].fullName;
                 localStorage.email = userDetails.email;
                 localStorage.registered = true;
                 showPage("landingPage");
                 showTab("chatTab");
+                socket = io.connect(serverUrl);
               // }
               // else {
               //   alert("Password is incorrect");
@@ -102,16 +107,32 @@ $(document).ready(function(){
         }
       }
 
+      function makeChatPairs() {
+        var allUsersRefIDs = Object.keys(allData.allUsers);
+        if(allUsersRefIDs.length > 1) {
+          for (var i = 0 ; i < allUsersRefIDs.length ; i++) {
+            var dbUserName = allData.allUsers[allUsersRefIDs[i]].fullName;
+            if(dbUserName != thisUserName) {
+              var newPair = {
+                pairName: thisUserName + " - " + dbUserName,
+                messages : []
+              }
+              allChatPairsRef.push(newPair);
+            }
+          }
+        }
+      }
+
 
   //LANDING PAGE
 
-  $("#chatTab").click(function(){
-    showTab("chatTab");
-  })
+      $("#chatTab").click(function(){
+        showTab("chatTab");
+      })
 
-  $("#publicFeedTab").click(function(){
-    showTab("publicFeedTab");
-  })
+      $("#publicFeedTab").click(function(){
+        showTab("publicFeedTab");
+      })
 
   //NAVIGATION
 
