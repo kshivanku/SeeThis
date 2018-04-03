@@ -1,4 +1,16 @@
 var pageIDs = ["introPage"];
+var database = firebase.database();
+var allDataRef = database.ref('allData');
+var allUsersRef = database.ref('allData/allUsers');
+var allLinksRef = database.ref('allData/allLinks');
+var allChatPairsRef = database.ref('allData/allChatPairs');
+var allData;
+var activeUser = undefined;
+
+allDataRef.on('value', function(data) {
+  allData = data.val();
+  console.log(allData);
+})
 
 $(document).ready(function(){
   showPage("introPage");
@@ -14,6 +26,12 @@ $(document).ready(function(){
     var fullName = $("#fullName").val();
     var email = $(".email").val();
     var password = $(".password").val();
+    var newUser = {
+      fullName: fullName,
+      email: email,
+      password: password
+    }
+    signUp(newUser);
   })
   $("#signInForm").submit(function(e){
     e.preventDefault();
@@ -42,6 +60,21 @@ $(document).ready(function(){
       $("#signInForm").css("display", "block");
       $("#signUpLabel").css("opacity", "0.54");
       $("#signInLabel").css("opacity", "1.0");
+    }
+  }
+
+  function signUp(newUser){
+    var allUsersRefIDs = Object.keys(allData.allUsers);
+    var newUserAlreadyPresent = false;
+    for(var i = 0 ; i < allUsersRefIDs.length ; i++) {
+      if(allData.allUsers[allUsersRefIDs[i]].fullName == newUser.fullName) {
+        newUserAlreadyPresent = true;
+        alert("User already present. Please Sign In");
+      }
+    }
+    if(!newUserAlreadyPresent) {
+      allUsersRef.push(newUser);
+      activeUser = newUser.fullName;
     }
   }
 });
