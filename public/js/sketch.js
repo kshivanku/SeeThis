@@ -1,4 +1,4 @@
-var pageIDs = ["introPage"];
+var pageIDs = ["introPage", "chatPage"];
 var database = firebase.database();
 var allDataRef = database.ref('allData');
 var allUsersRef = database.ref('allData/allUsers');
