@@ -178,4 +178,5 @@ input {
 }
 #landingPage .lastMessage {
   opacity: 0.54;
+  margin-top: 4px;
 }

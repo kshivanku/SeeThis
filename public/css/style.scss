@@ -201,5 +201,6 @@ input {
   .lastMessage {
     @extend %small_left;
     opacity: 0.54;
+    margin-top: 4px;
   }
 }
