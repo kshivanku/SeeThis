@@ -26,6 +26,8 @@ $(document).ready(function(){
     var fullName = $("#fullName").val();
     var email = $(".email").val();
     var password = $(".password").val();
+    var file = $("#dpFile").files[0];
+    console.log(file);
     var newUser = {
       fullName: fullName,
       email: email,
