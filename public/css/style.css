@@ -6,6 +6,14 @@ input, #introNav p {
   text-align: left;
 }
 
+#profileColor {
+  font-weight: 300;
+  font-size: 12px;
+  line-height: 15px;
+  opacity: 1;
+  text-align: left;
+}
+
 .signupSignin {
   color: #4463F7;
   text-transform: capitalize;
@@ -62,7 +70,7 @@ body {
 #logo {
   font-weight: 700;
   font-size: 28px;
-  padding: 24px 0 16px 0;
+  padding: 24px 0 16px;
 }
 
 #introNav p {
@@ -104,4 +112,17 @@ input {
   border-radius: 2px;
   margin-top: 32px;
   border: none;
+}
+
+#profileColor {
+  width: 24px;
+  height: 24px;
+  border: 1px solid #fff;
+  border-radius: 100%;
+  white-space: nowrap;
+  line-height: 24px;
+  margin: 16px 0;
+}
+#profileColor p {
+  margin-left: 32px;
 }
