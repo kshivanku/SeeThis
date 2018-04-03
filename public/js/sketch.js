@@ -8,8 +8,8 @@ var allChatPairsRef = database.ref('allData/allChatPairs');
 var allData;
 var thisUserName = undefined;
 var profileColor;
-var serverUrl = "http://localhost:8000";
-// var serverUrl = "https://seethis.herokuapp.com/";
+// var serverUrl = "http://localhost:8000";
+var serverUrl = "https://seethis.herokuapp.com/";
 
 allDataRef.on('value', function(data) {
   allData = data.val();
