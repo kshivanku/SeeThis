@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <!-- FIREBASE STUFF -->
+    <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyAI8K86YAg1bB8_P4_jLJadjg1imym1GRA",
+        authDomain: "seethis-3d472.firebaseapp.com",
+        databaseURL: "https://seethis-3d472.firebaseio.com",
+        projectId: "seethis-3d472",
+        storageBucket: "",
+        messagingSenderId: "458187670108"
+      };
+      firebase.initializeApp(config);
+    </script>
+    <!-- FIREBASE STUFF ENDS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="js/sketch.js"></script>
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <title></title>
+  </head>
+  <body>
+      <div id="introPage" class="padded">
+        <h1 id="logo">SeeThis</h1>
+        <div id="introNav">
+          <p id="signUpLabel" class="selected">Sign up</p>
+          <p id="signInLabel" class="deselected">Sign in</p>
+        </div>
+        <div>
+          <form id="signUpForm">
+            <fieldset>
+              <!-- <label for="fullName">Full Name</label> -->
+              <input id="fullName" type="text" placeholder="Full Name" required>
+              <input class="email" type="email" placeholder="Email" required>
+              <input class="password" type="password" placeholder="Password" required>
+              <button id="signUpButton" class="signupSignin" type="submit">SIGN UP</button>
+            </fieldset>
+          </form>
+        </div>
+        <div>
+          <form id="signInForm">
+            <fieldset>
+              <input class="email" type="email" placeholder="Email" required>
+              <input class="password" type="password" placeholder="Password" required>
+              <button id="signInButton" class="signupSignin" type="submit">SIGN IN</button>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+  </body>
+</html>
