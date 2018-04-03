@@ -15,8 +15,12 @@ allDataRef.on('value', function(data) {
 
 $(document).ready(function(){
   showPage("introPage");
-  showTab("chatTab");
-  showForm("signUpForm");
+  if(localStorage.registered) {
+    showForm("signInForm");
+  }
+  else {
+    showForm("signUpForm");
+  }
 
   //INTRO PAGE
       $("#signUpLabel").click(function(){
@@ -53,6 +57,7 @@ $(document).ready(function(){
 
       function signUp(newUser){
         localStorage.email = newUser.email;
+        localStorage.registered = true;
         var newUserAlreadyPresent = false;
         if(allData) {
           var allUsersRefIDs = Object.keys(allData.allUsers);
@@ -82,6 +87,7 @@ $(document).ready(function(){
               // if(allData.allUsers[allUsersRefIDs[i]].password == userDetails.password) {
                 activeUser = allData.allUsers[allUsersRefIDs[i]].fullName;
                 localStorage.email = userDetails.email;
+                localStorage.registered = true;
                 showPage("landingPage");
                 showTab("chatTab");
               // }
