@@ -52,6 +52,7 @@ $(document).ready(function(){
       })
 
       function signUp(newUser){
+        localStorage.email = newUser.email;
         var newUserAlreadyPresent = false;
         if(allData) {
           var allUsersRefIDs = Object.keys(allData.allUsers);
@@ -65,6 +66,7 @@ $(document).ready(function(){
         if(!newUserAlreadyPresent) {
           allUsersRef.push(newUser);
           activeUser = newUser.fullName;
+          makeChatPairs(newUser.fullName);
           showPage("landingPage");
           showTab("chatTab");
         }
@@ -79,6 +81,7 @@ $(document).ready(function(){
               userFound = true;
               // if(allData.allUsers[allUsersRefIDs[i]].password == userDetails.password) {
                 activeUser = allData.allUsers[allUsersRefIDs[i]].fullName;
+                localStorage.email = userDetails.email;
                 showPage("landingPage");
                 showTab("chatTab");
               // }
@@ -129,6 +132,9 @@ $(document).ready(function(){
           $("#signInForm").css("display", "block");
           $("#signUpLabel").css("opacity", "0.54");
           $("#signInLabel").css("opacity", "1.0");
+          if(localStorage.email) {
+            $("#signInForm .email").val(localStorage.email);
+          }
         }
       }
 

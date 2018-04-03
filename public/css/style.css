@@ -134,6 +134,7 @@ input {
 
 #landingPage {
   background-color: #F7F6F9;
+  height: 100vh;
 }
 #landingPage header {
   background-color: #4463F7;
