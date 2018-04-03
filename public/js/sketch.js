@@ -1,4 +1,4 @@
-var pageIDs = ["introPage", "landingPage"];
+var pageIDs = ["introPage", "landingPage", "chatDetail"];
 var database = firebase.database();
 var socket;
 var allDataRef = database.ref('allData');
@@ -132,6 +132,41 @@ $(document).ready(function(){
         showTab("chatTab");
       })
 
+      function populateChatTabBody(){
+        $("#chatTabBody").empty();
+        var allUsersRefIDs = Object.keys(allData.allUsers);
+        if(allUsersRefIDs.length > 1) {
+          for (var i = 0 ; i < allUsersRefIDs.length ; i++) {
+            var dbUserName = allData.allUsers[allUsersRefIDs[i]].fullName;
+            if(dbUserName != thisUserName) {
+              var profileColor = allData.allUsers[allUsersRefIDs[i]].profileColor;
+              var lastMessage = "";
+              var allChatPairsRefIDs = Object.keys(allData.allChatPairs);
+              for(var j = 0 ; j < allChatPairsRefIDs.length; j++) {
+                var pairName = allData.allChatPairs[allChatPairsRefIDs[j]].pairName;
+                if(pairName.indexOf(dbUserName) != -1 && pairName.indexOf(thisUserName) != -1) {
+                  if(allData.allChatPairs[allChatPairsRefIDs[j]].messages[0] != "null") {
+                    lastMessage = allData.allChatPairs[allChatPairsRefIDs[j]].messages[0].text;
+                  }
+                  else {
+                    lastMessage = "no chats yet"
+                  }
+                }
+              }
+              var cardId = dbUserName.split(" ")[0] + String(Math.floor(Math.random() * 100));
+              $("#chatTabBody").append("<div class='chatCard padded' id=" + cardId + "><div class='connectionDP'></div><div class='chatCardText'><p class='connectionName'>"+dbUserName+"</p><p class='lastMessage'>"+ lastMessage +"</p></div></div>");
+              $("<style>").text("#" + cardId + " .connectionDP { background-color: "+ profileColor +" }").appendTo("head");
+            }
+          }
+        }
+      }
+
+      $("#chatTabBody").on('click', '.chatCard', function(){
+        // console.log(this.id);
+        showPage("chatDetail");
+        showMessages(this.id);
+      })
+
       $("#publicFeedTab").click(function(){
         showTab("publicFeedTab");
       })
@@ -189,36 +224,6 @@ $(document).ready(function(){
           $("#publicFeedTabBody").css("display", "block");
         }
       }
-
-      function populateChatTabBody(){
-        $("#chatTabBody").empty();
-        var allUsersRefIDs = Object.keys(allData.allUsers);
-        if(allUsersRefIDs.length > 1) {
-          for (var i = 0 ; i < allUsersRefIDs.length ; i++) {
-            var dbUserName = allData.allUsers[allUsersRefIDs[i]].fullName;
-            if(dbUserName != thisUserName) {
-              var profileColor = allData.allUsers[allUsersRefIDs[i]].profileColor;
-              var lastMessage = "";
-              var allChatPairsRefIDs = Object.keys(allData.allChatPairs);
-              for(var j = 0 ; j < allChatPairsRefIDs.length; j++) {
-                var pairName = allData.allChatPairs[allChatPairsRefIDs[j]].pairName;
-                if(pairName.indexOf(dbUserName) != -1 && pairName.indexOf(thisUserName) != -1) {
-                  if(allData.allChatPairs[allChatPairsRefIDs[j]].messages[0] != "null") {
-                    lastMessage = allData.allChatPairs[allChatPairsRefIDs[j]].messages[0].text;
-                  }
-                  else {
-                    lastMessage = "no chats yet"
-                  }
-                }
-              }
-              $("#chatTabBody").append("<div class='chatCard padded' id=" + dbUserName.split(" ")[0] + dbUserName.split(" ")[1] + "><div class='connectionDP'></div><div class='chatCardText'><p class='connectionName'>"+dbUserName+"</p><p class='lastMessage'>"+ lastMessage +"</p></div></div>");
-              $("<style>").text("#" + dbUserName.split(" ")[0] + dbUserName.split(" ")[1] + " .connectionDP { background-color: "+ profileColor +" }").appendTo("head");
-            }
-          }
-        }
-      }
-
-
 });
 
 function getRandomColor() {
