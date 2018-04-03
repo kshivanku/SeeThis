@@ -211,9 +211,8 @@ $(document).ready(function(){
                   }
                 }
               }
-              $("#chatTabBody").append("<div class='chatCard padded' id=" + dbUserName.split(" ")[0] + "><div class='connectionDP'></div><div class='chatCardText'><p class='connectionName'>"+dbUserName+"</p><p class='lastMessage'>"+ lastMessage +"</p></div></div>");
-              $("<style>").text("#" + dbUserName.split(" ")[0] + " .connectionDP { background-color: "+ profileColor +" }").appendTo("head");
-              // $("#"+dbUserName).css("background-color", profileColor);
+              $("#chatTabBody").append("<div class='chatCard padded' id=" + dbUserName.split(" ")[0] + dbUserName.split(" ")[1] + "><div class='connectionDP'></div><div class='chatCardText'><p class='connectionName'>"+dbUserName+"</p><p class='lastMessage'>"+ lastMessage +"</p></div></div>");
+              $("<style>").text("#" + dbUserName.split(" ")[0] + dbUserName.split(" ")[1] + " .connectionDP { background-color: "+ profileColor +" }").appendTo("head");
             }
           }
         }
