@@ -237,7 +237,7 @@ header {
   }
 
   #chatInputField {
-    position: absolute;
+    position: fixed;
     bottom: 0px;
     right: 0px;
     width: 100%;
@@ -266,7 +266,7 @@ header {
     }
 
     button {
-      position: absolute;
+      position: fixed;
       right: 16px;
       bottom: 18px;
       width: 24px;
