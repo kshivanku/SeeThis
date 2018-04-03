@@ -1,4 +1,4 @@
-var pageIDs = ["introPage", "chatPage"];
+var pageIDs = ["introPage", "landingPage"];
 var database = firebase.database();
 var allDataRef = database.ref('allData');
 var allUsersRef = database.ref('allData/allUsers');
@@ -27,11 +27,11 @@ $(document).ready(function(){
     e.preventDefault();
     var fullName = $("#fullName").val();
     var email = $("#signUpForm .email").val();
-    var password = $("#signUpForm .password").val();
+    // var password = $("#signUpForm .password").val();
     var newUser = {
       fullName: fullName,
       email: email,
-      password: password,
+      // password: password,
       profileColor: profileColor
     }
     signUp(newUser);
@@ -40,10 +40,10 @@ $(document).ready(function(){
   $("#signInForm").submit(function(e){
     e.preventDefault();
     var email = $("#signInForm .email").val();
-    var password = $("#signInForm .password").val();
+    // var password = $("#signInForm .password").val();
     var userDetails = {
-      email: email,
-      password: password
+      email: email
+      // password: password
     }
     signIn(userDetails);
   })
@@ -88,7 +88,7 @@ $(document).ready(function(){
     if(!newUserAlreadyPresent) {
       allUsersRef.push(newUser);
       activeUser = newUser.fullName;
-      showPage("chatPage");
+      showPage("landingPage");
     }
   }
 
@@ -99,13 +99,13 @@ $(document).ready(function(){
       for(var i = 0 ; i < allUsersRefIDs.length ; i++) {
         if(allData.allUsers[allUsersRefIDs[i]].email == userDetails.email) {
           userFound = true;
-          if(allData.allUsers[allUsersRefIDs[i]].password == userDetails.password) {
+          // if(allData.allUsers[allUsersRefIDs[i]].password == userDetails.password) {
             activeUser = allData.allUsers[allUsersRefIDs[i]].fullName;
-            showPage("chatPage");
-          }
-          else {
-            alert("Password is incorrect");
-          }
+            showPage("landingPage");
+          // }
+          // else {
+          //   alert("Password is incorrect");
+          // }
         }
       }
     }
