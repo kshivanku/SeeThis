@@ -13,6 +13,7 @@ var serverUrl = "https://seethis.herokuapp.com/";
 var currentPage = null;
 //currentPage--> introPage, chatTab, publicFeedTab, [fullNameofChatPartner]
 
+socket = io.connect(serverUrl);
 allDataRef.on('value', function(data) {
     allData = data.val();
     console.log(allData);
@@ -79,7 +80,6 @@ $(document).ready(function() {
             makeChatPairs();
             showPage("landingPage");
             showTab("chatTab");
-            socket = io.connect(serverUrl);
         }
     }
 
@@ -96,7 +96,6 @@ $(document).ready(function() {
                     localStorage.registered = true;
                     showPage("landingPage");
                     showTab("chatTab");
-                    socket = io.connect(serverUrl);
                     // }
                     // else {
                     //   alert("Password is incorrect");
@@ -220,7 +219,7 @@ $(document).ready(function() {
         console.log('new chat recieved');
         console.log(data);
         if (data.receiver == thisUserName) {
-            if (window.navigator) {
+            if (window.navigator && currentPage != "introPage") {
                 window.navigator.vibrate(200);
             }
             if (currentPage == data.sender) {
