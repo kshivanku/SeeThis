@@ -212,9 +212,22 @@ $(document).ready(function() {
                   messages[0] = newMessage
                 }
                 database.ref("allData/allChatPairs/"+ allChatPairsRef[i] + "/messages").set(messages);
+                socket.emit('newChatText', newMessage);
               }
             }
     });
+
+    socket.on('newChatText', function(data){
+      if (data.receiver == thisUserName) {
+        window.navigator.vibrate(200);
+        if(currentPage == data.sender) {
+          $("#chatDetailBody").append('<div class="chatPartnerText chatBox"><p>' + data.text + '</p></div>');
+        }
+        else if(currentPage == chatTab) {
+          populateChatTabBody();
+        }
+      }
+    })
 
     $("#publicFeedTab").click(function() {
         showTab("publicFeedTab");
