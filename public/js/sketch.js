@@ -216,22 +216,20 @@ $(document).ready(function() {
         }
     });
 
-    if(socket != undefined) {
-      socket.on('newChatText', function(data) {
-          console.log('new chat recieved');
-          console.log(data);
-          if (data.receiver == thisUserName) {
-              if(window.navigator) {
+    socket.on('newChatText', function(data) {
+        console.log('new chat recieved');
+        console.log(data);
+        if (data.receiver == thisUserName) {
+            if (window.navigator) {
                 window.navigator.vibrate(200);
-              }
-              if (currentPage == data.sender) {
-                  $("#chatDetailBody").append('<div class="chatPartnerText chatBox"><p>' + data.text + '</p></div>');
-              } else if (currentPage == chatTab) {
-                  populateChatTabBody();
-              }
-          }
-      })
-    }
+            }
+            if (currentPage == data.sender) {
+                $("#chatDetailBody").append('<div class="chatPartnerText chatBox"><p>' + data.text + '</p></div>');
+            } else if (currentPage == chatTab) {
+                populateChatTabBody();
+            }
+        }
+    })
 
     $("#publicFeedTab").click(function() {
         showTab("publicFeedTab");
