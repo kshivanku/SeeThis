@@ -143,8 +143,9 @@ $(document).ready(function() {
                     for (var j = 0; j < allChatPairsRefIDs.length; j++) {
                         var pairName = allData.allChatPairs[allChatPairsRefIDs[j]].pairName;
                         if (pairName.indexOf(dbUserName) != -1 && pairName.indexOf(thisUserName) != -1) {
-                            if (allData.allChatPairs[allChatPairsRefIDs[j]].messages[0] != "null") {
-                                lastMessage = allData.allChatPairs[allChatPairsRefIDs[j]].messages[0].text;
+                            var messages = allData.allChatPairs[allChatPairsRefIDs[j]].messages;
+                            if (messages[0] != "null") {
+                                lastMessage = allData.allChatPairs[allChatPairsRefIDs[j]].messages[messages.length - 1].text;
                             } else {
                                 lastMessage = "no chats yet"
                             }
