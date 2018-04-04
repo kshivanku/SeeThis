@@ -200,7 +200,7 @@ $(document).ready(function() {
                             $("#chatDetailBody").append('<div class="clearfix"><div class="thisUserText chatBox"><p>' + messages[j].text + '</p></div></div>');
                         }
                     }
-                    if(document.getElementById("chatDetailBody").scrollHeight > "1000px") {
+                    if(document.body.scrollHeight > "1000px") {
                       window.scrollTo(0,document.body.scrollHeight);
                     }
                 } else {
@@ -215,7 +215,7 @@ $(document).ready(function() {
         $("#chatInputField input").val('');
         $("#chatDetailBody .emptyPageText").empty();
         $("#chatDetailBody").append('<div class="clearfix"><div class="thisUserText chatBox"><p>' + textInput + '</p></div></div>');
-        if(document.getElementById("chatDetailBody").scrollHeight > "1000px") {
+        if(document.body.scrollHeight > "1000px") {
           window.scrollTo(0,document.body.scrollHeight);
         }
         var allChatPairsRef = Object.keys(allData.allChatPairs);
