@@ -163,7 +163,6 @@ $(document).ready(function() {
         // console.log($(this)[0].childNodes[1].childNodes[0].innerHTML);
         var chatPartnerFullName = $(this)[0].childNodes[1].childNodes[0].innerHTML;
         currentPage = chatPartnerFullName;
-
         showPage("chatDetail");
         fixHeader(chatPartnerFullName);
         showMessages(chatPartnerFullName);
@@ -243,6 +242,7 @@ $(document).ready(function() {
             if (window.navigator && currentPage != "introPage") {
                 window.navigator.vibrate(200);
             }
+            console.log(currentPage);
             if (currentPage == data.sender) {
                 $("#chatDetailBody").append('<div class="clearfix"><div class="chatPartnerText chatBox"><p>' + data.text + '</p></div></div>');
             } else if (currentPage == "chatTab") {
