@@ -1,21 +1,22 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
     <!-- FIREBASE STUFF -->
     <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
     <script>
-      // Initialize Firebase
-      var config = {
-        apiKey: "AIzaSyAI8K86YAg1bB8_P4_jLJadjg1imym1GRA",
-        authDomain: "seethis-3d472.firebaseapp.com",
-        databaseURL: "https://seethis-3d472.firebaseio.com",
-        projectId: "seethis-3d472",
-        storageBucket: "",
-        messagingSenderId: "458187670108"
-      };
-      firebase.initializeApp(config);
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyAI8K86YAg1bB8_P4_jLJadjg1imym1GRA",
+            authDomain: "seethis-3d472.firebaseapp.com",
+            databaseURL: "https://seethis-3d472.firebaseio.com",
+            projectId: "seethis-3d472",
+            storageBucket: "",
+            messagingSenderId: "458187670108"
+        };
+        firebase.initializeApp(config);
     </script>
     <!-- FIREBASE STUFF ENDS -->
     <!-- SOCKET STUFF -->
@@ -26,80 +27,86 @@
     <link rel="stylesheet" href="/css/reset.css">
     <link rel="stylesheet" href="/css/style.css">
     <title></title>
-  </head>
-  <body>
-      <!-- INTRO PAGE -->
-      <div id="introPage" class="padded">
+</head>
+
+<body>
+    <!-- INTRO PAGE -->
+    <div id="introPage" class="padded">
         <h1 id="logo">SeeThis</h1>
         <div id="introNav">
-          <p id="signUpLabel" class="selected">Sign up</p>
-          <p id="signInLabel" class="deselected">Sign in</p>
+            <p id="signUpLabel" class="selected">Sign up</p>
+            <p id="signInLabel" class="deselected">Sign in</p>
         </div>
         <div>
-          <form id="signUpForm">
-            <fieldset>
-              <input id="fullName" type="text" placeholder="Full Name" required>
-              <input class="email" type="email" placeholder="Email" required>
-              <!-- <input class="password" type="password" placeholder="Password" required> -->
-              <div id="profileColor"><p>Your randomly chosen profile color</p></div>
-              <button id="signUpButton" class="signupSignin" type="submit">SIGN UP</button>
-            </fieldset>
-          </form>
+            <form id="signUpForm">
+                <fieldset>
+                    <input id="fullName" type="text" placeholder="Full Name" required>
+                    <input class="email" type="email" placeholder="Email" required>
+                    <!-- <input class="password" type="password" placeholder="Password" required> -->
+                    <div id="profileColor">
+                        <p>Your randomly chosen profile color</p>
+                    </div>
+                    <button id="signUpButton" class="signupSignin" type="submit">SIGN UP</button>
+                </fieldset>
+            </form>
         </div>
         <div>
-          <form id="signInForm">
-            <fieldset>
-              <input class="email" type="email" placeholder="Email" required>
-              <!-- <input class="password" type="password" placeholder="Password" required> -->
-              <button id="signInButton" class="signupSignin" type="submit">SIGN IN</button>
-            </fieldset>
-          </form>
+            <form id="signInForm">
+                <fieldset>
+                    <input class="email" type="email" placeholder="Email" required>
+                    <!-- <input class="password" type="password" placeholder="Password" required> -->
+                    <button id="signInButton" class="signupSignin" type="submit">SIGN IN</button>
+                </fieldset>
+            </form>
         </div>
-      </div>
+    </div>
 
-      <!-- LANDING PAGE -->
-      <div id="landingPage">
+    <!-- LANDING PAGE -->
+    <div id="landingPage">
         <header>
-          <div id="logo" class="padded">SeeThis</div>
-          <div id="landingNav">
-            <p id="chatTab">CHATS</p><!--
+            <div id="logo" class="padded">SeeThis</div>
+            <div id="landingNav">
+                <p id="chatTab">CHATS</p><!--
          --><p id="publicFeedTab">PUBLIC FEED</p>
-          <div>
+                <div>
         </header>
         <div id="chatTabBody">
-          <div class="chatCard padded">
-            <div class="connectionDP"></div><!--
+            <div class="chatCard padded">
+                <div class="connectionDP"></div><!--
          --><div class="chatCardText">
-              <p class="connectionName">Test Name</p>
-              <p class="lastMessage">last message sent by this user</p>
+                    <p class="connectionName">Test Name</p>
+                    <p class="lastMessage">last message sent by this user</p>
+                </div>
             </div>
-          </div>
         </div>
         <div id="publicFeedTabBody">
-          <p>public feed body</p>
+            <p>public feed body</p>
         </div>
-      </div>
+        </div>
 
-      <!-- CHAT DETAIL -->
-      <div id="chatDetail">
-        <header>
-          <div class="connectionDP"></div>
-          <p class="connectionName">Test Name</p>
-        </header>
-        <div id="chatDetailBody">
-          <div class="chatPartnerText chatBox">
-            <p>Sample text</p>
-          </div>
-          <div class="clearfix">
-            <div class="thisUserText chatBox">
-              <p>Sample text</p>
+        <!-- CHAT DETAIL -->
+        <div id="chatDetail">
+            <header>
+                <div class="connectionDP"></div>
+                <p class="connectionName">Test Name</p>
+            </header>
+            <div id="chatDetailBody">
+                <div class="clearfix">
+                    <div class="chatPartnerText chatBox">
+                        <p>Sample text</p>
+                    </div>
+                </div>
+                <div class="clearfix">
+                    <div class="thisUserText chatBox">
+                        <p>Sample text</p>
+                    </div>
+                </div>
             </div>
-          </div>
+            <div id="chatInputField">
+                <input type="text" placeholder="type here">
+                <button id="sendTextButton" type="submit"></button>
+            </div>
         </div>
-        <div id="chatInputField">
-          <input type="text" placeholder="type here">
-          <button id="sendTextButton" type="submit"></button>
-        </div>
-      </div>
-  </body>
+</body>
+
 </html>

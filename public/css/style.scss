@@ -225,7 +225,6 @@ header {
 
 #chatDetail {
     height: 100vh;
-
     header {
         height: 56px;
         background-image: url("../images/arrow_back.png");
@@ -233,6 +232,9 @@ header {
         background-size: 16px 16px;
         background-position: 20px 20px;
         margin-bottom: 16px;
+        position: fixed;
+        top: 0px;
+        width: 100%;
     }
 
     .connectionDP,
@@ -277,10 +279,11 @@ header {
         }
 
         input {
-            height: 62px;
+            min-height: 62px;
             background-color: #fff;
             @extend %body_left_100;
             padding-left: 16px;
+            padding-right: 60px;
             color: $primary-black;
             border-top: 0.5px solid rgba(39, 40, 56, 0.12);
             line-height: 62px;
@@ -304,19 +307,21 @@ header {
 
     #chatDetailBody {
         overflow: scroll;
-        margin-bottom: 80px;
+        margin: 80px 0;
 
         .chatBox {
-            // width: 286px;
+            max-width: 286px;
             padding: 8px;
             border: 0.5px solid rgba(232, 232, 232, 1.0);
             box-shadow: 0 0.5px 0 0 rgba(232, 232, 232, 1.0);
             margin-bottom: 8px;
             @extend %body_left_100;
+            border-radius: 4px;
         }
 
         .chatPartnerText {
             background-color: $primary-white;
+            float: left;
             margin-left: 26px;
         }
 

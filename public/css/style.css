@@ -200,6 +200,9 @@ header {
   background-size: 16px 16px;
   background-position: 20px 20px;
   margin-bottom: 16px;
+  position: fixed;
+  top: 0px;
+  width: 100%;
 }
 #chatDetail .connectionDP,
 #chatDetail .connectionName {
@@ -238,9 +241,10 @@ header {
   line-height: 62px;
 }
 #chatDetail #chatInputField input {
-  height: 62px;
+  min-height: 62px;
   background-color: #fff;
   padding-left: 16px;
+  padding-right: 60px;
   color: #656A7E;
   border-top: 0.5px solid rgba(39, 40, 56, 0.12);
   line-height: 62px;
@@ -261,16 +265,19 @@ header {
 }
 #chatDetail #chatDetailBody {
   overflow: scroll;
-  margin-bottom: 80px;
+  margin: 80px 0;
 }
 #chatDetail #chatDetailBody .chatBox {
+  max-width: 286px;
   padding: 8px;
   border: 0.5px solid #e8e8e8;
   box-shadow: 0 0.5px 0 0 #e8e8e8;
   margin-bottom: 8px;
+  border-radius: 4px;
 }
 #chatDetail #chatDetailBody .chatPartnerText {
   background-color: #fff;
+  float: left;
   margin-left: 26px;
 }
 #chatDetail #chatDetailBody .thisUserText {

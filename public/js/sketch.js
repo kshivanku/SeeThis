@@ -163,9 +163,28 @@ $(document).ready(function() {
         // console.log($(this)[0].childNodes[1].childNodes[0].innerHTML);
         var chatPartnerFullName = $(this)[0].childNodes[1].childNodes[0].innerHTML;
         currentPage = chatPartnerFullName;
+
         showPage("chatDetail");
+        fixHeader(chatPartnerFullName);
         showMessages(chatPartnerFullName);
     })
+
+    $("#chatDetail header").click(function(){
+      showPage("landingPage");
+      showTab("chatTab");
+    })
+
+    function fixHeader(chatPartnerFullName){
+      $("#chatDetail .connectionName").text(chatPartnerFullName);
+      var connectionDPColor;
+      var allUsersRef = Object.keys(allData.allUsers);
+      for (var i = 0 ; i < allUsersRef.length ; i++){
+        if(allData.allUsers[allUsersRef[i]].fullName == chatPartnerFullName) {
+          connectionDPColor = allData.allUsers[allUsersRef[i]].profileColor;
+        }
+      }
+      $("#chatDetail .connectionDP").css('background-color', connectionDPColor);
+    }
 
     function showMessages(chatPartnerFullName) {
         $("#chatDetailBody").empty();
@@ -177,12 +196,12 @@ $(document).ready(function() {
                 if (messages.length > 0 && messages[0] != "null") {
                     for (var j = 0; j < messages.length; j++) {
                         if (messages[j].sender == chatPartnerFullName) {
-                            $("#chatDetailBody").append('<div class="chatPartnerText chatBox"><p>' + messages[j].text + '</p></div>');
+                            $("#chatDetailBody").append('<div class="clearfix"><div class="chatPartnerText chatBox"><p>' + messages[j].text + '</p></div></div>');
                         } else {
                             $("#chatDetailBody").append('<div class="clearfix"><div class="thisUserText chatBox"><p>' + messages[j].text + '</p></div></div>');
                         }
                     }
-                    $("#chatDetailBody").scrollTop = $("#chatDetailBody").scrollHeight;
+                    window.scrollTo(0,document.body.scrollHeight);
                 } else {
                     $("#chatDetailBody").append("<p class='emptyPageText'>No chats yet</p>");
                 }
@@ -195,6 +214,7 @@ $(document).ready(function() {
         $("#chatInputField input").val('');
         $("#chatDetailBody .emptyPageText").empty();
         $("#chatDetailBody").append('<div class="clearfix"><div class="thisUserText chatBox"><p>' + textInput + '</p></div></div>');
+        window.scrollTo(0,document.body.scrollHeight);
         var allChatPairsRef = Object.keys(allData.allChatPairs);
         for (var i = 0; i < allChatPairsRef.length; i++) {
             var pairName = allData.allChatPairs[allChatPairsRef[i]].pairName;
@@ -224,7 +244,7 @@ $(document).ready(function() {
                 window.navigator.vibrate(200);
             }
             if (currentPage == data.sender) {
-                $("#chatDetailBody").append('<div class="chatPartnerText chatBox"><p>' + data.text + '</p></div>');
+                $("#chatDetailBody").append('<div class="clearfix"><div class="chatPartnerText chatBox"><p>' + data.text + '</p></div></div>');
             } else if (currentPage == chatTab) {
                 populateChatTabBody();
             }
