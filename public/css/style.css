@@ -1,4 +1,4 @@
-#chatDetail #chatInputField input, #landingPage .connectionName, #landingPage header p, input, #introNav p {
+#chatDetail #chatDetailBody .chatBox, #chatDetail #chatInputField input, #landingPage .connectionName, #landingPage header p, input, #introNav p {
   font-weight: 300;
   font-size: 14px;
   line-height: 18px;
@@ -6,7 +6,7 @@
   text-align: left;
 }
 
-#landingPage .lastMessage, #profileColor {
+#chatDetail #chatDetailBody .emptyPageText, #landingPage .lastMessage, #profileColor {
   font-weight: 300;
   font-size: 12px;
   line-height: 15px;
@@ -192,6 +192,7 @@ header {
   background-repeat: no-repeat;
   background-size: 16px 16px;
   background-position: 20px 20px;
+  margin-bottom: 16px;
 }
 #chatDetail .connectionDP, #chatDetail .connectionName {
   display: inline-block;
@@ -249,4 +250,26 @@ header {
   border: none;
   box-shadow: none;
   background-color: transparent;
+}
+#chatDetail #chatDetailBody {
+  overflow: scroll;
+}
+#chatDetail #chatDetailBody .chatBox {
+  width: 286px;
+  padding: 8px;
+  border: 0.5px solid #e8e8e8;
+  box-shadow: 0px 0.5px 0px 0px #e8e8e8;
+  margin-bottom: 8px;
+}
+#chatDetail #chatDetailBody .chatPartnerText {
+  background-color: #fff;
+  margin-left: 26px;
+}
+#chatDetail #chatDetailBody .thisUserText {
+  background-color: #F1F4FE;
+  margin-left: 48px;
+}
+#chatDetail #chatDetailBody .emptyPageText {
+  margin-top: 16px;
+  text-align: center;
 }

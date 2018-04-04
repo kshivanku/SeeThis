@@ -217,6 +217,7 @@ header {
     background-repeat: no-repeat;
     background-size: 16px 16px;
     background-position: 20px 20px;
+    margin-bottom: 16px;
   }
   .connectionDP, .connectionName {
     display: inline-block;
@@ -277,6 +278,36 @@ header {
       border: none;
       box-shadow: none;
       background-color: transparent;
+    }
+  }
+
+  #chatDetailBody {
+
+    overflow: scroll;
+
+    .chatBox {
+      width: 286px;
+      padding: 8px;
+      border: 0.5px solid rgba(232, 232, 232, 1.0);
+      box-shadow: 0px 0.5px 0px 0px rgba(232, 232, 232, 1.0);
+      margin-bottom: 8px;
+      @extend %body_left_100;
+    }
+
+    .chatPartnerText {
+      background-color: $primary-white;
+      margin-left: 26px;
+    }
+
+    .thisUserText {
+      background-color: #F1F4FE;
+      margin-left: 48px;
+    }
+
+    .emptyPageText {
+      @extend %small_left;
+      margin-top: 16px;
+      text-align: center;
     }
   }
 }
