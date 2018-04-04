@@ -245,7 +245,7 @@ $(document).ready(function() {
             }
             if (currentPage == data.sender) {
                 $("#chatDetailBody").append('<div class="clearfix"><div class="chatPartnerText chatBox"><p>' + data.text + '</p></div></div>');
-            } else if (currentPage == chatTab) {
+            } else if (currentPage == "chatTab") {
                 populateChatTabBody();
             }
         }
