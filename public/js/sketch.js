@@ -1,6 +1,6 @@
 var pageIDs = ["introPage", "landingPage", "chatDetail"];
 var database = firebase.database();
-var socket;
+var socket = undefined;
 var allDataRef = database.ref('allData');
 var allUsersRef = database.ref('allData/allUsers');
 var allLinksRef = database.ref('allData/allLinks');
@@ -201,33 +201,33 @@ $(document).ready(function() {
             if (pairName.indexOf(thisUserName) != -1 && pairName.indexOf(currentPage) != -1) {
                 var messages = allData.allChatPairs[allChatPairsRef[i]].messages;
                 var newMessage = {
-                  sender: thisUserName,
-                  receiver: currentPage,
-                  text: textInput
+                    sender: thisUserName,
+                    receiver: currentPage,
+                    text: textInput
                 }
                 if (messages.length > 0 && messages[0] != "null") {
-                  messages.push(newMessage);
+                    messages.push(newMessage);
+                } else {
+                    messages[0] = newMessage
                 }
-                else {
-                  messages[0] = newMessage
-                }
-                database.ref("allData/allChatPairs/"+ allChatPairsRef[i] + "/messages").set(messages);
+                database.ref("allData/allChatPairs/" + allChatPairsRef[i] + "/messages").set(messages);
                 socket.emit('newChatText', newMessage);
-              }
             }
+        }
     });
 
-    socket.on('newChatText', function(data){
-      if (data.receiver == thisUserName) {
-        window.navigator.vibrate(200);
-        if(currentPage == data.sender) {
-          $("#chatDetailBody").append('<div class="chatPartnerText chatBox"><p>' + data.text + '</p></div>');
-        }
-        else if(currentPage == chatTab) {
-          populateChatTabBody();
-        }
-      }
-    })
+    if(socket != undefined) {
+      socket.on('newChatText', function(data) {
+          if (data.receiver == thisUserName) {
+              window.navigator.vibrate(200);
+              if (currentPage == data.sender) {
+                  $("#chatDetailBody").append('<div class="chatPartnerText chatBox"><p>' + data.text + '</p></div>');
+              } else if (currentPage == chatTab) {
+                  populateChatTabBody();
+              }
+          }
+      })
+    }
 
     $("#publicFeedTab").click(function() {
         showTab("publicFeedTab");
