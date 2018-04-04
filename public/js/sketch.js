@@ -215,28 +215,70 @@ $(document).ready(function() {
         var textInput = $("#chatInputField input").val();
         $("#chatInputField input").val('');
         $("#chatDetailBody .emptyPageText").empty();
-        $("#chatDetailBody").append('<div class="clearfix"><div class="thisUserText chatBox"><p>' + textInput + '</p></div></div>');
-        if($(document).height() / $(window).height() > 1.8) {
-          window.scrollTo(0,document.body.scrollHeight);
-        }
-        var allChatPairsRef = Object.keys(allData.allChatPairs);
-        for (var i = 0; i < allChatPairsRef.length; i++) {
-            var pairName = allData.allChatPairs[allChatPairsRef[i]].pairName;
-            if (pairName.indexOf(thisUserName) != -1 && pairName.indexOf(currentPage) != -1) {
-                var messages = allData.allChatPairs[allChatPairsRef[i]].messages;
-                var newMessage = {
-                    sender: thisUserName,
-                    receiver: currentPage,
-                    text: textInput
+        if(validURL(textInput)) {
+          $.ajax({
+            type: "POST",
+            url: '/urlScraper',
+            data: {"linkURL": textInput},
+            success: gotScrapedData,
+            dataType: "json"
+          });
+          function gotScrapedData(err, data) {
+            if(err){console.log(err)};
+            console.log(data);
+            var final_image = null;
+            var max_size = null;
+            var aspectThreshold = 2.5;
+            var areaThreshold = 2000;
+            for (var i = 0 ; i < data.images.length ; i++) {
+              $("<img/>", {load: function(){
+                var width = this.width;
+                var height = this.height;
+                if(width && height) {
+                  if(width/height < aspectThreshold && width/height > (1/aspectThreshold) && width * height > areaThreshold) {
+                    if(max_size == null || width * height > max_size) {
+                      max_size = width * height;
+                      final_image = data.images[i];
+                    }
+                  }
                 }
-                if (messages.length > 0 && messages[0] != "null") {
-                    messages.push(newMessage);
-                } else {
-                    messages[0] = newMessage
-                }
-                database.ref("allData/allChatPairs/" + allChatPairsRef[i] + "/messages").set(messages);
-                socket.emit('newChatText', newMessage);
+              }, src:data.images[i]});
             }
+            var newMessage = {
+              sender: thisUserName,
+              receiver: currentPage,
+              text: textInput,
+              isLink: true,
+              headline: data.pageHeading,
+              feature_image: final_image
+            }
+            console.log(newMessage);
+          }
+        }
+        else {
+          $("#chatDetailBody").append('<div class="clearfix"><div class="thisUserText chatBox"><p>' + textInput + '</p></div></div>');
+          if($(document).height() / $(window).height() > 1.8) {
+            window.scrollTo(0,document.body.scrollHeight);
+          }
+          var allChatPairsRef = Object.keys(allData.allChatPairs);
+          for (var i = 0; i < allChatPairsRef.length; i++) {
+              var pairName = allData.allChatPairs[allChatPairsRef[i]].pairName;
+              if (pairName.indexOf(thisUserName) != -1 && pairName.indexOf(currentPage) != -1) {
+                  var messages = allData.allChatPairs[allChatPairsRef[i]].messages;
+                  var newMessage = {
+                      sender: thisUserName,
+                      receiver: currentPage,
+                      text: textInput
+                  }
+                  if (messages.length > 0 && messages[0] != "null") {
+                      messages.push(newMessage);
+                  } else {
+                      messages[0] = newMessage
+                  }
+                  database.ref("allData/allChatPairs/" + allChatPairsRef[i] + "/messages").set(messages);
+                  socket.emit('newChatText', newMessage);
+              }
+          }
         }
     });
 
@@ -320,4 +362,12 @@ function getRandomColor() {
         color += letters[Math.floor(Math.random() * 16)];
     }
     return color;
+}
+
+function validURL(userInput) {
+    var res = userInput.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
+    if(res == null)
+        return false;
+    else
+        return true;
 }
