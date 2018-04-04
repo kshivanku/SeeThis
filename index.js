@@ -20,6 +20,8 @@ var io = socket(server);
 io.sockets.on('connection', function(socket){
   console.log(socket.id);
   socket.on('newChatText', function(data){
+    console.log('new chat recieved');
+    console.log(data);
     socket.broadcast.emit('newChatText', data);
   });
 });
