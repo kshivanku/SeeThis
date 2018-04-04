@@ -200,7 +200,9 @@ $(document).ready(function() {
                             $("#chatDetailBody").append('<div class="clearfix"><div class="thisUserText chatBox"><p>' + messages[j].text + '</p></div></div>');
                         }
                     }
-                    window.scrollTo(0,document.body.scrollHeight);
+                    if(document.getElementById("chatDetailBody").scrollHeight > "100px") {
+                      window.scrollTo(0,document.body.scrollHeight);
+                    }
                 } else {
                     $("#chatDetailBody").append("<p class='emptyPageText'>No chats yet</p>");
                 }
@@ -213,7 +215,9 @@ $(document).ready(function() {
         $("#chatInputField input").val('');
         $("#chatDetailBody .emptyPageText").empty();
         $("#chatDetailBody").append('<div class="clearfix"><div class="thisUserText chatBox"><p>' + textInput + '</p></div></div>');
-        window.scrollTo(0,document.body.scrollHeight);
+        if(document.getElementById("chatDetailBody").scrollHeight > "100px") {
+          window.scrollTo(0,document.body.scrollHeight);
+        }
         var allChatPairsRef = Object.keys(allData.allChatPairs);
         for (var i = 0; i < allChatPairsRef.length; i++) {
             var pairName = allData.allChatPairs[allChatPairsRef[i]].pairName;
