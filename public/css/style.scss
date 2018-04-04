@@ -2,8 +2,8 @@
 $primary-blue: #4463F7;
 $app-bg-color: #F7F6F9;
 $primary-black: #656A7E;
-$primary-white: #fff;
-//EXTENDED
+$primary-white: #fff; //EXTENDED
+
 %body_left_100 {
     font-weight: 300;
     font-size: 14px;
@@ -29,11 +29,10 @@ $primary-white: #fff;
 }
 
 %UI_Left_100 {
-  font-size: 16px;
-  font-weight: 700;
-  text-align: left;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: left;
 }
-
 //CUSTOM FONT
 @font-face {
     font-family: "CircularStd";
@@ -51,6 +50,7 @@ $primary-white: #fff;
     font-weight: 700;
 }
 //BORDER BOX
+
 * {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -64,10 +64,12 @@ $primary-white: #fff;
     box-sizing: border-box;
 }
 //OVERALL SETTING
+
 body {
     font: 100% "CircularStd";
     font-weight: 300;
     color: $primary-black;
+    background-color: #F7F6F9;
 }
 
 .padded {
@@ -79,6 +81,7 @@ body {
     color: $primary-white;
     width: 100vw;
     height: 100vh;
+
     #logo {
         font-weight: 700;
         font-size: 28px;
@@ -143,171 +146,198 @@ input {
     margin: 16px 0;
 
     p {
-      margin-left: 32px;
+        margin-left: 32px;
     }
 }
 
 header {
-  background-color: $primary-blue;
-  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.12), 0px 4px 4px 0px rgba(0, 0, 0, 0.24);
-  color: $primary-white;
+    background-color: $primary-blue;
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.12), 0 4px 4px 0 rgba(0, 0, 0, 0.24);
+    color: $primary-white;
 }
 
 #landingPage {
-  background-color: #F7F6F9;
-  height: 100vh;
-  header {
-    #logo {
-      @extend %UI_Left_100;
-      line-height: 56px;
+    background-color: #F7F6F9;
+    height: 100vh;
+
+    header {
+        #logo {
+            @extend %UI_Left_100;
+            line-height: 56px;
+        }
+
+        p {
+            @extend %body_left_100;
+            display: inline-block;
+            width: 50%;
+            line-height: 48px;
+            text-align: center;
+        }
     }
-    p {
-      @extend %body_left_100;
-      display: inline-block;
-      width: 50%;
-      line-height: 48px;
-      text-align: center;
+
+    #chatTabBody,
+    #publicFeedTabBody {
+        margin-top: 16px;
     }
-  }
 
-  #chatTabBody, #publicFeedTabBody{
-      margin-top: 16px;
-  }
+    .chatCard {
+        width: 100%;
+        height: 80px;
+        background-color: #fff;
+        margin-bottom: 1px;
+    }
 
-  .chatCard {
-    width: 100%;
-    height: 80px;
-    background-color: #fff;
-    margin-bottom: 1px;
-  }
+    .connectionDP {
+        border-radius: 100%;
+        width: 48px;
+        height: 48px;
+        // background-color: #222222;
+        margin-top: 16px;
+    }
 
-  .connectionDP {
-    border-radius: 100%;
-    width: 48px;
-    height: 48px;
-    // background-color: #222222;
-    margin-top: 16px;
-  }
+    .chatCardText,
+    .connectionDP {
+        display: inline-block;
+        vertical-align: top;
+    }
 
-  .connectionDP, .chatCardText {
-    display: inline-block;
-    vertical-align:top;
-  }
-  .chatCardText {
-    margin-left: 8px;
-    margin-top: 22px;
-  }
-  .connectionName {
-    @extend %body_left_100;
-    font-weight: 700;
-  }
-  .lastMessage {
-    @extend %small_left;
-    opacity: 0.54;
-    margin-top: 4px;
-  }
+    .chatCardText {
+        margin-left: 8px;
+        margin-top: 22px;
+    }
+
+    .connectionName {
+        @extend %body_left_100;
+        font-weight: 700;
+    }
+
+    .lastMessage {
+        @extend %small_left;
+        opacity: 0.54;
+        margin-top: 4px;
+        height: 15px;
+        width: 272px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
 }
 
 #chatDetail {
-  background-color: #F7F6F9;
-  height: 100vh;
-  header {
-    height: 56px;
-    background-image: url("../images/arrow_back.png");
-    background-repeat: no-repeat;
-    background-size: 16px 16px;
-    background-position: 20px 20px;
-    margin-bottom: 16px;
-  }
-  .connectionDP, .connectionName {
-    display: inline-block;
-    vertical-align: top;
-    margin-left: 68px;
-  }
+    height: 100vh;
 
-  .connectionDP {
-    width: 32px;
-    height: 32px;
-    border-radius: 100%;
-    background-color: #202020;
-    margin-top: 12px;
-  }
-  .connectionName {
-    line-height: 56px;
-    margin-left: 8px;
-  }
-
-  #chatInputField {
-    position: fixed;
-    bottom: 0px;
-    right: 0px;
-    width: 100%;
-    ::-webkit-input-placeholder {
-        /* Chrome/Opera/Safari */
-        font-size: 12px;
-        color: $primary-black;
-        opacity: 0.54;
-    }
-    ::-moz-placeholder {
-        /* Firefox 19+ */
-        font-size: 12px;
-        color: $primary-black;
-        opacity: 0.54;
-        line-height: 62px;
-    }
-    input {
-      height: 62px;
-      background-color: #fff;
-      @extend %body_left_100;
-      padding-left: 16px;
-      color: $primary-black;
-      border-top: 0.5px solid rgba(39, 40, 56, 0.12);
-      line-height: 62px;
-      margin-bottom: 0px;
+    header {
+        height: 56px;
+        background-image: url("../images/arrow_back.png");
+        background-repeat: no-repeat;
+        background-size: 16px 16px;
+        background-position: 20px 20px;
+        margin-bottom: 16px;
     }
 
-    button {
-      position: fixed;
-      right: 16px;
-      bottom: 18px;
-      width: 24px;
-      height: 24px;
-      background-image: url("../images/send_button.png");
-      background-repeat: no-repeat;
-      background-size: 24px 24px;
-      border: none;
-      box-shadow: none;
-      background-color: transparent;
-    }
-  }
-
-  #chatDetailBody {
-
-    overflow: scroll;
-
-    .chatBox {
-      width: 286px;
-      padding: 8px;
-      border: 0.5px solid rgba(232, 232, 232, 1.0);
-      box-shadow: 0px 0.5px 0px 0px rgba(232, 232, 232, 1.0);
-      margin-bottom: 8px;
-      @extend %body_left_100;
+    .connectionDP,
+    .connectionName {
+        display: inline-block;
+        vertical-align: top;
+        margin-left: 68px;
     }
 
-    .chatPartnerText {
-      background-color: $primary-white;
-      margin-left: 26px;
+    .connectionDP {
+        width: 32px;
+        height: 32px;
+        border-radius: 100%;
+        background-color: #202020;
+        margin-top: 12px;
     }
 
-    .thisUserText {
-      background-color: #F1F4FE;
-      margin-left: 48px;
+    .connectionName {
+        line-height: 56px;
+        margin-left: 8px;
     }
 
-    .emptyPageText {
-      @extend %small_left;
-      margin-top: 16px;
-      text-align: center;
+    #chatInputField {
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        width: 100%;
+
+        ::-webkit-input-placeholder {
+            /* Chrome/Opera/Safari */
+            font-size: 12px;
+            color: $primary-black;
+            opacity: 0.54;
+        }
+
+        ::-moz-placeholder {
+            /* Firefox 19+ */
+            font-size: 12px;
+            color: $primary-black;
+            opacity: 0.54;
+            line-height: 62px;
+        }
+
+        input {
+            height: 62px;
+            background-color: #fff;
+            @extend %body_left_100;
+            padding-left: 16px;
+            color: $primary-black;
+            border-top: 0.5px solid rgba(39, 40, 56, 0.12);
+            line-height: 62px;
+            margin-bottom: 0;
+        }
+
+        button {
+            position: fixed;
+            right: 16px;
+            bottom: 18px;
+            width: 24px;
+            height: 24px;
+            background-image: url("../images/send_button.png");
+            background-repeat: no-repeat;
+            background-size: 24px 24px;
+            border: none;
+            box-shadow: none;
+            background-color: transparent;
+        }
     }
-  }
+
+    #chatDetailBody {
+        overflow: scroll;
+        margin-bottom: 80px;
+
+        .chatBox {
+            // width: 286px;
+            padding: 8px;
+            border: 0.5px solid rgba(232, 232, 232, 1.0);
+            box-shadow: 0 0.5px 0 0 rgba(232, 232, 232, 1.0);
+            margin-bottom: 8px;
+            @extend %body_left_100;
+        }
+
+        .chatPartnerText {
+            background-color: $primary-white;
+            margin-left: 26px;
+        }
+
+        .thisUserText {
+            background-color: #F1F4FE;
+            float: right;
+            margin-right: 26px;
+        }
+        .clearfix:after,
+        .clearfix:before {
+            content: '';
+            display: table;
+        }
+        .clearfix:after {
+            clear: both;
+        }
+
+        .emptyPageText {
+            @extend %small_left;
+            margin-top: 16px;
+            text-align: center;
+        }
+    }
 }

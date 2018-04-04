@@ -179,7 +179,7 @@ $(document).ready(function() {
                         if (messages[j].sender == chatPartnerFullName) {
                             $("#chatDetailBody").append('<div class="chatPartnerText chatBox"><p>' + messages[j].text + '</p></div>');
                         } else {
-                            $("#chatDetailBody").append('<div class="thisUserText chatBox"><p>' + messages[j].text + '</p></div>');
+                            $("#chatDetailBody").append('<div class="clearfix"><div class="thisUserText chatBox"><p>' + messages[j].text + '</p></div></div>');
                         }
                     }
                     $("#chatDetailBody").scrollTop = $("#chatDetailBody").scrollHeight;
@@ -194,7 +194,7 @@ $(document).ready(function() {
         var textInput = $("#chatInputField input").val();
         $("#chatInputField input").val('');
         $("#chatDetailBody .emptyPageText").empty();
-        $("#chatDetailBody").append('<div class="thisUserText chatBox"><p>' + textInput + '</p></div>');
+        $("#chatDetailBody").append('<div class="clearfix"><div class="thisUserText chatBox"><p>' + textInput + '</p></div></div>');
         var allChatPairsRef = Object.keys(allData.allChatPairs);
         for (var i = 0; i < allChatPairsRef.length; i++) {
             var pairName = allData.allChatPairs[allChatPairsRef[i]].pairName;

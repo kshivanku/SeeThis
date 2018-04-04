@@ -60,6 +60,7 @@ body {
   font: 100% "CircularStd";
   font-weight: 300;
   color: #656A7E;
+  background-color: #F7F6F9;
 }
 
 .padded {
@@ -134,7 +135,7 @@ input {
 
 header {
   background-color: #4463F7;
-  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.12), 0px 4px 4px 0px rgba(0, 0, 0, 0.24);
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.12), 0 4px 4px 0 rgba(0, 0, 0, 0.24);
   color: #fff;
 }
 
@@ -151,7 +152,8 @@ header {
   line-height: 48px;
   text-align: center;
 }
-#landingPage #chatTabBody, #landingPage #publicFeedTabBody {
+#landingPage #chatTabBody,
+#landingPage #publicFeedTabBody {
   margin-top: 16px;
 }
 #landingPage .chatCard {
@@ -166,7 +168,8 @@ header {
   height: 48px;
   margin-top: 16px;
 }
-#landingPage .connectionDP, #landingPage .chatCardText {
+#landingPage .chatCardText,
+#landingPage .connectionDP {
   display: inline-block;
   vertical-align: top;
 }
@@ -180,10 +183,14 @@ header {
 #landingPage .lastMessage {
   opacity: 0.54;
   margin-top: 4px;
+  height: 15px;
+  width: 272px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 #chatDetail {
-  background-color: #F7F6F9;
   height: 100vh;
 }
 #chatDetail header {
@@ -194,7 +201,8 @@ header {
   background-position: 20px 20px;
   margin-bottom: 16px;
 }
-#chatDetail .connectionDP, #chatDetail .connectionName {
+#chatDetail .connectionDP,
+#chatDetail .connectionName {
   display: inline-block;
   vertical-align: top;
   margin-left: 68px;
@@ -212,8 +220,8 @@ header {
 }
 #chatDetail #chatInputField {
   position: fixed;
-  bottom: 0px;
-  right: 0px;
+  bottom: 0;
+  right: 0;
   width: 100%;
 }
 #chatDetail #chatInputField ::-webkit-input-placeholder {
@@ -236,7 +244,7 @@ header {
   color: #656A7E;
   border-top: 0.5px solid rgba(39, 40, 56, 0.12);
   line-height: 62px;
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 #chatDetail #chatInputField button {
   position: fixed;
@@ -253,12 +261,12 @@ header {
 }
 #chatDetail #chatDetailBody {
   overflow: scroll;
+  margin-bottom: 80px;
 }
 #chatDetail #chatDetailBody .chatBox {
-  width: 286px;
   padding: 8px;
   border: 0.5px solid #e8e8e8;
-  box-shadow: 0px 0.5px 0px 0px #e8e8e8;
+  box-shadow: 0 0.5px 0 0 #e8e8e8;
   margin-bottom: 8px;
 }
 #chatDetail #chatDetailBody .chatPartnerText {
@@ -267,7 +275,16 @@ header {
 }
 #chatDetail #chatDetailBody .thisUserText {
   background-color: #F1F4FE;
-  margin-left: 48px;
+  float: right;
+  margin-right: 26px;
+}
+#chatDetail #chatDetailBody .clearfix:after,
+#chatDetail #chatDetailBody .clearfix:before {
+  content: "";
+  display: table;
+}
+#chatDetail #chatDetailBody .clearfix:after {
+  clear: both;
 }
 #chatDetail #chatDetailBody .emptyPageText {
   margin-top: 16px;
