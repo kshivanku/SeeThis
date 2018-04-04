@@ -20,7 +20,7 @@ allDataRef.on('value', function(data) {
 })
 
 $(document).ready(function() {
-    document.body.requestFullscreen();
+    document.documentElement.requestFullscreen();
     showPage("introPage");
     if (localStorage.registered) {
         showForm("signInForm");
