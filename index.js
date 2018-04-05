@@ -34,27 +34,27 @@ io.sockets.on('connection', function(socket) {
       console.log('urlToScrape data received');
       var url = data.linkURL;
       console.log('url', url);
-      request(url, function(error, response, html) {
-          console.log('response.statusCode: ' + response.statusCode);
-          if (!error && response.statusCode == 200) {
-              console.log('get response received');
-              var $ = cheerio.load(html);
-              fs.writeFileSync('tempWebpage.html', html);
-              var images = [];
-              $('img').each(function(i, element) {
-                  if($(this).attr('src') != null) {
-                    images.push($(this).attr('src'));
-                  }
-              })
-              var urlScrapedData = {
-                  "pageHeading": $('title').text(),
-                  "images": images,
-                  "newMessage": data.newMessage
-              }
-              console.log('data to send', urlScrappedData);
-              io.sockets.connected[data.thisUsersocketID].emit('urlScrapedData', urlScrapedData);
-          }
-      });
+      // request(url, function(error, response, html) {
+      //     console.log('response.statusCode: ' + response.statusCode);
+      //     if (!error && response.statusCode == 200) {
+      //         console.log('get response received');
+      //         var $ = cheerio.load(html);
+      //         fs.writeFileSync('tempWebpage.html', html);
+      //         var images = [];
+      //         $('img').each(function(i, element) {
+      //             if($(this).attr('src') != null) {
+      //               images.push($(this).attr('src'));
+      //             }
+      //         })
+      //         var urlScrapedData = {
+      //             "pageHeading": $('title').text(),
+      //             "images": images,
+      //             "newMessage": data.newMessage
+      //         }
+      //         console.log('data to send', urlScrappedData);
+      //         io.sockets.connected[data.thisUsersocketID].emit('urlScrapedData', urlScrapedData);
+      //     }
+      // });
     })
 });
 
