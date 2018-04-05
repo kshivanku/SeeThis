@@ -235,6 +235,7 @@ $(document).ready(function() {
             "thisUsersocketID": thisUsersocketID,
             "newMessage": newMessage
           }
+          console.log(urlData);
           socket.emit('urlToScrape', urlData);
           // $.ajax({
           //   type: "POST",
@@ -243,7 +244,6 @@ $(document).ready(function() {
           //   success: gotScrapedData,
           //   dataType: "json"
           // });
-
         }
         else {
           addNewMessageToChat(false, newMessage);
