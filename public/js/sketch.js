@@ -30,6 +30,7 @@ $(document).ready(function() {
 
     socket.on('sessionID', function(data){
       thisUsersocketID = data;
+      console.log(data);
     })
 
     //INTRO PAGE
