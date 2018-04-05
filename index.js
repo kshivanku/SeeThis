@@ -2,12 +2,14 @@
 var express = require('express');
 var request = require('request');
 var cheerio = require('cheerio');
+var cors = require('cors');
 var requestImageSize = require('request-image-size');
 var bodyParser = require('body-parser');
 var app = express();
 var server = app.listen(process.env.PORT || 8000, function() {
     console.log('serverstarted');
 })
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extented: true}));
 app.use(express.static("public"));
