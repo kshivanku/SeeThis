@@ -358,7 +358,17 @@ $(document).ready(function() {
             }
             console.log(currentPage);
             if (currentPage == data.sender) {
-                $("#chatDetailBody").append('<div class="clearfix"><div class="chatPartnerText chatBox"><p>' + data.text + '</p></div></div>');
+              if(messages[j].isLink) {
+                $("#chatDetailBody").append('<div class="clearfix"><div class="chatPartnerText chatBox"> \
+                                             <div class="linkPreviewBox"> \
+                                             <div class="imagePreview"><img src="'+ messages[j].feature_image +'"></div><!-- \
+                                             --><div class="headlinePreview">'+ messages[j].headline+'</div> \
+                                             </div> \
+                                             <a href= '+ messages[j].text + ' class="linkText">'+ messages[j].text +'</a></div></div>');
+              }
+              else {
+                $("#chatDetailBody").append('<div class="clearfix"><div class="chatPartnerText chatBox"><p>' + messages[j].text + '</p></div></div>');
+              }
             } else if (currentPage == "chatTab") {
                 populateChatTabBody();
             }
