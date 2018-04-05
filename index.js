@@ -35,6 +35,7 @@ io.sockets.on('connection', function(socket) {
       var url = data.linkURL;
       console.log('url', url);
       request(url, function(error, response, html) {
+          console.log('response.statusCode: ' + response.statusCode);
           if (!error && response.statusCode == 200) {
               console.log('get response received');
               var $ = cheerio.load(html);
