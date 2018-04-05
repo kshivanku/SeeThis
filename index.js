@@ -51,7 +51,6 @@ io.sockets.on('connection', function(socket) {
                   "images": images,
                   "newMessage": data.newMessage
               }
-              console.log('data to send', urlScrapedData);
               io.sockets.connected[data.thisUsersocketID].emit('urlScrapedData', urlScrapedData);
           }
       });

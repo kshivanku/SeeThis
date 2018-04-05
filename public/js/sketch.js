@@ -229,6 +229,8 @@ $(document).ready(function() {
           headline: null,
           feature_image: null
         }
+        var textInput = "http" + textInput.split("http")[1];
+        console.log(textInput);
         if(validURL(textInput)) {
           var urlData = {
             "linkURL": textInput,
