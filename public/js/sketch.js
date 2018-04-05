@@ -7,6 +7,7 @@ var allLinksRef = database.ref('allData/allLinks');
 var allChatPairsRef = database.ref('allData/allChatPairs');
 var allData;
 var thisUserName = undefined;
+var thisUsersocketID = null;
 var profileColor;
 // var serverUrl = "http://localhost:8000";
 var serverUrl = "https://seethis.herokuapp.com/";
@@ -26,6 +27,10 @@ $(document).ready(function() {
     } else {
         showForm("signUpForm");
     }
+
+    socket.on('sessionID', function(data){
+      thisUsersocketID = data;
+    })
 
     //INTRO PAGE
 
@@ -223,58 +228,67 @@ $(document).ready(function() {
           headline: null,
           feature_image: null
         }
-
         if(validURL(textInput)) {
-          $.ajax({
-            type: "POST",
-            url: 'https://seethis.herokuapp.com/urlScraper',
-            data: {"linkURL": textInput},
-            success: gotScrapedData,
-            dataType: "json"
-          });
-          function gotScrapedData(data, err) {
-            // if(err){console.log('err', err)};
-            // console.log('data', data);
-            newMessage.isLink = true;
-            newMessage.headline = data.pageHeading;
-
-            //FINDING THE RIGHT IMAGE
-            var final_image = null;
-            var max_size = null;
-            var aspectThreshold = 2.5;
-            var areaThreshold = 80000;
-            if(data.images.length > 0) {
-              for (var i = 0 ; i < data.images.length ; i++) {
-                if(data.images[i].match(/\.(jpeg|jpg|gif|png)$/)) {
-                  var img = new Image();
-                  img.src = data.images[i];
-                  img.onload = function(){
-                    var width = this.width;
-                    var height = this.height;
-                    if(width && height) {
-                      if(width/height < aspectThreshold && width/height > (1/aspectThreshold) && width * height > areaThreshold) {
-                        if(max_size == null || width * height > max_size) {
-                          max_size = width * height;
-                          final_image = this.src;
-                        }
-                      }
-                    }
-                    newMessage.feature_image = final_image;
-                  }
-                }
-              }
-            }
-            setTimeout(function(){
-              addNewMessageToChat(true, newMessage);
-              uploadNewMessage(newMessage);
-            }, 1000)
+          var urlData = {
+            "linkURL": textInput,
+            "thisUsersocketID": thisUsersocketID,
+            "newMessage": newMessage
           }
+          socket.emit('urlToScrape', urlData);
+          // $.ajax({
+          //   type: "POST",
+          //   url: 'https://seethis.herokuapp.com/urlScraper',
+          //   data: {"linkURL": textInput},
+          //   success: gotScrapedData,
+          //   dataType: "json"
+          // });
+
         }
         else {
           addNewMessageToChat(false, newMessage);
           uploadNewMessage(newMessage);
         }
     });
+
+    socket.on('urlScrapedData', gotScrapedData);
+    function gotScrapedData(data) {
+      // if(err){console.log('err', err)};
+      // console.log('data', data);
+      newMessage = data.newMessage;
+      newMessage.isLink = true;
+      newMessage.headline = data.pageHeading;
+      //FINDING THE RIGHT IMAGE
+      var final_image = null;
+      var max_size = null;
+      var aspectThreshold = 2.5;
+      var areaThreshold = 80000;
+      if(data.images.length > 0) {
+        for (var i = 0 ; i < data.images.length ; i++) {
+          if(data.images[i].match(/\.(jpeg|jpg|gif|png)$/)) {
+            var img = new Image();
+            img.src = data.images[i];
+            img.onload = function(){
+              var width = this.width;
+              var height = this.height;
+              if(width && height) {
+                if(width/height < aspectThreshold && width/height > (1/aspectThreshold) && width * height > areaThreshold) {
+                  if(max_size == null || width * height > max_size) {
+                    max_size = width * height;
+                    final_image = this.src;
+                  }
+                }
+              }
+              newMessage.feature_image = final_image;
+            }
+          }
+        }
+      }
+      setTimeout(function(){
+        addNewMessageToChat(true, newMessage);
+        uploadNewMessage(newMessage);
+      }, 1000)
+    }
+
 
     function addNewMessageToChat(isLink, newMessage) {
       console.log(newMessage);
