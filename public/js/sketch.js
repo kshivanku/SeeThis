@@ -281,7 +281,7 @@ $(document).ready(function() {
       if(isLink){
         $("#chatDetailBody").append('<div class="clearfix"><div class="thisUserText chatBox"> \
                                      <div class="linkPreviewBox"> \
-                                     <div class="imagePreview"><img src=">'+ newMessage.feature_image +'"></div><!-- \
+                                     <div class="imagePreview"><img src="'+ newMessage.feature_image +'"></div><!-- \
                                      --><div class="headlinePreview">'+ newMessage.headline+'</div> \
                                      </div> \
                                      <a href= '+ newMessage.text + ' class="linkText">'+ newMessage.text +'</a></div></div>');

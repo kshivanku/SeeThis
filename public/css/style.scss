@@ -365,6 +365,19 @@ header {
           background-repeat: no-repeat;
           background-size: cover;
           background-image: url("test.png");
+          overflow: hidden;
+          position: relative;
+        }
+
+        .imagePreview img {
+          position: absolute;
+          height: 88px;
+          width: auto;
+          top: -9999px;
+          right: -9999px;
+          left: -9999px;
+          bottom: -9999px;
+          margin: auto;
         }
 
         .headlinePreview {
