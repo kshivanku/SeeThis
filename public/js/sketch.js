@@ -249,9 +249,11 @@ $(document).ready(function() {
           headline: null,
           feature_image: null
         }
+        textInput = textInput.toLowerCase();
         var textInput = "http" + textInput.split("http")[1];
         console.log(textInput);
         if(validURL(textInput)) {
+          newMessage.text = textInput;
           var urlData = {
             "linkURL": textInput,
             "thisUsersocketID": thisUsersocketID,
@@ -344,6 +346,9 @@ $(document).ready(function() {
                   messages[0] = newMessage
               }
               database.ref("allData/allChatPairs/" + allChatPairsRef[i] + "/messages").set(messages);
+              if(newMessage.isLink) {
+                database.ref("allData/allLinks/").push(newMessage);
+              }
               socket.emit('newChatText', newMessage);
           }
       }
