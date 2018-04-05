@@ -291,19 +291,25 @@ $(document).ready(function() {
         for (var i = 0 ; i < data.images.length ; i++) {
           if(data.images[i].match(/\.(jpeg|jpg|gif|png)$/)) {
             var img = new Image();
-            img.src = data.images[i];
-            img.onload = function(){
-              var width = this.width;
-              var height = this.height;
-              if(width && height) {
-                if(width/height < aspectThreshold && width/height > (1/aspectThreshold) && width * height > areaThreshold) {
-                  if(max_size == null || width * height > max_size) {
-                    max_size = width * height;
-                    final_image = this.src;
+            var imageurl = data.images[i];
+            if(imageurl.indexOf("https") == -1 && imageurl.indexOf("http") != -1) {
+              imageurl = "https" + imageurl.split("http")[1];
+            }
+            if(imageurl.indexOf("https") != -1) {
+              img.src = data.images[i];
+              img.onload = function(){
+                var width = this.width;
+                var height = this.height;
+                if(width && height) {
+                  if(width/height < aspectThreshold && width/height > (1/aspectThreshold) && width * height > areaThreshold) {
+                    if(max_size == null || width * height > max_size) {
+                      max_size = width * height;
+                      final_image = this.src;
+                    }
                   }
                 }
+                newMessage.feature_image = final_image;
               }
-              newMessage.feature_image = final_image;
             }
           }
         }
