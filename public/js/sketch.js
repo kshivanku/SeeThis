@@ -382,6 +382,8 @@ $(document).ready(function() {
 
     $("#publicFeedTab").click(function() {
         showTab("publicFeedTab");
+        ("#publicFeedTabBody").empty();
+        // var allLinksRef = Object.keys(allData.allLinks);
     })
 
     //NAVIGATION

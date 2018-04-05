@@ -175,8 +175,7 @@ header {
         }
     }
 
-    #chatTabBody,
-    #publicFeedTabBody {
+    #chatTabBody, #publicFeedTabBody {
         margin-top: 16px;
     }
 
@@ -221,6 +220,63 @@ header {
         white-space: nowrap;
         text-overflow: ellipsis;
     }
+}
+
+#publicFeedCard {
+  width: 100%;
+  background-color: $primary-white;
+  margin-bottom: 1px;
+  margin-top: 0px;
+  padding: 16px;
+
+  #chatPairDetails {
+    margin-bottom: 8px;
+    margin-top: 0px;
+  }
+
+  #senderProfileColor, #chatPairText {
+    display: inline-block;
+  }
+
+  #senderProfileColor {
+    width: 32px;
+    height: 32px;
+    border-radius: 100%;
+    margin-right: 8px;
+    vertical-align: middle;
+    background-image: url('test.png');
+  }
+
+  #chatPairText {
+    @extend %body_left_100;
+    vertical-align: middle;
+  }
+
+  .userNames {
+    font-weight: 700;
+  }
+
+  #linkDetails {
+    margin-left: 40px;
+
+    #linkPicture {
+      background-image: url('test.png');
+      width: 288px;
+      height: 120px;
+      margin-bottom: 8px;
+    }
+
+    #linkHeadline {
+      @extend %body_left_100;
+      font-weight: 700;
+    }
+    #linkURL a{
+      @extend %small_left;
+      color: $primary-blue;
+      word-wrap: break-word;
+      text-decoration: none;
+    }
+  }
 }
 
 #chatDetail {
