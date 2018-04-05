@@ -215,6 +215,15 @@ $(document).ready(function() {
         var textInput = $("#chatInputField input").val();
         $("#chatInputField input").val('');
         $("#chatDetailBody .emptyPageText").empty();
+        var newMessage = {
+          sender: thisUserName,
+          receiver: currentPage,
+          text: textInput,
+          isLink: false,
+          headline: null,
+          feature_image: null
+        }
+
         if(validURL(textInput)) {
           $.ajax({
             type: "POST",
@@ -223,64 +232,89 @@ $(document).ready(function() {
             success: gotScrapedData,
             dataType: "json"
           });
-          function gotScrapedData(err, data) {
-            if(err){console.log(err)};
-            console.log(data);
+          function gotScrapedData(data, err) {
+            // if(err){console.log('err', err)};
+            // console.log('data', data);
+            newMessage.isLink = true;
+            newMessage.headline = data.pageHeading;
+
+            //FINDING THE RIGHT IMAGE
             var final_image = null;
             var max_size = null;
             var aspectThreshold = 2.5;
-            var areaThreshold = 2000;
-            for (var i = 0 ; i < data.images.length ; i++) {
-              $("<img/>", {load: function(){
-                var width = this.width;
-                var height = this.height;
-                if(width && height) {
-                  if(width/height < aspectThreshold && width/height > (1/aspectThreshold) && width * height > areaThreshold) {
-                    if(max_size == null || width * height > max_size) {
-                      max_size = width * height;
-                      final_image = data.images[i];
+            var areaThreshold = 80000;
+            if(data.images.length > 0) {
+              for (var i = 0 ; i < data.images.length ; i++) {
+                if(data.images[i].match(/\.(jpeg|jpg|gif|png)$/)) {
+                  var img = new Image();
+                  img.src = data.images[i];
+                  img.onload = function(){
+                    var width = this.width;
+                    var height = this.height;
+                    if(width && height) {
+                      if(width/height < aspectThreshold && width/height > (1/aspectThreshold) && width * height > areaThreshold) {
+                        if(max_size == null || width * height > max_size) {
+                          max_size = width * height;
+                          final_image = this.src;
+                        }
+                      }
                     }
+                    newMessage.feature_image = final_image;
                   }
                 }
-              }, src:data.images[i]});
+              }
             }
-            var newMessage = {
-              sender: thisUserName,
-              receiver: currentPage,
-              text: textInput,
-              isLink: true,
-              headline: data.pageHeading,
-              feature_image: final_image
-            }
-            console.log(newMessage);
+            setTimeout(function(){
+              addNewMessageToChat(true, newMessage);
+              uploadNewMessage(newMessage);
+            }, 1000)
           }
         }
         else {
-          $("#chatDetailBody").append('<div class="clearfix"><div class="thisUserText chatBox"><p>' + textInput + '</p></div></div>');
-          if($(document).height() / $(window).height() > 1.8) {
-            window.scrollTo(0,document.body.scrollHeight);
-          }
-          var allChatPairsRef = Object.keys(allData.allChatPairs);
-          for (var i = 0; i < allChatPairsRef.length; i++) {
-              var pairName = allData.allChatPairs[allChatPairsRef[i]].pairName;
-              if (pairName.indexOf(thisUserName) != -1 && pairName.indexOf(currentPage) != -1) {
-                  var messages = allData.allChatPairs[allChatPairsRef[i]].messages;
-                  var newMessage = {
-                      sender: thisUserName,
-                      receiver: currentPage,
-                      text: textInput
-                  }
-                  if (messages.length > 0 && messages[0] != "null") {
-                      messages.push(newMessage);
-                  } else {
-                      messages[0] = newMessage
-                  }
-                  database.ref("allData/allChatPairs/" + allChatPairsRef[i] + "/messages").set(messages);
-                  socket.emit('newChatText', newMessage);
-              }
-          }
+          addNewMessageToChat(false, newMessage);
+          uploadNewMessage(newMessage);
         }
     });
+
+    function addNewMessageToChat(isLink, newMessage) {
+      console.log(newMessage);
+      if(isLink){
+        $("#chatDetailBody").append('<div class="clearfix"><div class="thisUserText chatBox"> \
+                                     <div class="linkPreviewBox"> \
+                                     <div class="imagePreview"><img src=">'+ newMessage.feature_image +'"></div><!-- \
+                                     --><div class="headlinePreview">'+ newMessage.headline+'</div> \
+                                     </div> \
+                                     <a href= '+ newMessage.text + ' class="linkText">'+ newMessage.text +'</a></div></div>');
+
+        // if(newMessage.feature_image != null) {
+        //   $("#chatDetailBody .imagePreview").last().css("background-image", newMessage.feature_image);
+        // }
+      }
+      else{
+        $("#chatDetailBody").append('<div class="clearfix"><div class="thisUserText chatBox"><p>' + newMessage.text + '</p></div></div>');
+      }
+
+      if($(document).height() / $(window).height() > 1.8) {
+        window.scrollTo(0,document.body.scrollHeight);
+      }
+    }
+
+    function uploadNewMessage(newMessage){
+      var allChatPairsRef = Object.keys(allData.allChatPairs);
+      for (var i = 0; i < allChatPairsRef.length; i++) {
+          var pairName = allData.allChatPairs[allChatPairsRef[i]].pairName;
+          if (pairName.indexOf(thisUserName) != -1 && pairName.indexOf(currentPage) != -1) {
+              var messages = allData.allChatPairs[allChatPairsRef[i]].messages;
+              if (messages.length > 0 && messages[0] != "null") {
+                  messages.push(newMessage);
+              } else {
+                  messages[0] = newMessage
+              }
+              database.ref("allData/allChatPairs/" + allChatPairsRef[i] + "/messages").set(messages);
+              socket.emit('newChatText', newMessage);
+          }
+      }
+    }
 
     socket.on('newChatText', function(data) {
         console.log('new chat recieved');

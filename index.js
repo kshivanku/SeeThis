@@ -35,7 +35,9 @@ app.post('/urlScraper', function(req, res) {
             fs.writeFileSync('tempWebpage.html', html);
             var images = [];
             $('img').each(function(i, element) {
-                images.push($(this).attr('src'));
+                if($(this).attr('src') != null) {
+                  images.push($(this).attr('src'));
+                }
             })
 
             var reply = {
@@ -43,8 +45,6 @@ app.post('/urlScraper', function(req, res) {
                 "images": images
             }
             res.send(reply);
-        } else {
-            res.end();
         }
     });
 });

@@ -1,4 +1,4 @@
-#chatDetail #chatDetailBody .chatBox, #chatDetail #chatInputField input, #landingPage .connectionName, #landingPage header p, input, #introNav p {
+#chatDetail #chatDetailBody .headlinePreview, #chatDetail #chatDetailBody .chatBox, #chatDetail #chatInputField input, #landingPage .connectionName, #landingPage header p, input, #introNav p {
   font-weight: 300;
   font-size: 14px;
   line-height: 18px;
@@ -6,7 +6,7 @@
   text-align: left;
 }
 
-#chatDetail #chatDetailBody .emptyPageText, #landingPage .lastMessage, #profileColor {
+#chatDetail #chatDetailBody .linkText, #chatDetail #chatDetailBody .emptyPageText, #landingPage .lastMessage, #profileColor {
   font-weight: 300;
   font-size: 12px;
   line-height: 15px;
@@ -275,6 +275,7 @@ header {
   box-shadow: 0 0.5px 0 0 #e8e8e8;
   margin-bottom: 8px;
   border-radius: 4px;
+  word-wrap: break-word;
 }
 #chatDetail #chatDetailBody .chatPartnerText {
   background-color: #fff;
@@ -297,4 +298,39 @@ header {
 #chatDetail #chatDetailBody .emptyPageText {
   margin-top: 16px;
   text-align: center;
+}
+#chatDetail #chatDetailBody .linkPreviewBox {
+  width: 270px;
+  height: 88px;
+  background-color: #F7F6F9;
+  border-radius: 2px;
+  margin-bottom: 8px;
+}
+#chatDetail #chatDetailBody .imagePreview {
+  display: inline-block;
+  border-radius: 2px 0 0 2px;
+  width: 63px;
+  height: 88px;
+  background-color: #D8D8D8;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url("test.png");
+}
+#chatDetail #chatDetailBody .headlinePreview {
+  margin: 8px;
+  display: inline-block;
+  width: 191px;
+  height: 72px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 700;
+}
+#chatDetail #chatDetailBody .imagePreview, #chatDetail #chatDetailBody .headlinePreview {
+  vertical-align: top;
+}
+#chatDetail #chatDetailBody .linkText {
+  color: #4463F7;
+  font-weight: 500;
+  text-decoration: none;
 }
