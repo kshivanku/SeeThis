@@ -227,7 +227,7 @@ $(document).ready(function() {
         if(validURL(textInput)) {
           $.ajax({
             type: "POST",
-            url: '/urlScraper',
+            url: 'https://seethis.herokuapp.com/urlScraper',
             data: {"linkURL": textInput},
             success: gotScrapedData,
             dataType: "json"
@@ -285,10 +285,6 @@ $(document).ready(function() {
                                      --><div class="headlinePreview">'+ newMessage.headline+'</div> \
                                      </div> \
                                      <a href= '+ newMessage.text + ' class="linkText">'+ newMessage.text +'</a></div></div>');
-
-        // if(newMessage.feature_image != null) {
-        //   $("#chatDetailBody .imagePreview").last().css("background-image", newMessage.feature_image);
-        // }
       }
       else{
         $("#chatDetailBody").append('<div class="clearfix"><div class="thisUserText chatBox"><p>' + newMessage.text + '</p></div></div>');
