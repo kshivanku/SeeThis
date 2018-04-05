@@ -207,7 +207,7 @@ $(document).ready(function() {
                                                            <div class="imagePreview"><img src="'+ messages[j].feature_image +'"></div><!-- \
                                                            --><div class="headlinePreview">'+ messages[j].headline+'</div> \
                                                            </div> \
-                                                           <a href= '+ messages[j].text + ' class="linkText">'+ messages[j].text +'</a></div></div>');
+                                                           <a href= '+ messages[j].text + ' class="linkText" target="_blank">'+ messages[j].text +'</a></div></div>');
                             }
                             else {
                               $("#chatDetailBody").append('<div class="clearfix"><div class="chatPartnerText chatBox"><p>' + messages[j].text + '</p></div></div>');
@@ -219,7 +219,7 @@ $(document).ready(function() {
                                                            <div class="imagePreview"><img src="'+ messages[j].feature_image +'"></div><!-- \
                                                            --><div class="headlinePreview">'+ messages[j].headline+'</div> \
                                                            </div> \
-                                                           <a href= '+ messages[j].text + ' class="linkText">'+ messages[j].text +'</a></div></div>');
+                                                           <a href= '+ messages[j].text + ' class="linkText" target="_blank">'+ messages[j].text +'</a></div></div>');
                             }
                             else {
                               $("#chatDetailBody").append('<div class="clearfix"><div class="thisUserText chatBox"><p>' + messages[j].text + '</p></div></div>');
@@ -323,7 +323,7 @@ $(document).ready(function() {
                                      <div class="imagePreview"><img src="'+ newMessage.feature_image +'"></div><!-- \
                                      --><div class="headlinePreview">'+ newMessage.headline+'</div> \
                                      </div> \
-                                     <a href= '+ newMessage.text + ' class="linkText">'+ newMessage.text +'</a></div></div>');
+                                     <a href= '+ newMessage.text + ' class="linkText" target="_blank">'+ newMessage.text +'</a></div></div>');
       }
       else{
         $("#chatDetailBody").append('<div class="clearfix"><div class="thisUserText chatBox"><p>' + newMessage.text + '</p></div></div>');
@@ -369,7 +369,7 @@ $(document).ready(function() {
                                              <div class="imagePreview"><img src="'+ data.feature_image +'"></div><!-- \
                                              --><div class="headlinePreview">'+ data.headline+'</div> \
                                              </div> \
-                                             <a href= '+ data.text + ' class="linkText">'+ data.text +'</a></div></div>');
+                                             <a href= '+ data.text + ' class="linkText" target="_blank">'+ data.text +'</a></div></div>');
               }
               else {
                 $("#chatDetailBody").append('<div class="clearfix"><div class="chatPartnerText chatBox"><p>' + data.text + '</p></div></div>');
