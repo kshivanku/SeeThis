@@ -33,8 +33,10 @@ io.sockets.on('connection', function(socket) {
     socket.on('urlToScrape', function(data){
       console.log('urlToScrape data received');
       var url = data.linkURL;
+      console.log('url', url);
       request(url, function(error, response, html) {
           if (!error && response.statusCode == 200) {
+              console.log('get response received');
               var $ = cheerio.load(html);
               fs.writeFileSync('tempWebpage.html', html);
               var images = [];
@@ -43,12 +45,12 @@ io.sockets.on('connection', function(socket) {
                     images.push($(this).attr('src'));
                   }
               })
-
               var urlScrapedData = {
                   "pageHeading": $('title').text(),
                   "images": images,
                   "newMessage": data.newMessage
               }
+              console.log('data to send', urlScrappedData);
               io.sockets.connected[data.thisUsersocketID].emit('urlScrapedData', urlScrapedData);
 
           }
