@@ -235,6 +235,7 @@ header {
         position: fixed;
         top: 0px;
         width: 100%;
+        z-index: 100;
     }
 
     .connectionDP,
@@ -308,6 +309,7 @@ header {
     #chatDetailBody {
         overflow: scroll;
         margin: 80px 0;
+        z-index: 50;
 
         .chatBox {
             max-width: 286px;

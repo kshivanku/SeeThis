@@ -201,9 +201,29 @@ $(document).ready(function() {
                 if (messages.length > 0 && messages[0] != "null") {
                     for (var j = 0; j < messages.length; j++) {
                         if (messages[j].sender == chatPartnerFullName) {
-                            $("#chatDetailBody").append('<div class="clearfix"><div class="chatPartnerText chatBox"><p>' + messages[j].text + '</p></div></div>');
+                            if(messages[j].isLink) {
+                              $("#chatDetailBody").append('<div class="clearfix"><div class="chatPartnerText chatBox"> \
+                                                           <div class="linkPreviewBox"> \
+                                                           <div class="imagePreview"><img src="'+ messages[j].feature_image +'"></div><!-- \
+                                                           --><div class="headlinePreview">'+ messages[j].headline+'</div> \
+                                                           </div> \
+                                                           <a href= '+ messages[j].text + ' class="linkText">'+ messages[j].text +'</a></div></div>');
+                            }
+                            else {
+                              $("#chatDetailBody").append('<div class="clearfix"><div class="chatPartnerText chatBox"><p>' + messages[j].text + '</p></div></div>');
+                            }
                         } else {
-                            $("#chatDetailBody").append('<div class="clearfix"><div class="thisUserText chatBox"><p>' + messages[j].text + '</p></div></div>');
+                            if(messages[j].isLink){
+                              $("#chatDetailBody").append('<div class="clearfix"><div class="thisUserText chatBox"> \
+                                                           <div class="linkPreviewBox"> \
+                                                           <div class="imagePreview"><img src="'+ messages[j].feature_image +'"></div><!-- \
+                                                           --><div class="headlinePreview">'+ messages[j].headline+'</div> \
+                                                           </div> \
+                                                           <a href= '+ messages[j].text + ' class="linkText">'+ messages[j].text +'</a></div></div>');
+                            }
+                            else {
+                              $("#chatDetailBody").append('<div class="clearfix"><div class="thisUserText chatBox"><p>' + messages[j].text + '</p></div></div>');
+                            }
                         }
                     }
 
