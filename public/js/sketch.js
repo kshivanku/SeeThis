@@ -230,7 +230,7 @@ $(document).ready(function() {
             url: 'https://seethis.herokuapp.com/urlScraper',
             data: {"linkURL": textInput},
             success: gotScrapedData,
-            dataType: "jsonp"
+            dataType: "json"
           });
           function gotScrapedData(data, err) {
             // if(err){console.log('err', err)};
