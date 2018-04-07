@@ -236,7 +236,7 @@ $(document).ready(function() {
                 window.scrollTo(0, document.body.scrollHeight);
             }
         } else {
-            $("#chatDetailBody").append("<p class='emptyPageText'>No chats yet</p>");
+            $("#chatDetailBody").append("<p class='emptyPageText'>This is the begining of your chat</p>");
         }
 
     }
@@ -244,7 +244,6 @@ $(document).ready(function() {
     $("#sendTextButton").click(function() {
         var textInput = $("#chatInputField input").val();
         $("#chatInputField input").val('');
-        $("#chatDetailBody .emptyPageText").empty();
         var newMessage = {
             sender: thisUserName,
             receiver: currentPage,

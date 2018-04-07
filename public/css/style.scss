@@ -405,6 +405,7 @@ header {
         .emptyPageText {
             @extend %small_left;
             margin-top: 16px;
+            margin-bottom: 16px;
             text-align: center;
         }
 

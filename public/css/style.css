@@ -346,6 +346,7 @@ header {
 }
 #chatDetail #chatDetailBody .emptyPageText {
   margin-top: 16px;
+  margin-bottom: 16px;
   text-align: center;
 }
 #chatDetail #chatDetailBody .linkPreviewBox {
