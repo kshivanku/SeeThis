@@ -38,6 +38,7 @@ io.sockets.on('connection', function(socket) {
         "newMessage" : data.newMessage
       };
       request(url, function(error, response, html) {
+          console.log(response.statusCode);
           if (!error && response.statusCode == 200) {
               var $ = cheerio.load(html);
               fs.writeFileSync('tempWebpage.html', html);
