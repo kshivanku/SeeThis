@@ -294,6 +294,7 @@ $(document).ready(function() {
         var aspectThreshold = 2.5;
         var areaThreshold = 80000;
         if (data.images.length > 0) {
+            console.log(data.images);
             for (var i = 0; i < data.images.length; i++) {
                 if (data.images[i].match(/\.(jpeg|jpg|gif|png)$/)) {
                     var img = new Image();
