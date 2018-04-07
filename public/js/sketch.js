@@ -152,17 +152,12 @@ $(document).ready(function() {
                 if (dbUserName != thisUserName) {
                     var profileColor = allData.allUsers[allUsersRefIDs[i]].profileColor;
                     var lastMessage = "";
-                    var allChatPairsRefIDs = Object.keys(allData.allChatPairs);
-                    for (var j = 0; j < allChatPairsRefIDs.length; j++) {
-                        var pairName = allData.allChatPairs[allChatPairsRefIDs[j]].pairName;
-                        if (pairName.indexOf(dbUserName) != -1 && pairName.indexOf(thisUserName) != -1) {
-                            var messages = allData.allChatPairs[allChatPairsRefIDs[j]].messages;
-                            if (messages[0] != "null") {
-                                lastMessage = allData.allChatPairs[allChatPairsRefIDs[j]].messages[messages.length - 1].text;
-                            } else {
-                                lastMessage = "no chats yet"
-                            }
-                        }
+                    var chatPairID = findChatPairRefID(dbUserName);
+                    var messages = allData.allChatPairs[chatPairID].messages;
+                    if (messages[0] != "null") {
+                        lastMessage = allData.allChatPairs[chatPairID].messages[messages.length - 1].text;
+                    } else {
+                        lastMessage = "no chats yet"
                     }
 
                     //GENERATE A RANDOM CARD ID WITH FULL NAME OF THE USER
@@ -173,14 +168,13 @@ $(document).ready(function() {
                     }
                     cardID += String(Math.floor(Math.random() * 100));
 
-                    $("#chatTabBody").append("<div class='chatCard padded' id=" + cardID + ">\
-                                                <div class='connectionDP'></div><!--\
+                    $("#chatTabBody").append("<div class='chatCard padded clearfix' id=" + cardID + ">\
+                                                <div class='connectionDP' style='background-color: " + profileColor + "'></div><!--\
                                              --><div class='chatCardText'>\
                                                   <p class='connectionName'>" + dbUserName + "</p>\
                                                   <p class='lastMessage'>" + lastMessage + "</p>\
                                                 </div>\
                                               </div>");
-                    $("<style>").text("#" + cardID + " .connectionDP { background-color: " + profileColor + " }").appendTo("head");
                 }
             }
         }
@@ -424,36 +418,35 @@ $(document).ready(function() {
     function populatePublicFeedTabBody() {
         $("#publicFeedTabBody").empty();
         var allLinksRef = Object.keys(allData.allLinks);
-        for (var i = allLinksRef.length - 1; i >=0 ; i--) {
+        for (var i = allLinksRef.length - 1; i >= 0; i--) {
             var linkEntry = allData.allLinks[allLinksRef[i]];
             var feature_image = "";
-            if(linkEntry.feature_image) {
-              feature_image = linkEntry.feature_image;
+            if (linkEntry.feature_image) {
+                feature_image = linkEntry.feature_image;
+            } else {
+                feature_image = "../css/test.png";
             }
-            else {
-              feature_image = "../css/test.png";
-            }
-            $("#publicFeedTabBody").append('<div class="publicFeedCard">\
-                                                <div class="chatPairDetails">\
-                                                    <div class="senderProfileColor" style="background-color: '+ findProfileColor(linkEntry.sender) +'"></div><!--\
-                                                    --><p class="chatPairText"><span class="userNames">' + linkEntry.sender + '</span> shared with <span class="userNames">' + linkEntry.receiver + '</span ></p>\
-                                                </div>\
+            $("#publicFeedTabBody").append('<div class="publicFeedCard clearfix">\
+                                              <div class="senderProfileColor" style="background-color: ' + findProfileColor(linkEntry.sender) + ';">&nbsp;</div>\
+                                              <div class="linkSection">\
+                                                <p class="chatPairText"><span class="userNames">' + linkEntry.sender + '</span> shared with <span class="userNames">' + linkEntry.receiver + '</span ></p>\
                                                 <div class="linkDetails">\
-                                                  <div class="linkPicture" style="background-image: url('+ feature_image +')"></div>\
+                                                  <div class="linkPicture" style="background-image: url(' + feature_image + ')"></div>\
                                                   <div class="linkHeadline">' + linkEntry.headline + '</div>\
                                                   <div class="linkURL"><a href="' + linkEntry.text + '" target="_blank">' + linkEntry.text + '</a></div>\
                                                 </div>\
+                                              </div>\
                                             </div>');
         }
     }
 
     function findProfileColor(userName) {
-      var allUsersRef = Object.keys(allData.allUsers);
-      for (var i = 0 ; i < allUsersRef.length ; i++) {
-        if(allData.allUsers[allUsersRef[i]].fullName == userName) {
-          return allData.allUsers[allUsersRef[i]].profileColor;
+        var allUsersRef = Object.keys(allData.allUsers);
+        for (var i = 0; i < allUsersRef.length; i++) {
+            if (allData.allUsers[allUsersRef[i]].fullName == userName) {
+                return allData.allUsers[allUsersRef[i]].profileColor;
+            }
         }
-      }
     }
 
     /****************************

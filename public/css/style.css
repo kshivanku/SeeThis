@@ -67,6 +67,16 @@ body {
   padding: 0 16px;
 }
 
+.clearfix:after,
+.clearfix:before {
+  content: "";
+  display: table;
+}
+
+.clearfix:after {
+  clear: both;
+}
+
 #introPage {
   background: linear-gradient(to bottom, #4463F7 100%, #3655EE 100%);
   color: #fff;
@@ -170,7 +180,7 @@ header {
 }
 #landingPage .chatCardText,
 #landingPage .connectionDP {
-  display: inline-block;
+  float: left;
   vertical-align: top;
 }
 #landingPage .chatCardText {
@@ -196,33 +206,29 @@ header {
   margin-bottom: 1px;
   margin-top: 0px;
   padding: 16px;
+  overflow: hidden;
 }
-.publicFeedCard .chatPairDetails {
-  margin-bottom: 8px;
-  margin-top: 0px;
+.publicFeedCard .senderProfileColor, .publicFeedCard .linkSection {
+  float: left;
+  vertical-align: top;
 }
-.publicFeedCard .senderProfileColor, .publicFeedCard .chatPairText {
-  display: inline-block;
+.publicFeedCard .linkSection {
+  margin-left: 8px;
+  width: calc(100% - 49px);
 }
 .publicFeedCard .senderProfileColor {
   width: 32px;
   height: 32px;
   border-radius: 100%;
-  margin-right: 8px;
-  vertical-align: middle;
 }
 .publicFeedCard .chatPairText {
-  vertical-align: middle;
+  margin-bottom: 8px;
 }
 .publicFeedCard .userNames {
   font-weight: 700;
 }
-.publicFeedCard .linkDetails {
-  margin-left: 40px;
-}
 .publicFeedCard .linkDetails .linkPicture {
-  background-image: url("test.png");
-  width: 288px;
+  width: 100%;
   height: 120px;
   margin-bottom: 8px;
   background-size: cover;
@@ -335,14 +341,6 @@ header {
   background-color: #F1F4FE;
   float: right;
   margin-right: 26px;
-}
-#chatDetail #chatDetailBody .clearfix:after,
-#chatDetail #chatDetailBody .clearfix:before {
-  content: "";
-  display: table;
-}
-#chatDetail #chatDetailBody .clearfix:after {
-  clear: both;
 }
 #chatDetail #chatDetailBody .emptyPageText {
   margin-top: 16px;

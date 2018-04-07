@@ -76,6 +76,15 @@ body {
     padding: 0 16px;
 }
 
+.clearfix:after,
+.clearfix:before {
+    content: '';
+    display: table;
+}
+.clearfix:after {
+    clear: both;
+}
+
 #introPage {
     background: linear-gradient(to bottom, #4463F7 100%, #3655EE 100%);
     color: $primary-white;
@@ -197,7 +206,7 @@ header {
 
     .chatCardText,
     .connectionDP {
-        display: inline-block;
+        float: left;
         vertical-align: top;
     }
 
@@ -229,28 +238,34 @@ header {
   margin-bottom: 1px;
   margin-top: 0px;
   padding: 16px;
+  overflow: hidden;
 
-  .chatPairDetails {
-    margin-bottom: 8px;
-    margin-top: 0px;
+  // .chatPairDetails {
+  //   margin-bottom: 8px;
+  //   margin-top: 0px;
+  // }
+
+  .senderProfileColor, .linkSection {
+    float: left;
+    vertical-align: top;
   }
 
-  .senderProfileColor, .chatPairText {
-    display: inline-block;
+  .linkSection {
+    margin-left: 8px;
+    width: calc(100% - 49px);
   }
 
   .senderProfileColor {
     width: 32px;
     height: 32px;
     border-radius: 100%;
-    margin-right: 8px;
-    vertical-align: middle;
+    // margin-right: 8px;
     // background-image: url('test.png');
   }
 
   .chatPairText {
     @extend %body_left_100;
-    vertical-align: middle;
+    margin-bottom: 8px;
   }
 
   .userNames {
@@ -258,11 +273,11 @@ header {
   }
 
   .linkDetails {
-    margin-left: 40px;
+    // margin-left: 40px;
 
     .linkPicture {
-      background-image: url('test.png');
-      width: 288px;
+      // background-image: url('test.png');
+      width: 100%;
       height: 120px;
       margin-bottom: 8px;
       background-size: cover;
@@ -392,14 +407,6 @@ header {
             background-color: #F1F4FE;
             float: right;
             margin-right: 26px;
-        }
-        .clearfix:after,
-        .clearfix:before {
-            content: '';
-            display: table;
-        }
-        .clearfix:after {
-            clear: both;
         }
 
         .emptyPageText {
