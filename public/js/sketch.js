@@ -402,7 +402,7 @@ $(document).ready(function() {
                                                    </div> \
                                                    <a href= ' + messageObj.text + ' class="linkText" target="_blank">' + messageObj.text + '</a></div></div>');
                 } else {
-                    $("#chatDetailBody").append('<div class="clearfix"><div class="chatPartnerText chatBox"> \
+                    $("#chatDetailBody").append('<div class="clearfix"><div class="thisUserText chatBox"> \
                                                    <div class="linkPreviewBox"> \
                                                    <div class="headlinePreview">' + messageObj.headline + '</div> \
                                                    </div> \
