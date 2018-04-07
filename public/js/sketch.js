@@ -15,12 +15,23 @@ var currentPage = null;
 //currentPage--> introPage, chatTab, publicFeedTab, [fullNameofChatPartner]
 
 socket = io.connect(serverUrl);
+socket.on('sessionID', function(data) {
+    thisUsersocketID = data;
+    console.log(data);
+})
+
+//Always keep allData updated in sync with the Firebase DB
 allDataRef.on('value', function(data) {
     allData = data.val();
     console.log(allData);
 })
 
 $(document).ready(function() {
+
+    /****************************
+    INTRO PAGE
+    *****************************/
+
     showPage("introPage");
     if (localStorage.registered) {
         showForm("signInForm");
@@ -28,13 +39,7 @@ $(document).ready(function() {
         showForm("signUpForm");
     }
 
-    socket.on('sessionID', function(data){
-      thisUsersocketID = data;
-      console.log(data);
-    })
-
-    //INTRO PAGE
-
+    //INTROPAGE TAB SWITCH
     $("#signUpLabel").click(function() {
         showForm("signUpForm");
     })
@@ -130,7 +135,9 @@ $(document).ready(function() {
         }
     }
 
-    //LANDING PAGE
+    /****************************
+    LANDING PAGE  --> CHAT TAB
+    *****************************/
 
     $("#chatTab").click(function() {
         showTab("chatTab");
@@ -157,9 +164,23 @@ $(document).ready(function() {
                             }
                         }
                     }
-                    var cardId = dbUserName.split(" ")[0] + "_" + String(Math.floor(Math.random() * 100));
-                    $("#chatTabBody").append("<div class='chatCard padded' id=" + cardId + "><div class='connectionDP'></div><div class='chatCardText'><p class='connectionName'>" + dbUserName + "</p><p class='lastMessage'>" + lastMessage + "</p></div></div>");
-                    $("<style>").text("#" + cardId + " .connectionDP { background-color: " + profileColor + " }").appendTo("head");
+
+                    //GENERATE A RANDOM CARD ID WITH FULL NAME OF THE USER
+                    var subNameArray = dbUserName.split(" ");
+                    var cardID = "";
+                    for (var k = 0; k < subNameArray.length; k++) {
+                        cardID += subNameArray[k] + "_";
+                    }
+                    cardID += String(Math.floor(Math.random() * 100));
+
+                    $("#chatTabBody").append("<div class='chatCard padded' id=" + cardID + ">\
+                                                <div class='connectionDP'></div><!--\
+                                             --><div class='chatCardText'>\
+                                                  <p class='connectionName'>" + dbUserName + "</p>\
+                                                  <p class='lastMessage'>" + lastMessage + "</p>\
+                                                </div>\
+                                              </div>");
+                    $("<style>").text("#" + cardID + " .connectionDP { background-color: " + profileColor + " }").appendTo("head");
                 }
             }
         }
@@ -167,74 +188,57 @@ $(document).ready(function() {
 
     $("#chatTabBody").on('click', '.chatCard', function() {
         // console.log($(this)[0].childNodes[1].childNodes[0].innerHTML);
-        var chatPartnerFullName = $(this)[0].childNodes[1].childNodes[0].innerHTML;
+        console.log($(this)[0].id);
+        var chatPartnerNameArray = $(this)[0].id.split("_");
+        var chatPartnerFullName = ""
+        for (var i = 0; i < chatPartnerNameArray.length - 1; i++) {
+            chatPartnerFullName += chatPartnerNameArray[i];
+            if (i != chatPartnerNameArray.length - 2) {
+                chatPartnerFullName += " ";
+            }
+        }
         currentPage = chatPartnerFullName;
         showPage("chatDetail");
         fixHeader(chatPartnerFullName);
         showMessages(chatPartnerFullName);
     })
 
-    $("#chatDetail header").click(function(){
-      showPage("landingPage");
-      showTab("chatTab");
+    /********************************************
+    LANDING PAGE  --> CHAT TAB  --> CHAT DETAILS
+    *********************************************/
+
+    $("#chatDetail header").click(function() {
+        showPage("landingPage");
+        showTab("chatTab");
     })
 
-    function fixHeader(chatPartnerFullName){
-      $("#chatDetail .connectionName").text(chatPartnerFullName);
-      var connectionDPColor;
-      var allUsersRef = Object.keys(allData.allUsers);
-      for (var i = 0 ; i < allUsersRef.length ; i++){
-        if(allData.allUsers[allUsersRef[i]].fullName == chatPartnerFullName) {
-          connectionDPColor = allData.allUsers[allUsersRef[i]].profileColor;
+    function fixHeader(chatPartnerFullName) {
+        $("#chatDetail .connectionName").text(chatPartnerFullName);
+        var connectionDPColor;
+        var allUsersRef = Object.keys(allData.allUsers);
+        for (var i = 0; i < allUsersRef.length; i++) {
+            if (allData.allUsers[allUsersRef[i]].fullName == chatPartnerFullName) {
+                connectionDPColor = allData.allUsers[allUsersRef[i]].profileColor;
+            }
         }
-      }
-      $("#chatDetail .connectionDP").css('background-color', connectionDPColor);
+        $("#chatDetail .connectionDP").css('background-color', connectionDPColor);
     }
 
     function showMessages(chatPartnerFullName) {
         $("#chatDetailBody").empty();
-        var allChatPairsRef = Object.keys(allData.allChatPairs);
-        for (var i = 0; i < allChatPairsRef.length; i++) {
-            var pairName = allData.allChatPairs[allChatPairsRef[i]].pairName;
-            if (pairName.indexOf(thisUserName) != -1 && pairName.indexOf(chatPartnerFullName) != -1) {
-                var messages = allData.allChatPairs[allChatPairsRef[i]].messages;
-                if (messages.length > 0 && messages[0] != "null") {
-                    for (var j = 0; j < messages.length; j++) {
-                        if (messages[j].sender == chatPartnerFullName) {
-                            if(messages[j].isLink) {
-                              $("#chatDetailBody").append('<div class="clearfix"><div class="chatPartnerText chatBox"> \
-                                                           <div class="linkPreviewBox"> \
-                                                           <div class="imagePreview"><img src="'+ messages[j].feature_image +'"></div><!-- \
-                                                           --><div class="headlinePreview">'+ messages[j].headline+'</div> \
-                                                           </div> \
-                                                           <a href= '+ messages[j].text + ' class="linkText" target="_blank">'+ messages[j].text +'</a></div></div>');
-                            }
-                            else {
-                              $("#chatDetailBody").append('<div class="clearfix"><div class="chatPartnerText chatBox"><p>' + messages[j].text + '</p></div></div>');
-                            }
-                        } else {
-                            if(messages[j].isLink){
-                              $("#chatDetailBody").append('<div class="clearfix"><div class="thisUserText chatBox"> \
-                                                           <div class="linkPreviewBox"> \
-                                                           <div class="imagePreview"><img src="'+ messages[j].feature_image +'"></div><!-- \
-                                                           --><div class="headlinePreview">'+ messages[j].headline+'</div> \
-                                                           </div> \
-                                                           <a href= '+ messages[j].text + ' class="linkText" target="_blank">'+ messages[j].text +'</a></div></div>');
-                            }
-                            else {
-                              $("#chatDetailBody").append('<div class="clearfix"><div class="thisUserText chatBox"><p>' + messages[j].text + '</p></div></div>');
-                            }
-                        }
-                    }
-
-                    if($(document).height() / $(window).height() > 1.8) {
-                      window.scrollTo(0,document.body.scrollHeight);
-                    }
-                } else {
-                    $("#chatDetailBody").append("<p class='emptyPageText'>No chats yet</p>");
-                }
+        var chatPairID = findChatPairRefID(chatPartnerFullName);
+        var messages = allData.allChatPairs[chatPairID].messages;
+        if (messages.length > 0 && messages[0] != "null") {
+            for (var j = 0; j < messages.length; j++) {
+                appendMessageToChatWindow(messages[j]);
             }
+            if ($(document).height() / $(window).height() > 1.8) {
+                window.scrollTo(0, document.body.scrollHeight);
+            }
+        } else {
+            $("#chatDetailBody").append("<p class='emptyPageText'>No chats yet</p>");
         }
+
     }
 
     $("#sendTextButton").click(function() {
@@ -242,122 +246,101 @@ $(document).ready(function() {
         $("#chatInputField input").val('');
         $("#chatDetailBody .emptyPageText").empty();
         var newMessage = {
-          sender: thisUserName,
-          receiver: currentPage,
-          text: textInput,
-          isLink: false,
-          headline: null,
-          feature_image: null
+            sender: thisUserName,
+            receiver: currentPage,
+            text: textInput,
+            isLink: false,
+            headline: null,
+            feature_image: null
         }
         textInput = textInput.toLowerCase();
+        //In case there is something before the link. For example sometimes
+        //title gets copied alond with the link
         var textInput = "http" + textInput.split("http")[1];
-        console.log(textInput);
-        if(validURL(textInput)) {
-          newMessage.text = textInput;
-          var urlData = {
-            "linkURL": textInput,
-            "thisUsersocketID": thisUsersocketID,
-            "newMessage": newMessage
-          }
-          console.log(urlData);
-          socket.emit('urlToScrape', urlData);
-          // $.ajax({
-          //   type: "POST",
-          //   url: 'https://seethis.herokuapp.com/urlScraper',
-          //   data: {"linkURL": textInput},
-          //   success: gotScrapedData,
-          //   dataType: "json"
-          // });
-        }
-        else {
-          addNewMessageToChat(false, newMessage);
-          uploadNewMessage(newMessage);
+        if (validURL(textInput)) {
+            newMessage.text = textInput;
+            var urlData = {
+                "linkURL": textInput,
+                "thisUsersocketID": thisUsersocketID,
+                "newMessage": newMessage
+            }
+            socket.emit('urlToScrape', urlData);
+            // $.ajax({
+            //   type: "POST",
+            //   url: 'https://seethis.herokuapp.com/urlScraper',
+            //   data: {"linkURL": textInput},
+            //   success: gotScrapedData,
+            //   dataType: "json"
+            // });
+        } else {
+            appendMessageToChatWindow(newMessage);
+            uploadMessageToDB(newMessage);
         }
     });
 
     socket.on('urlScrapedData', gotScrapedData);
     function gotScrapedData(data) {
-      // if(err){console.log('err', err)};
-      // console.log('data', data);
-      newMessage = data.newMessage;
-      newMessage.isLink = true;
-      newMessage.headline = data.pageHeading;
-      //FINDING THE RIGHT IMAGE
-      var final_image = null;
-      var max_size = null;
-      var aspectThreshold = 2.5;
-      var areaThreshold = 80000;
-      if(data.images.length > 0) {
-        for (var i = 0 ; i < data.images.length ; i++) {
-          if(data.images[i].match(/\.(jpeg|jpg|gif|png)$/)) {
-            var img = new Image();
-            var imageurl = data.images[i];
-            if(imageurl.indexOf("https") == -1 && imageurl.indexOf("http") != -1) {
-              imageurl = "https" + imageurl.split("http")[1];
-            }
-            if(imageurl.indexOf("https") != -1) {
-              img.src = data.images[i];
-              img.onload = function(){
-                var width = this.width;
-                var height = this.height;
-                if(width && height) {
-                  if(width/height < aspectThreshold && width/height > (1/aspectThreshold) && width * height > areaThreshold) {
-                    if(max_size == null || width * height > max_size) {
-                      max_size = width * height;
-                      final_image = this.src;
+        // if(err){console.log('err', err)};
+        // console.log('data', data);
+        var newMessage = data.newMessage;
+        newMessage.isLink = true;
+        newMessage.headline = data.pageHeading;
+        //FINDING THE RIGHT IMAGE
+        var final_image = null;
+        var max_size = null;
+        var aspectThreshold = 2.5;
+        var areaThreshold = 80000;
+        if (data.images.length > 0) {
+            for (var i = 0; i < data.images.length; i++) {
+                if (data.images[i].match(/\.(jpeg|jpg|gif|png)$/)) {
+                    var img = new Image();
+                    var imageurl = data.images[i];
+                    if (imageurl.indexOf("https") == -1 && imageurl.indexOf("http") != -1) {
+                        imageurl = "https" + imageurl.split("http")[1];
                     }
-                  }
+                    if (imageurl.indexOf("https") != -1) {
+                        img.src = data.images[i];
+                        img.onload = function() {
+                            var width = this.width;
+                            var height = this.height;
+                            if (width && height) {
+                                if (width / height < aspectThreshold && width / height > (1 / aspectThreshold) && width * height > areaThreshold) {
+                                    if (max_size == null || width * height > max_size) {
+                                        max_size = width * height;
+                                        final_image = this.src;
+                                    }
+                                }
+                            }
+                            console.log(newMessage);
+                            newMessage.feature_image = final_image;
+                        }
+                    }
                 }
-                newMessage.feature_image = final_image;
-              }
             }
-          }
         }
-      }
-      setTimeout(function(){
-        addNewMessageToChat(true, newMessage);
-        uploadNewMessage(newMessage);
-      }, 1000)
+        //EXTREMELY HACKY, NEED A BETTER WAY TO WAIT FOR IMAGE INFORMATION TO PROCESS
+        setTimeout(function() {
+            console.log(newMessage);
+            appendMessageToChatWindow(newMessage);
+            uploadMessageToDB(newMessage);
+        }, 1000)
     }
 
+    function uploadMessageToDB(newMessage) {
+        var chatPairID = findChatPairRefID(newMessage.receiver);
 
-    function addNewMessageToChat(isLink, newMessage) {
-      console.log(newMessage);
-      if(isLink){
-        $("#chatDetailBody").append('<div class="clearfix"><div class="thisUserText chatBox"> \
-                                     <div class="linkPreviewBox"> \
-                                     <div class="imagePreview"><img src="'+ newMessage.feature_image +'"></div><!-- \
-                                     --><div class="headlinePreview">'+ newMessage.headline+'</div> \
-                                     </div> \
-                                     <a href= '+ newMessage.text + ' class="linkText" target="_blank">'+ newMessage.text +'</a></div></div>');
-      }
-      else{
-        $("#chatDetailBody").append('<div class="clearfix"><div class="thisUserText chatBox"><p>' + newMessage.text + '</p></div></div>');
-      }
+        var messages = allData.allChatPairs[chatPairID].messages;
+        if (messages.length > 0 && messages[0] != "null") {
+            messages.push(newMessage);
+        } else {
+            messages[0] = newMessage
+        }
+        database.ref("allData/allChatPairs/" + chatPairID + "/messages").set(messages);
+        if (newMessage.isLink) {
+            database.ref("allData/allLinks/").push(newMessage);
+        }
+        socket.emit('newChatText', newMessage);
 
-      if($(document).height() / $(window).height() > 1.8) {
-        window.scrollTo(0,document.body.scrollHeight);
-      }
-    }
-
-    function uploadNewMessage(newMessage){
-      var allChatPairsRef = Object.keys(allData.allChatPairs);
-      for (var i = 0; i < allChatPairsRef.length; i++) {
-          var pairName = allData.allChatPairs[allChatPairsRef[i]].pairName;
-          if (pairName.indexOf(thisUserName) != -1 && pairName.indexOf(currentPage) != -1) {
-              var messages = allData.allChatPairs[allChatPairsRef[i]].messages;
-              if (messages.length > 0 && messages[0] != "null") {
-                  messages.push(newMessage);
-              } else {
-                  messages[0] = newMessage
-              }
-              database.ref("allData/allChatPairs/" + allChatPairsRef[i] + "/messages").set(messages);
-              if(newMessage.isLink) {
-                database.ref("allData/allLinks/").push(newMessage);
-              }
-              socket.emit('newChatText', newMessage);
-          }
-      }
     }
 
     socket.on('newChatText', function(data) {
@@ -369,32 +352,89 @@ $(document).ready(function() {
             }
             console.log(currentPage);
             if (currentPage == data.sender) {
-              if(data.isLink) {
-                $("#chatDetailBody").append('<div class="clearfix"><div class="chatPartnerText chatBox"> \
-                                             <div class="linkPreviewBox"> \
-                                             <div class="imagePreview"><img src="'+ data.feature_image +'"></div><!-- \
-                                             --><div class="headlinePreview">'+ data.headline+'</div> \
-                                             </div> \
-                                             <a href= '+ data.text + ' class="linkText" target="_blank">'+ data.text +'</a></div></div>');
-              }
-              else {
-                $("#chatDetailBody").append('<div class="clearfix"><div class="chatPartnerText chatBox"><p>' + data.text + '</p></div></div>');
-              }
+                appendMessageToChatWindow(data);
             } else if (currentPage == "chatTab") {
                 populateChatTabBody();
             }
         }
     })
 
+    function findChatPairRefID(chatPartnerFullName) {
+        var allChatPairsRef = Object.keys(allData.allChatPairs);
+        for (var i = 0; i < allChatPairsRef.length; i++) {
+            var pairName = allData.allChatPairs[allChatPairsRef[i]].pairName;
+            if (pairName.indexOf(thisUserName) != -1 && pairName.indexOf(chatPartnerFullName) != -1) {
+                return allChatPairsRef[i];
+            }
+        }
+    }
+
+    function appendMessageToChatWindow(messageObj) {
+        if (messageObj.sender == currentPage) {
+            if (messageObj.isLink) {
+                console.log("link found");
+                console.log(messageObj.headline);
+                console.log(messageObj.feature_image);
+                if(messageObj.feature_image != null) {
+                  $("#chatDetailBody").append('<div class="clearfix"><div class="chatPartnerText chatBox"> \
+                                                   <div class="linkPreviewBox"> \
+                                                   <div class="imagePreview"><img src="' + messageObj.feature_image + '"></div><!-- \
+                                                   --><div class="headlinePreview">' + messageObj.headline + '</div> \
+                                                   </div> \
+                                                   <a href= ' + messageObj.text + ' class="linkText" target="_blank">' + messageObj.text + '</a></div></div>');
+                }
+                else {
+                  $("#chatDetailBody").append('<div class="clearfix"><div class="chatPartnerText chatBox"> \
+                                                   <div class="linkPreviewBox"> \
+                                                   <div class="headlinePreview">' + messageObj.headline + '</div> \
+                                                   </div> \
+                                                   <a href= ' + messageObj.text + ' class="linkText" target="_blank">' + messageObj.text + '</a></div></div>');
+                }
+            } else {
+                $("#chatDetailBody").append('<div class="clearfix"><div class="chatPartnerText chatBox"><p>' + messageObj.text + '</p></div></div>');
+            }
+        } else {
+            if (messageObj.isLink) {
+                if(messageObj.feature_image != null) {
+                  $("#chatDetailBody").append('<div class="clearfix"><div class="thisUserText chatBox"> \
+                                                   <div class="linkPreviewBox"> \
+                                                   <div class="imagePreview"><img src="' + messageObj.feature_image + '"></div><!-- \
+                                                   --><div class="headlinePreview">' + messageObj.headline + '</div> \
+                                                   </div> \
+                                                   <a href= ' + messageObj.text + ' class="linkText" target="_blank">' + messageObj.text + '</a></div></div>');
+                }
+                else {
+                  $("#chatDetailBody").append('<div class="clearfix"><div class="chatPartnerText chatBox"> \
+                                                   <div class="linkPreviewBox"> \
+                                                   <div class="headlinePreview">' + messageObj.headline + '</div> \
+                                                   </div> \
+                                                   <a href= ' + messageObj.text + ' class="linkText" target="_blank">' + messageObj.text + '</a></div></div>');
+                }
+            } else {
+                $("#chatDetailBody").append('<div class="clearfix"><div class="thisUserText chatBox"><p>' + messageObj.text + '</p></div></div>');
+            }
+        }
+    }
+
+    /**********************************
+    LANDING PAGE  --> PUBLIC FEED TAB
+    ***********************************/
+
     $("#publicFeedTab").click(function() {
         showTab("publicFeedTab");
-        ("#publicFeedTabBody").empty();
-        // var allLinksRef = Object.keys(allData.allLinks);
     })
 
-    //NAVIGATION
+    function populatePublicFeedTabBody() {
+        $("#publicFeedTabBody").empty();
+        // var allLinksRef = Object.keys(allData.allLinks);
+    }
+
+    /****************************
+    NAVIGATION
+    *****************************/
 
     function showPage(pageID) {
+        console.log("showing page: " + pageID);
         $("#" + pageID).css("display", "block");
         for (var i = 0; i < pageIDs.length; i++) {
             if (pageIDs[i] != pageID) {
@@ -441,9 +481,14 @@ $(document).ready(function() {
             $("#publicFeedTab").css("border-bottom", "2px solid #fff");
             $("#chatTabBody").css("display", "none");
             $("#publicFeedTabBody").css("display", "block");
+            populatePublicFeedTabBody();
         }
     }
 });
+
+/****************************
+HELPER FUNCTIONS
+*****************************/
 
 function getRandomColor() {
     var letters = '0123456789ABCDEF';
@@ -456,8 +501,8 @@ function getRandomColor() {
 
 function validURL(userInput) {
     var res = userInput.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
-    if(res == null)
+    if (res == null)
         return false;
     else
         return true;
-}
+    }
