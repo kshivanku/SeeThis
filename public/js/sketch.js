@@ -370,14 +370,14 @@ $(document).ready(function() {
                 console.log(messageObj.feature_image);
                 if (messageObj.feature_image != null) {
                     $("#chatDetailBody").append('<div class="clearfix"><div class="chatPartnerText chatBox"> \
-                                                   <div class="linkPreviewBox"> \
-                                                   <div class="imagePreview"><img src="' + messageObj.feature_image + '"></div><!-- \
-                                                   --><div class="headlinePreview">' + messageObj.headline + '</div> \
+                                                   <div class="linkPreviewBox clearfix"> \
+                                                   <div class="imagePreview"><img src="' + messageObj.feature_image + '"></div> \
+                                                   <div class="headlinePreview">' + messageObj.headline + '</div> \
                                                    </div> \
                                                    <a href= ' + messageObj.text + ' class="linkText" target="_blank">' + messageObj.text + '</a></div></div>');
                 } else {
                     $("#chatDetailBody").append('<div class="clearfix"><div class="chatPartnerText chatBox"> \
-                                                   <div class="linkPreviewBox"> \
+                                                   <div class="linkPreviewBox clearfix"> \
                                                    <div class="headlinePreview">' + messageObj.headline + '</div> \
                                                    </div> \
                                                    <a href= ' + messageObj.text + ' class="linkText" target="_blank">' + messageObj.text + '</a></div></div>');
@@ -389,14 +389,14 @@ $(document).ready(function() {
             if (messageObj.isLink) {
                 if (messageObj.feature_image != null) {
                     $("#chatDetailBody").append('<div class="clearfix"><div class="thisUserText chatBox"> \
-                                                   <div class="linkPreviewBox"> \
-                                                   <div class="imagePreview"><img src="' + messageObj.feature_image + '"></div><!-- \
-                                                   --><div class="headlinePreview">' + messageObj.headline + '</div> \
+                                                   <div class="linkPreviewBox clearfix"> \
+                                                   <div class="imagePreview"><img src="' + messageObj.feature_image + '"></div> \
+                                                   <div class="headlinePreview">' + messageObj.headline + '</div> \
                                                    </div> \
                                                    <a href= ' + messageObj.text + ' class="linkText" target="_blank">' + messageObj.text + '</a></div></div>');
                 } else {
                     $("#chatDetailBody").append('<div class="clearfix"><div class="thisUserText chatBox"> \
-                                                   <div class="linkPreviewBox"> \
+                                                   <div class="linkPreviewBox clearfix"> \
                                                    <div class="headlinePreview">' + messageObj.headline + '</div> \
                                                    </div> \
                                                    <a href= ' + messageObj.text + ' class="linkText" target="_blank">' + messageObj.text + '</a></div></div>');

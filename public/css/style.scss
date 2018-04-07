@@ -418,14 +418,14 @@ header {
 
         .linkPreviewBox{
           width: 270px;
-          height: 88px;
+          // height: 88px;
           background-color: #F7F6F9;
           border-radius: 2px;
           margin-bottom: 8px;
         }
 
         .imagePreview {
-          display: inline-block;
+          float: left;
           border-radius: 2px 0 0 2px;
           width: 63px;
           height: 88px;
@@ -450,10 +450,7 @@ header {
         }
 
         .headlinePreview {
-          margin: 8px;
-          display: inline-block;
-          width: 191px;
-          height: 72px;
+          padding: 8px;
           overflow: hidden;
           text-overflow: ellipsis;
           @extend %body_left_100;
@@ -461,7 +458,7 @@ header {
         }
 
         .imagePreview, .headlinePreview {
-          vertical-align: top;
+          // float: left;
         }
 
         .linkText {
