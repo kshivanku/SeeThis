@@ -162,6 +162,14 @@ header {
   line-height: 48px;
   text-align: center;
 }
+#landingPage header .main_nav_scrolled {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  background-color: #4463F7;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.12), 0 4px 4px 0 rgba(0, 0, 0, 0.24);
+  color: #fff;
+}
 #landingPage #chatTabBody, #landingPage #publicFeedTabBody {
   margin-top: 16px;
   margin-bottom: 16px;

@@ -17,13 +17,11 @@ var currentPage = null;
 socket = io.connect(serverUrl);
 socket.on('sessionID', function(data) {
     thisUsersocketID = data;
-    console.log(data);
 })
 
 //Always keep allData updated in sync with the Firebase DB
 allDataRef.on('value', function(data) {
     allData = data.val();
-    console.log(allData);
 })
 
 $(document).ready(function() {
@@ -135,6 +133,19 @@ $(document).ready(function() {
         }
     }
 
+    /******************
+    LANDING PAGE SCROLL
+    *******************/
+
+    $(window).scroll(function(){
+      if($(this).scrollTop() > $("#landingPage #logo").height()) {
+        $("#landingNav").addClass("main_nav_scrolled");
+      }
+      else {
+        $("#landingNav").removeClass("main_nav_scrolled");
+      }
+    })
+
     /****************************
     LANDING PAGE  --> CHAT TAB
     *****************************/
@@ -182,7 +193,6 @@ $(document).ready(function() {
 
     $("#chatTabBody").on('click', '.chatCard', function() {
         // console.log($(this)[0].childNodes[1].childNodes[0].innerHTML);
-        console.log($(this)[0].id);
         var chatPartnerNameArray = $(this)[0].id.split("_");
         var chatPartnerFullName = ""
         for (var i = 0; i < chatPartnerNameArray.length - 1; i++) {
@@ -304,7 +314,6 @@ $(document).ready(function() {
                                     }
                                 }
                             }
-                            console.log(newMessage);
                             newMessage.feature_image = final_image;
                         }
                     }
@@ -313,7 +322,6 @@ $(document).ready(function() {
         }
         //EXTREMELY HACKY, NEED A BETTER WAY TO WAIT FOR IMAGE INFORMATION TO PROCESS
         setTimeout(function() {
-            console.log(newMessage);
             appendMessageToChatWindow(newMessage);
             uploadMessageToDB(newMessage);
         }, 1000)
@@ -337,13 +345,10 @@ $(document).ready(function() {
     }
 
     socket.on('newChatText', function(data) {
-        console.log('new chat recieved');
-        console.log(data);
         if (data.receiver == thisUserName) {
             if (window.navigator && currentPage != "introPage") {
                 window.navigator.vibrate(200);
             }
-            console.log(currentPage);
             if (currentPage == data.sender) {
                 appendMessageToChatWindow(data);
             } else if (currentPage == "chatTab") {
@@ -365,9 +370,6 @@ $(document).ready(function() {
     function appendMessageToChatWindow(messageObj) {
         if (messageObj.sender == currentPage) {
             if (messageObj.isLink) {
-                console.log("link found");
-                console.log(messageObj.headline);
-                console.log(messageObj.feature_image);
                 if (messageObj.feature_image != null) {
                     $("#chatDetailBody").append('<div class="clearfix"><div class="chatPartnerText chatBox"> \
                                                    <div class="linkPreviewBox clearfix"> \
@@ -454,7 +456,6 @@ $(document).ready(function() {
     *****************************/
 
     function showPage(pageID) {
-        console.log("showing page: " + pageID);
         $("#" + pageID).css("display", "block");
         for (var i = 0; i < pageIDs.length; i++) {
             if (pageIDs[i] != pageID) {
