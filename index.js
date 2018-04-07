@@ -49,6 +49,7 @@ io.sockets.on('connection', function(socket) {
               // })
               urlScrapedData.pageHeading = $('title').text();
               getImageUrls(url, function(err, images) {
+                console.log("data", data);
                 if(!err) {
                   console.log("here");
                   console.log(images);
