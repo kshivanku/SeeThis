@@ -375,16 +375,15 @@ $(document).ready(function() {
                 console.log("link found");
                 console.log(messageObj.headline);
                 console.log(messageObj.feature_image);
-                if(messageObj.feature_image != null) {
-                  $("#chatDetailBody").append('<div class="clearfix"><div class="chatPartnerText chatBox"> \
+                if (messageObj.feature_image != null) {
+                    $("#chatDetailBody").append('<div class="clearfix"><div class="chatPartnerText chatBox"> \
                                                    <div class="linkPreviewBox"> \
                                                    <div class="imagePreview"><img src="' + messageObj.feature_image + '"></div><!-- \
                                                    --><div class="headlinePreview">' + messageObj.headline + '</div> \
                                                    </div> \
                                                    <a href= ' + messageObj.text + ' class="linkText" target="_blank">' + messageObj.text + '</a></div></div>');
-                }
-                else {
-                  $("#chatDetailBody").append('<div class="clearfix"><div class="chatPartnerText chatBox"> \
+                } else {
+                    $("#chatDetailBody").append('<div class="clearfix"><div class="chatPartnerText chatBox"> \
                                                    <div class="linkPreviewBox"> \
                                                    <div class="headlinePreview">' + messageObj.headline + '</div> \
                                                    </div> \
@@ -395,16 +394,15 @@ $(document).ready(function() {
             }
         } else {
             if (messageObj.isLink) {
-                if(messageObj.feature_image != null) {
-                  $("#chatDetailBody").append('<div class="clearfix"><div class="thisUserText chatBox"> \
+                if (messageObj.feature_image != null) {
+                    $("#chatDetailBody").append('<div class="clearfix"><div class="thisUserText chatBox"> \
                                                    <div class="linkPreviewBox"> \
                                                    <div class="imagePreview"><img src="' + messageObj.feature_image + '"></div><!-- \
                                                    --><div class="headlinePreview">' + messageObj.headline + '</div> \
                                                    </div> \
                                                    <a href= ' + messageObj.text + ' class="linkText" target="_blank">' + messageObj.text + '</a></div></div>');
-                }
-                else {
-                  $("#chatDetailBody").append('<div class="clearfix"><div class="chatPartnerText chatBox"> \
+                } else {
+                    $("#chatDetailBody").append('<div class="clearfix"><div class="chatPartnerText chatBox"> \
                                                    <div class="linkPreviewBox"> \
                                                    <div class="headlinePreview">' + messageObj.headline + '</div> \
                                                    </div> \
@@ -426,7 +424,37 @@ $(document).ready(function() {
 
     function populatePublicFeedTabBody() {
         $("#publicFeedTabBody").empty();
-        // var allLinksRef = Object.keys(allData.allLinks);
+        var allLinksRef = Object.keys(allData.allLinks);
+        for (var i = allLinksRef.length - 1; i >=0 ; i--) {
+            var linkEntry = allData.allLinks[allLinksRef[i]];
+            var feature_image = "";
+            if(linkEntry.feature_image) {
+              feature_image = linkEntry.feature_image;
+            }
+            else {
+              feature_image = "../css/test.png";
+            }
+            $("#publicFeedTabBody").append('<div class="publicFeedCard">\
+                                                <div class="chatPairDetails">\
+                                                    <div class="senderProfileColor" style="background-color: '+ findProfileColor(linkEntry.sender) +'"></div><!--\
+                                                    --><p class="chatPairText"><span class="userNames">' + linkEntry.sender + '</span> shared with <span class="userNames">' + linkEntry.receiver + '</span ></p>\
+                                                </div>\
+                                                <div class="linkDetails">\
+                                                  <div class="linkPicture" style="background-image: url('+ feature_image +')"></div>\
+                                                  <div class="linkHeadline">' + linkEntry.headline + '</div>\
+                                                  <div class="linkURL"><a href="' + linkEntry.text + '" target="_blank">' + linkEntry.text + '</a></div>\
+                                                </div>\
+                                            </div>');
+        }
+    }
+
+    function findProfileColor(userName) {
+      var allUsersRef = Object.keys(allData.allUsers);
+      for (var i = 0 ; i < allUsersRef.length ; i++) {
+        if(allData.allUsers[allUsersRef[i]].fullName == userName) {
+          return allData.allUsers[allUsersRef[i]].profileColor;
+        }
+      }
     }
 
     /****************************

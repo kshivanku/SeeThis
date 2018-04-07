@@ -1,4 +1,4 @@
-#chatDetail #chatDetailBody .headlinePreview, #chatDetail #chatDetailBody .chatBox, #chatDetail #chatInputField input, #publicFeedCard #linkDetails #linkHeadline, #publicFeedCard #chatPairText, #landingPage .connectionName, #landingPage header p, input, #introNav p {
+#chatDetail #chatDetailBody .headlinePreview, #chatDetail #chatDetailBody .chatBox, #chatDetail #chatInputField input, .publicFeedCard .linkDetails .linkHeadline, .publicFeedCard .chatPairText, #landingPage .connectionName, #landingPage header p, input, #introNav p {
   font-weight: 300;
   font-size: 14px;
   line-height: 18px;
@@ -6,7 +6,7 @@
   text-align: left;
 }
 
-#chatDetail #chatDetailBody .linkText, #chatDetail #chatDetailBody .emptyPageText, #publicFeedCard #linkDetails #linkURL a, #landingPage .lastMessage, #profileColor {
+#chatDetail #chatDetailBody .linkText, #chatDetail #chatDetailBody .emptyPageText, .publicFeedCard .linkDetails .linkURL a, #landingPage .lastMessage, #profileColor {
   font-weight: 300;
   font-size: 12px;
   line-height: 15px;
@@ -154,6 +154,7 @@ header {
 }
 #landingPage #chatTabBody, #landingPage #publicFeedTabBody {
   margin-top: 16px;
+  margin-bottom: 16px;
 }
 #landingPage .chatCard {
   width: 100%;
@@ -189,47 +190,48 @@ header {
   text-overflow: ellipsis;
 }
 
-#publicFeedCard {
+.publicFeedCard {
   width: 100%;
   background-color: #fff;
   margin-bottom: 1px;
   margin-top: 0px;
   padding: 16px;
 }
-#publicFeedCard #chatPairDetails {
+.publicFeedCard .chatPairDetails {
   margin-bottom: 8px;
   margin-top: 0px;
 }
-#publicFeedCard #senderProfileColor, #publicFeedCard #chatPairText {
+.publicFeedCard .senderProfileColor, .publicFeedCard .chatPairText {
   display: inline-block;
 }
-#publicFeedCard #senderProfileColor {
+.publicFeedCard .senderProfileColor {
   width: 32px;
   height: 32px;
   border-radius: 100%;
   margin-right: 8px;
   vertical-align: middle;
-  background-image: url("test.png");
 }
-#publicFeedCard #chatPairText {
+.publicFeedCard .chatPairText {
   vertical-align: middle;
 }
-#publicFeedCard .userNames {
+.publicFeedCard .userNames {
   font-weight: 700;
 }
-#publicFeedCard #linkDetails {
+.publicFeedCard .linkDetails {
   margin-left: 40px;
 }
-#publicFeedCard #linkDetails #linkPicture {
+.publicFeedCard .linkDetails .linkPicture {
   background-image: url("test.png");
   width: 288px;
   height: 120px;
   margin-bottom: 8px;
+  background-size: cover;
 }
-#publicFeedCard #linkDetails #linkHeadline {
+.publicFeedCard .linkDetails .linkHeadline {
   font-weight: 700;
+  word-wrap: break-word;
 }
-#publicFeedCard #linkDetails #linkURL a {
+.publicFeedCard .linkDetails .linkURL a {
   color: #4463F7;
   word-wrap: break-word;
   text-decoration: none;
