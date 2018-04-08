@@ -9,8 +9,8 @@ var allData;
 var thisUserName = undefined;
 var thisUsersocketID = null;
 var profileColor;
-// var serverUrl = "http://localhost:8000";
-var serverUrl = "https://seethis.herokuapp.com/";
+var serverUrl = "http://localhost:8000";
+// var serverUrl = "https://seethis.herokuapp.com/";
 var currentPage = null;
 //currentPage--> introPage, chatTab, publicFeedTab, [fullNameofChatPartner]
 
@@ -137,13 +137,12 @@ $(document).ready(function() {
     LANDING PAGE SCROLL
     *******************/
 
-    $(window).scroll(function(){
-      if($(this).scrollTop() > $("#landingPage #logo").height()) {
-        $("#landingNav").addClass("main_nav_scrolled");
-      }
-      else {
-        $("#landingNav").removeClass("main_nav_scrolled");
-      }
+    $(window).scroll(function() {
+        if ($(this).scrollTop() > $("#landingPage #logo").height()) {
+            $("#landingNav").addClass("main_nav_scrolled");
+        } else {
+            $("#landingNav").removeClass("main_nav_scrolled");
+        }
     })
 
     /****************************
@@ -262,6 +261,7 @@ $(document).ready(function() {
         var textInput = "http" + textInput.split("http")[1];
         if (validURL(textInput)) {
             newMessage.text = textInput;
+            newMessage.isLink = true;
             var urlData = {
                 "linkURL": textInput,
                 "thisUsersocketID": thisUsersocketID,
@@ -282,50 +282,9 @@ $(document).ready(function() {
     });
 
     socket.on('urlScrapedData', gotScrapedData);
-    function gotScrapedData(data) {
-        // if(err){console.log('err', err)};
-        // console.log('data', data);
-        var newMessage = data.newMessage;
-        newMessage.isLink = true;
-        newMessage.headline = data.pageHeading;
-        //FINDING THE RIGHT IMAGE
-        var final_image = null;
-        var max_size = null;
-        var aspectThreshold = 2.5;
-        var areaThreshold = 80000;
-        if (data.images.length > 0) {
-            console.log(data.images);
-            for (var i = 0; i < data.images.length; i++) {
-                if (data.images[i].match(/\.(jpeg|jpg|gif|png)$/)) {
-                    var img = new Image();
-                    var imageurl = data.images[i];
-                    if (imageurl.indexOf("https") == -1 && imageurl.indexOf("http") != -1) {
-                        imageurl = "https" + imageurl.split("http")[1];
-                    }
-                    if (imageurl.indexOf("https") != -1) {
-                        img.src = data.images[i];
-                        img.onload = function() {
-                            var width = this.width;
-                            var height = this.height;
-                            if (width && height) {
-                                if (width / height < aspectThreshold && width / height > (1 / aspectThreshold) && width * height > areaThreshold) {
-                                    if (max_size == null || width * height > max_size) {
-                                        max_size = width * height;
-                                        final_image = this.src;
-                                    }
-                                }
-                            }
-                            newMessage.feature_image = final_image;
-                        }
-                    }
-                }
-            }
-        }
-        //EXTREMELY HACKY, NEED A BETTER WAY TO WAIT FOR IMAGE INFORMATION TO PROCESS
-        setTimeout(function() {
-            appendMessageToChatWindow(newMessage);
-            uploadMessageToDB(newMessage);
-        }, 1000)
+    function gotScrapedData(newMessage) {
+        appendMessageToChatWindow(newMessage);
+        uploadMessageToDB(newMessage);
     }
 
     function uploadMessageToDB(newMessage) {
