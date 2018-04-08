@@ -54,6 +54,7 @@ io.sockets.on('connection', function(socket) {
                 var num_images = 0;
                 var probe_callback = 0;
                 $('img').each(function(i, element) {
+                    console.log($(this).attr('src'));
                     if ($(this).attr('src') != null) {
                         num_images += 1;
                         probe($(this).attr('src'), function(err, result){
