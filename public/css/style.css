@@ -211,7 +211,7 @@ header {
 .publicFeedCard {
   width: 100%;
   background-color: #fff;
-  margin-bottom: 1px;
+  margin-bottom: 8px;
   margin-top: 0px;
   padding: 16px;
   overflow: hidden;
@@ -357,7 +357,6 @@ header {
 }
 #chatDetail #chatDetailBody .linkPreviewBox {
   width: 270px;
-  min-height: 88px;
   background-color: #F7F6F9;
   border-radius: 2px;
   margin-bottom: 8px;

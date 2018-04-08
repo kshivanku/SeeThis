@@ -36,11 +36,19 @@ io.sockets.on('connection', function(socket) {
         request(url, function(error, response, html) {
             console.log(response.statusCode);
             if (!error && response.statusCode == 200) {
-                var $ = cheerio.load(html);
                 fs.writeFileSync('tempWebpage.html', html);
+                var $ = cheerio.load(html);
                 //HEADING
-                newMessage.headline = $('title').text();
+
+                //CHEERIO METHOD
+                // var titletext = $('title').text();
+                // newMessage.headline = titletext.substr(0, 100) + "\u2026"; //because title text sometimes throws wierd text with it.
+
+                //WITHOUT CHEERIO
+                newMessage.headline = html.match(/<title[^>]*>([^<]+)<\/title>/)[1];
+                // var metaDescription =  $('meta[name=description]').attr("content");
                 console.log(newMessage.headline);
+
                 //IMAGES
                 var srcList = [];
                 var num_images = 0;
@@ -53,7 +61,7 @@ io.sockets.on('connection', function(socket) {
                             srcList.push(result);
                             probe_callback += 1;
                             if (probe_callback == num_images) {
-                                console.log(srcList);
+                                // console.log(srcList);
                                 newMessage.feature_image = findFeatureImage(srcList);
                                 io.sockets.connected[data.thisUsersocketID].emit('urlScrapedData', newMessage);
                             }
