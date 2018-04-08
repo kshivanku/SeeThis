@@ -333,7 +333,7 @@ $(document).ready(function() {
                 if (messageObj.feature_image != null) {
                     $("#chatDetailBody").append('<div class="clearfix"><div class="chatPartnerText chatBox"> \
                                                    <div class="linkPreviewBox clearfix"> \
-                                                   <div class="imagePreview"><img src="' + messageObj.feature_image + '"></div> \
+                                                   <div class="imagePreview" style="background-image: url('+ messageObj.feature_image +');"></div> \
                                                    <div class="headlinePreview">' + messageObj.headline + '</div> \
                                                    </div> \
                                                    <a href= ' + messageObj.text + ' class="linkText" target="_blank">' + messageObj.text + '</a></div></div>');
@@ -352,7 +352,7 @@ $(document).ready(function() {
                 if (messageObj.feature_image != null) {
                     $("#chatDetailBody").append('<div class="clearfix"><div class="thisUserText chatBox"> \
                                                    <div class="linkPreviewBox clearfix"> \
-                                                   <div class="imagePreview"><img src="' + messageObj.feature_image + '"></div> \
+                                                   <div class="imagePreview" style="background-image: url('+ messageObj.feature_image +');"></div> \
                                                    <div class="headlinePreview">' + messageObj.headline + '</div> \
                                                    </div> \
                                                    <a href= ' + messageObj.text + ' class="linkText" target="_blank">' + messageObj.text + '</a></div></div>');

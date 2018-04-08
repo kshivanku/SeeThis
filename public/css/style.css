@@ -357,15 +357,17 @@ header {
 }
 #chatDetail #chatDetailBody .linkPreviewBox {
   width: 270px;
+  min-height: 88px;
   background-color: #F7F6F9;
   border-radius: 2px;
   margin-bottom: 8px;
 }
 #chatDetail #chatDetailBody .imagePreview {
+  margin-bottom: 8px;
   float: left;
-  border-radius: 2px 0 0 2px;
-  width: 63px;
-  height: 88px;
+  border-radius: 2px 2px 0 0;
+  width: 100%;
+  height: 120px;
   background-color: #D8D8D8;
   background-position: center;
   background-repeat: no-repeat;
@@ -374,20 +376,8 @@ header {
   overflow: hidden;
   position: relative;
 }
-#chatDetail #chatDetailBody .imagePreview img {
-  position: absolute;
-  height: 88px;
-  width: auto;
-  top: -9999px;
-  right: -9999px;
-  left: -9999px;
-  bottom: -9999px;
-  margin: auto;
-}
 #chatDetail #chatDetailBody .headlinePreview {
   padding: 8px;
-  overflow: hidden;
-  text-overflow: ellipsis;
   font-weight: 700;
 }
 #chatDetail #chatDetailBody .linkText {
