@@ -9,8 +9,8 @@ var allData;
 var thisUserName = undefined;
 var thisUsersocketID = null;
 var profilePicBase64;
-// var serverUrl = "http://localhost:8000";
-var serverUrl = "https://seethis.herokuapp.com/";
+var serverUrl = "http://localhost:8000";
+// var serverUrl = "https://seethis.herokuapp.com/";
 var currentPage = null;
 //currentPage--> introPage, chatTab, publicFeedTab, [fullNameofChatPartner]
 
@@ -183,10 +183,14 @@ $(document).ready(function() {
                     cardID += String(Math.floor(Math.random() * 100));
 
                     $("#chatTabBody").append("<div class='chatCard padded clearfix' id=" + cardID + ">\
-                                                <div class='connectionDP' style='background-image: url(" + dbUserProfilePicBase64 + ");'></div><!--\
-                                             --><div class='chatCardText'>\
+                                                <div class='connectionDP' style='background-image: url(" + dbUserProfilePicBase64 + ");'></div>\
+                                                <div class='chatCardText'>\
                                                   <p class='connectionName'>" + dbUserName + "</p>\
                                                   <p class='lastMessage'>" + lastMessage + "</p>\
+                                                </div>\
+                                                <div class='lastChatMetaInfo'>\
+                                                  <div class='lastMessageTime'>12/08</div>\
+                                                  <div class='unread_count'>3</div>\
                                                 </div>\
                                               </div>");
                 }
@@ -221,20 +225,19 @@ $(document).ready(function() {
     })
 
     function fixHeader(pageID, chatPartnerFullName) {
-      if(pageID == 'chatDetail') {
-        $("#chatDetail .connectionName").text(chatPartnerFullName);
-        var connectionProfilePicBase64;
-        var allUsersRef = Object.keys(allData.allUsers);
-        for (var i = 0; i < allUsersRef.length; i++) {
-            if (allData.allUsers[allUsersRef[i]].fullName == chatPartnerFullName) {
-                connectionProfilePicBase64 = allData.allUsers[allUsersRef[i]].profilePicBase64;
+        if (pageID == 'chatDetail') {
+            $("#chatDetail .connectionName").text(chatPartnerFullName);
+            var connectionProfilePicBase64;
+            var allUsersRef = Object.keys(allData.allUsers);
+            for (var i = 0; i < allUsersRef.length; i++) {
+                if (allData.allUsers[allUsersRef[i]].fullName == chatPartnerFullName) {
+                    connectionProfilePicBase64 = allData.allUsers[allUsersRef[i]].profilePicBase64;
+                }
             }
+            $("#chatDetail .connectionDP").css('background-image', 'url(' + connectionProfilePicBase64 + ')');
+        } else if (pageID = 'landingPage') {
+            $('#userDP').css('background-image', 'url(' + profilePicBase64 + ')');
         }
-        $("#chatDetail .connectionDP").css('background-image', 'url(' + connectionProfilePicBase64 + ')');
-      }
-      else if(pageID = 'landingPage') {
-        $('#userDP').css('background-image', 'url('+ profilePicBase64 +')');
-      }
     }
 
     function showMessages(chatPartnerFullName) {
@@ -268,7 +271,10 @@ $(document).ready(function() {
             text: textInput,
             isLink: false,
             headline: null,
-            feature_image: null
+            feature_image: null,
+            date: getDate(),
+            timeInMS: Date.now(),
+            isRead: false
         }
         textInput = textInput.toLowerCase();
         //In case there is something before the link. For example sometimes
@@ -292,15 +298,40 @@ $(document).ready(function() {
             // });
         } else {
             appendMessageToChatWindow(newMessage);
-            uploadMessageToDB(newMessage);
+            sendMessageToPartner(newMessage);
         }
     });
 
     socket.on('urlScrapedData', gotScrapedData);
     function gotScrapedData(newMessage) {
         appendMessageToChatWindow(newMessage);
-        uploadMessageToDB(newMessage);
+        sendMessageToPartner(newMessage);
     }
+
+    function sendMessageToPartner(newMessage) {
+        socket.emit('newChatText', newMessage);
+    }
+
+    socket.on('newChatText', function(data) {
+        if (data.receiver == thisUserName) {
+            if (window.navigator && currentPage != "introPage") {
+                window.navigator.vibrate(200);
+            }
+            if (currentPage == data.sender) {
+                data.isRead = true;
+                appendMessageToChatWindow(data);
+                uploadMessageToDB(data);
+            } else if (currentPage == "chatTab") {
+                data.isRead = false;
+                uploadMessageToDB(data);
+                populateChatTabBody();
+            }
+            else {
+              data.isRead = false;
+              uploadMessageToDB(data);
+            }
+        }
+    })
 
     function uploadMessageToDB(newMessage) {
         var chatPairID = findChatPairRefID(newMessage.receiver);
@@ -315,22 +346,7 @@ $(document).ready(function() {
         if (newMessage.isLink) {
             database.ref("allData/allLinks/").push(newMessage);
         }
-        socket.emit('newChatText', newMessage);
-
     }
-
-    socket.on('newChatText', function(data) {
-        if (data.receiver == thisUserName) {
-            if (window.navigator && currentPage != "introPage") {
-                window.navigator.vibrate(200);
-            }
-            if (currentPage == data.sender) {
-                appendMessageToChatWindow(data);
-            } else if (currentPage == "chatTab") {
-                populateChatTabBody();
-            }
-        }
-    })
 
     function findChatPairRefID(chatPartnerFullName) {
         var allChatPairsRef = Object.keys(allData.allChatPairs);
@@ -478,7 +494,7 @@ $(document).ready(function() {
             $("#publicFeedTabBody").css("display", "block");
             populatePublicFeedTabBody();
         }
-        window.scrollTo(0,0);
+        window.scrollTo(0, 0);
     }
 });
 
@@ -511,6 +527,21 @@ function PreviewImage() {
         // console.log(oFREvent.target.result);
         profilePicBase64 = oFREvent.target.result;
         // document.getElementById("uploadPreview").src = oFREvent.target.result;
-        document.getElementById("uploadPreview").style.backgroundImage = 'url('+ oFREvent.target.result +')';
+        document.getElementById("uploadPreview").style.backgroundImage = 'url(' + oFREvent.target.result + ')';
     };
 };
+
+function getDate() {
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1; //January is 0!
+    var yyyy = today.getFullYear();
+    if (dd < 10) {
+        dd = '0' + dd
+    }
+    if (mm < 10) {
+        mm = '0' + mm
+    }
+    today = mm + '/' + dd + '/' + yyyy;
+    return today;
+}

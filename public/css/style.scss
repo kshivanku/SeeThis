@@ -277,6 +277,7 @@ header {
     .chatCardText {
         margin-left: 8px;
         margin-top: 22px;
+        width: calc(100vw - 134px);
     }
 
     .connectionName {
@@ -289,10 +290,35 @@ header {
         opacity: 0.54;
         margin-top: 4px;
         height: 15px;
-        width: 272px;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
+    }
+
+    .lastChatMetaInfo {
+      float: right;
+      margin-top: 22px;
+      width: 30px;
+    }
+
+    .unread_count {
+      float: right;
+      background-color: $primary-blue;
+      width: 18px;
+      height: 18px;
+      text-align: center;
+      line-height: 18px;
+      color: $primary-white;
+      @extend %body_left_100;
+      margin-top: 4px;
+      border-radius: 100%;
+    }
+
+    .lastMessageTime {
+      float: right;
+      @extend %small_left;
+      opacity: 0.54;
+      font-weight: 300;
     }
 }
 

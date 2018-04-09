@@ -1,4 +1,4 @@
-#chatDetail #chatDetailBody .headlinePreview, #chatDetail #chatDetailBody .chatBox, #chatDetail #chatInputField input, .publicFeedCard .linkDetails .linkHeadline, .publicFeedCard .chatPairText, #landingPage .connectionName, #landingPage header p, input, #introNav p {
+#chatDetail #chatDetailBody .headlinePreview, #chatDetail #chatDetailBody .chatBox, #chatDetail #chatInputField input, .publicFeedCard .linkDetails .linkHeadline, .publicFeedCard .chatPairText, #landingPage .unread_count, #landingPage .connectionName, #landingPage header p, input, #introNav p {
   font-weight: 300;
   font-size: 14px;
   line-height: 18px;
@@ -6,7 +6,7 @@
   text-align: left;
 }
 
-#chatDetail #chatDetailBody .linkText, #chatDetail #chatDetailBody .emptyPageText, .publicFeedCard .linkDetails .linkURL a, #landingPage .lastMessage, #profileColor {
+#chatDetail #chatDetailBody .linkText, #chatDetail #chatDetailBody .emptyPageText, .publicFeedCard .linkDetails .linkURL a, #landingPage .lastMessageTime, #landingPage .lastMessage, #profileColor {
   font-weight: 300;
   font-size: 12px;
   line-height: 15px;
@@ -245,6 +245,7 @@ header {
 #landingPage .chatCardText {
   margin-left: 8px;
   margin-top: 22px;
+  width: calc(100vw - 134px);
 }
 #landingPage .connectionName {
   font-weight: 700;
@@ -253,10 +254,30 @@ header {
   opacity: 0.54;
   margin-top: 4px;
   height: 15px;
-  width: 272px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+#landingPage .lastChatMetaInfo {
+  float: right;
+  margin-top: 22px;
+  width: 30px;
+}
+#landingPage .unread_count {
+  float: right;
+  background-color: #4463F7;
+  width: 18px;
+  height: 18px;
+  text-align: center;
+  line-height: 18px;
+  color: #fff;
+  margin-top: 4px;
+  border-radius: 100%;
+}
+#landingPage .lastMessageTime {
+  float: right;
+  opacity: 0.54;
+  font-weight: 300;
 }
 
 .publicFeedCard {
