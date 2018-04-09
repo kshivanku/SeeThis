@@ -373,9 +373,10 @@ $(document).ready(function() {
         if (newMessage.isLink) {
             database.ref("allData/allLinks/").push(newMessage);
         }
+        //Wait 1/2 sec for DB to get updated
         setTimeout(function(){
           socket.emit('newChatText', newMessage);
-        }, 1000);
+        }, 500);
     }
 
     function markAllAsRead(chatPartnerFullName) {
