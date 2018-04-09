@@ -245,6 +245,10 @@ $(document).ready(function() {
 
     }
 
+    $("#chatInputField").click(function(){
+      window.scrollTo(0,document.body.scrollHeight);
+    });
+
     $("#sendTextButton").click(function() {
         var textInput = $("#chatInputField input").val();
         $("#chatInputField input").val('');
