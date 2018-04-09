@@ -9,8 +9,8 @@ var allData;
 var thisUserName = undefined;
 var thisUsersocketID = null;
 var profileColor;
-// var serverUrl = "http://localhost:8000";
-var serverUrl = "https://seethis.herokuapp.com/";
+var serverUrl = "http://localhost:8000";
+// var serverUrl = "https://seethis.herokuapp.com/";
 var currentPage = null;
 //currentPage--> introPage, chatTab, publicFeedTab, [fullNameofChatPartner]
 
@@ -155,6 +155,7 @@ $(document).ready(function() {
 
     function populateChatTabBody() {
         $("#chatTabBody").empty();
+        window.scrollTo(0,0);
         var allUsersRefIDs = Object.keys(allData.allUsers);
         if (allUsersRefIDs.length > 1) {
             for (var i = 0; i < allUsersRefIDs.length; i++) {
@@ -367,6 +368,7 @@ $(document).ready(function() {
                 $("#chatDetailBody").append('<div class="clearfix"><div class="thisUserText chatBox"><p>' + messageObj.text + '</p></div></div>');
             }
         }
+        window.scrollTo(0,document.body.scrollHeight);
     }
 
     /**********************************

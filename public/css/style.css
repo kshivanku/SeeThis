@@ -251,9 +251,6 @@ header {
   text-decoration: none;
 }
 
-#chatDetail {
-  height: 100vh;
-}
 #chatDetail header {
   height: 56px;
   background-image: url("../images/arrow_back.png");
