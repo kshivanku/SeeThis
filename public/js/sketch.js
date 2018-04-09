@@ -245,7 +245,8 @@ $(document).ready(function() {
 
     }
 
-    $("#chatInputField").click(function(){
+    $("#chatInputField input").click(function(){
+      console.log("input field clicked");
       window.scrollTo(0,document.body.scrollHeight);
     });
 
