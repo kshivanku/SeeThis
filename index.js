@@ -54,6 +54,7 @@ io.sockets.on('connection', function(socket) {
                 var num_images = 0;
                 var probe_callback = 0;
                 var totalImageTagsFound = $('img').length;
+                console.log("TOTAL IMAGES FOUND: " + totalImageTagsFound);
                 var imagesWithNoSrc = 0;
                 if(totalImageTagsFound > 0) {
                   $('img').each(function(i, element) {
