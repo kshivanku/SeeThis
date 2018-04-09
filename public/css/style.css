@@ -1,4 +1,4 @@
-#chatDetail #chatDetailBody .headlinePreview, #chatDetail #chatDetailBody .chatBox, #chatDetail #chatInputField input, .publicFeedCard .linkDetails .linkHeadline, .publicFeedCard .chatPairText, #landingPage .connectionName, #landingPage header p, #profilePictureArea p, input, #introNav p {
+#chatDetail #chatDetailBody .headlinePreview, #chatDetail #chatDetailBody .chatBox, #chatDetail #chatInputField input, .publicFeedCard .linkDetails .linkHeadline, .publicFeedCard .chatPairText, #landingPage .connectionName, #landingPage header p, input, #introNav p {
   font-weight: 300;
   font-size: 14px;
   line-height: 18px;
@@ -124,8 +124,9 @@ input {
   visibility: hidden;
 }
 #profilePictureArea p {
+  font-size: 12px;
+  color: #fff;
   opacity: 0.54;
-  font-weight: 300;
 }
 
 ::-webkit-input-placeholder {

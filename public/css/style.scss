@@ -140,9 +140,9 @@ input {
   }
 
   p{
-    @extend %body_left_100;
+    font-size: 12px;
+    color: $primary-white;
     opacity: 0.54;
-    font-weight: 300;
   }
 }
 
