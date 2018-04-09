@@ -221,6 +221,9 @@ header {
   width: 48px;
   height: 48px;
   margin-top: 16px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 #landingPage .chatCardText,
 #landingPage .connectionDP {
@@ -252,7 +255,7 @@ header {
   padding: 16px;
   overflow: hidden;
 }
-.publicFeedCard .senderProfileColor, .publicFeedCard .linkSection {
+.publicFeedCard .senderProfilePicBase64, .publicFeedCard .linkSection {
   float: left;
   vertical-align: top;
 }
@@ -260,10 +263,13 @@ header {
   margin-left: 8px;
   width: calc(100% - 49px);
 }
-.publicFeedCard .senderProfileColor {
+.publicFeedCard .senderProfilePicBase64 {
   width: 32px;
   height: 32px;
   border-radius: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 .publicFeedCard .chatPairText {
   margin-bottom: 8px;
@@ -309,8 +315,10 @@ header {
   width: 32px;
   height: 32px;
   border-radius: 100%;
-  background-color: #202020;
   margin-top: 12px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 #chatDetail .connectionName {
   line-height: 56px;

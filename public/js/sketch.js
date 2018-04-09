@@ -8,8 +8,7 @@ var allChatPairsRef = database.ref('allData/allChatPairs');
 var allData;
 var thisUserName = undefined;
 var thisUsersocketID = null;
-var profileColor;
-var imageBase64
+var profilePicBase64;
 // var serverUrl = "http://localhost:8000";
 var serverUrl = "https://seethis.herokuapp.com/";
 var currentPage = null;
@@ -51,12 +50,11 @@ $(document).ready(function() {
         var fullName = $("#fullName").val();
         var email = $("#signUpForm .email").val();
         // var password = $("#signUpForm .password").val();
-        console.log(imageBase64);
         var newUser = {
             fullName: fullName,
             email: email,
             // password: password,
-            profileColor: profileColor
+            profilePicBase64: profilePicBase64
         }
         signUp(newUser);
     })
@@ -163,7 +161,7 @@ $(document).ready(function() {
             for (var i = 0; i < allUsersRefIDs.length; i++) {
                 var dbUserName = allData.allUsers[allUsersRefIDs[i]].fullName;
                 if (dbUserName != thisUserName) {
-                    var profileColor = allData.allUsers[allUsersRefIDs[i]].profileColor;
+                    var dbUserProfilePicBase64 = allData.allUsers[allUsersRefIDs[i]].profilePicBase64;
                     var lastMessage = "";
                     var chatPairID = findChatPairRefID(dbUserName);
                     var messages = allData.allChatPairs[chatPairID].messages;
@@ -182,7 +180,7 @@ $(document).ready(function() {
                     cardID += String(Math.floor(Math.random() * 100));
 
                     $("#chatTabBody").append("<div class='chatCard padded clearfix' id=" + cardID + ">\
-                                                <div class='connectionDP' style='background-color: " + profileColor + "'></div><!--\
+                                                <div class='connectionDP' style='background-image: url(" + dbUserProfilePicBase64 + ");'></div><!--\
                                              --><div class='chatCardText'>\
                                                   <p class='connectionName'>" + dbUserName + "</p>\
                                                   <p class='lastMessage'>" + lastMessage + "</p>\
@@ -220,14 +218,14 @@ $(document).ready(function() {
 
     function fixHeader(chatPartnerFullName) {
         $("#chatDetail .connectionName").text(chatPartnerFullName);
-        var connectionDPColor;
+        var connectionProfilePicBase64;
         var allUsersRef = Object.keys(allData.allUsers);
         for (var i = 0; i < allUsersRef.length; i++) {
             if (allData.allUsers[allUsersRef[i]].fullName == chatPartnerFullName) {
-                connectionDPColor = allData.allUsers[allUsersRef[i]].profileColor;
+                connectionProfilePicBase64 = allData.allUsers[allUsersRef[i]].profilePicBase64;
             }
         }
-        $("#chatDetail .connectionDP").css('background-color', connectionDPColor);
+        $("#chatDetail .connectionDP").css('background-image', 'url(' + connectionProfilePicBase64 + ')');
     }
 
     function showMessages(chatPartnerFullName) {
@@ -398,11 +396,11 @@ $(document).ready(function() {
                 feature_image = "../css/test.png";
             }
             $("#publicFeedTabBody").append('<div class="publicFeedCard clearfix">\
-                                              <div class="senderProfileColor" style="background-color: ' + findProfileColor(linkEntry.sender) + ';">&nbsp;</div>\
+                                              <div class="senderProfilePicBase64" style="background-image: url(' + findProfilePic(linkEntry.sender) + ');"></div>\
                                               <div class="linkSection">\
                                                 <p class="chatPairText"><span class="userNames">' + linkEntry.sender + '</span> shared with <span class="userNames">' + linkEntry.receiver + '</span ></p>\
                                                 <div class="linkDetails">\
-                                                  <div class="linkPicture" style="background-image: url(' + feature_image + ')"></div>\
+                                                  <div class="linkPicture" style="background-image: url(' + feature_image + ');"></div>\
                                                   <div class="linkHeadline">' + linkEntry.headline + '</div>\
                                                   <div class="linkURL"><a href="' + linkEntry.text + '" target="_blank">' + linkEntry.text + '</a></div>\
                                                 </div>\
@@ -411,11 +409,11 @@ $(document).ready(function() {
         }
     }
 
-    function findProfileColor(userName) {
+    function findProfilePic(userName) {
         var allUsersRef = Object.keys(allData.allUsers);
         for (var i = 0; i < allUsersRef.length; i++) {
             if (allData.allUsers[allUsersRef[i]].fullName == userName) {
-                return allData.allUsers[allUsersRef[i]].profileColor;
+                return allData.allUsers[allUsersRef[i]].profilePicBase64;
             }
         }
     }
@@ -440,8 +438,6 @@ $(document).ready(function() {
             $("#signInForm").css("display", "none");
             $("#signUpLabel").css("opacity", "1.0");
             $("#signInLabel").css("opacity", "0.54");
-            profileColor = getRandomColor();
-            $("#profileColor").css("background-color", profileColor);
         } else {
             $("#signUpForm").css("display", "none");
             $("#signInForm").css("display", "block");
@@ -480,14 +476,14 @@ $(document).ready(function() {
 HELPER FUNCTIONS
 *****************************/
 
-function getRandomColor() {
-    var letters = '0123456789ABCDEF';
-    var color = '#';
-    for (var i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-}
+// function getRandomColor() {
+//     var letters = '0123456789ABCDEF';
+//     var color = '#';
+//     for (var i = 0; i < 6; i++) {
+//         color += letters[Math.floor(Math.random() * 16)];
+//     }
+//     return color;
+// }
 
 function validURL(userInput) {
     var res = userInput.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
@@ -503,7 +499,7 @@ function PreviewImage() {
 
     oFReader.onload = function(oFREvent) {
         // console.log(oFREvent.target.result);
-        imageBase64 = oFREvent.target.result;
+        profilePicBase64 = oFREvent.target.result;
         // document.getElementById("uploadPreview").src = oFREvent.target.result;
         document.getElementById("uploadPreview").style.backgroundImage = 'url('+ oFREvent.target.result +')';
     };

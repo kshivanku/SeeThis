@@ -250,6 +250,9 @@ header {
         height: 48px;
         // background-color: #222222;
         margin-top: 16px;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
     }
 
     .chatCardText,
@@ -293,7 +296,7 @@ header {
   //   margin-top: 0px;
   // }
 
-  .senderProfileColor, .linkSection {
+  .senderProfilePicBase64, .linkSection {
     float: left;
     vertical-align: top;
   }
@@ -303,10 +306,13 @@ header {
     width: calc(100% - 49px);
   }
 
-  .senderProfileColor {
+  .senderProfilePicBase64 {
     width: 32px;
     height: 32px;
     border-radius: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     // margin-right: 8px;
     // background-image: url('test.png');
   }
@@ -370,8 +376,11 @@ header {
         width: 32px;
         height: 32px;
         border-radius: 100%;
-        background-color: #202020;
+        // background-color: #202020;
         margin-top: 12px;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
     }
 
     .connectionName {
