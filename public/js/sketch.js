@@ -138,7 +138,7 @@ $(document).ready(function() {
     *******************/
 
     $(window).scroll(function() {
-        if ($(this).scrollTop() > $("#landingPage #logo").height()) {
+        if ($(this).scrollTop() > $("#landingPage header").height()) {
             $("#landingNav").addClass("main_nav_scrolled");
         } else {
             $("#landingNav").removeClass("main_nav_scrolled");
@@ -247,7 +247,7 @@ $(document).ready(function() {
 
     $("#chatInputField input").click(function(){
       console.log("input field clicked");
-      window.scrollTo(0,document.body.scrollHeight + 100);
+      window.scrollTo(0,document.body.scrollHeight); //DOES NOT WORK
     });
 
     $("#sendTextButton").click(function() {
