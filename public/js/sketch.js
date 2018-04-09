@@ -373,7 +373,9 @@ $(document).ready(function() {
         if (newMessage.isLink) {
             database.ref("allData/allLinks/").push(newMessage);
         }
-        socket.emit('newChatText', newMessage);
+        setTimeout(function(){
+          socket.emit('newChatText', newMessage);
+        }, 1000);
     }
 
     function markAllAsRead(chatPartnerFullName) {
