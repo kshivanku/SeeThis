@@ -1,4 +1,4 @@
-#chatDetail #chatDetailBody .headlinePreview, #chatDetail #chatDetailBody .chatBox, #chatDetail #chatInputField input, .publicFeedCard .linkDetails .linkHeadline, .publicFeedCard .chatPairText, #landingPage .connectionName, #landingPage header p, input, #introNav p {
+#chatDetail #chatDetailBody .headlinePreview, #chatDetail #chatDetailBody .chatBox, #chatDetail #chatInputField input, .publicFeedCard .linkDetails .linkHeadline, .publicFeedCard .chatPairText, #landingPage .connectionName, #landingPage header p, #profilePictureArea p, input, #introNav p {
   font-weight: 300;
   font-size: 14px;
   line-height: 18px;
@@ -89,6 +89,9 @@ body {
   padding: 24px 0 16px;
 }
 
+#introNav {
+  margin-bottom: 16px;
+}
 #introNav p {
   display: inline-block;
   margin-right: 40px;
@@ -104,6 +107,25 @@ input {
   border-bottom: 1px solid rgba(255, 255, 255, 0.54);
   color: #fff;
   outline: none;
+}
+
+#profilePictureArea #uploadImageButton, #profilePictureArea #uploadPreview {
+  float: left;
+}
+#profilePictureArea #uploadPreview {
+  margin: 16px 0;
+  width: 100px;
+  height: 100px;
+  display: block;
+}
+#profilePictureArea #uploadImageButton {
+  width: calc(100% - 116px);
+  margin-top: 16px;
+  visibility: hidden;
+}
+#profilePictureArea p {
+  opacity: 0.54;
+  font-weight: 300;
 }
 
 ::-webkit-input-placeholder {
@@ -157,7 +179,7 @@ header {
   line-height: 56px;
 }
 #landingPage header p {
-  display: inline-block;
+  float: left;
   width: 50%;
   line-height: 48px;
   text-align: center;

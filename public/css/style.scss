@@ -99,6 +99,7 @@ body {
 }
 
 #introNav {
+    margin-bottom: 16px;
     p {
         display: inline-block;
         @extend %body_left_100;
@@ -117,6 +118,32 @@ input {
     color: $primary-white;
     @extend %body_left_100;
     outline: none;
+}
+
+#profilePictureArea {
+  #uploadImageButton, #uploadPreview {
+    float: left;
+  }
+
+  #uploadPreview {
+    margin: 16px 0;
+    width: 100px;
+    height: 100px;
+    display: block;
+    // border: 0.5px solid rgba(255, 255, 255, .54);
+  }
+
+  #uploadImageButton {
+    width: calc(100% - 116px);
+    margin-top: 16px;
+    visibility:hidden;
+  }
+
+  p{
+    @extend %body_left_100;
+    opacity: 0.54;
+    font-weight: 300;
+  }
 }
 
 ::-webkit-input-placeholder {
@@ -177,7 +204,7 @@ header {
 
         p {
             @extend %body_left_100;
-            display: inline-block;
+            float: left;
             width: 50%;
             line-height: 48px;
             text-align: center;

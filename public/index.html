@@ -41,12 +41,19 @@
         <div>
             <form id="signUpForm">
                 <fieldset>
+                    <div id="profilePictureArea" class="clearfix">
+                      <label for="uploadImageButton">
+                        <p>Select Profile Picture</p>
+                        <img id="uploadPreview" />
+                      </label>
+                      <input id="uploadImageButton" type="file" name="myPhoto" onchange="PreviewImage();"/>
+                    </div>
                     <input id="fullName" type="text" placeholder="Full Name" required>
                     <input class="email" type="email" placeholder="Email" required>
                     <!-- <input class="password" type="password" placeholder="Password" required> -->
-                    <div id="profileColor">
+                    <!-- <div id="profileColor">
                         <p>Your randomly chosen profile color</p>
-                    </div>
+                    </div> -->
                     <button id="signUpButton" class="signupSignin" type="submit">SIGN UP</button>
                 </fieldset>
             </form>
@@ -66,9 +73,9 @@
     <div id="landingPage">
         <header>
             <div id="logo" class="padded">SeeThis</div>
-            <div id="landingNav">
-                <p id="chatTab">CHATS</p><!--
-                --><p id="publicFeedTab">PUBLIC FEED</p>
+            <div id="landingNav" class="clearfix">
+                <p id="chatTab">CHATS</p>
+                <p id="publicFeedTab">PUBLIC FEED</p>
             </div>
         </header>
         <div id="chatTabBody">
@@ -82,9 +89,9 @@
         </div>
         <div id="publicFeedTabBody">
             <div class="publicFeedCard clearfix">
-              <div class="senderProfileColor"></div>
-              <div class="linkSection">
-                <p class="chatPairText"><span class="userNames">User sender</span> shared with <span class="userNames">Receiver User</span ></p>
+                <div class="senderProfileColor"></div>
+                <div class="linkSection">
+                    <p class="chatPairText"><span class="userNames">User sender</span> shared with <span class="userNames">Receiver User</span ></p>
                 <div class="linkDetails">
                   <div class="linkPicture"></div>
                   <div class="linkHeadline">Test Headline for something. This can be very short or very long it does not matter</div>

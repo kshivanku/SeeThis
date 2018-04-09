@@ -9,6 +9,7 @@ var allData;
 var thisUserName = undefined;
 var thisUsersocketID = null;
 var profileColor;
+var imageBase64
 // var serverUrl = "http://localhost:8000";
 var serverUrl = "https://seethis.herokuapp.com/";
 var currentPage = null;
@@ -50,6 +51,7 @@ $(document).ready(function() {
         var fullName = $("#fullName").val();
         var email = $("#signUpForm .email").val();
         // var password = $("#signUpForm .password").val();
+        console.log(imageBase64);
         var newUser = {
             fullName: fullName,
             email: email,
@@ -155,7 +157,7 @@ $(document).ready(function() {
 
     function populateChatTabBody() {
         $("#chatTabBody").empty();
-        window.scrollTo(0,0);
+        window.scrollTo(0, 0);
         var allUsersRefIDs = Object.keys(allData.allUsers);
         if (allUsersRefIDs.length > 1) {
             for (var i = 0; i < allUsersRefIDs.length; i++) {
@@ -245,9 +247,9 @@ $(document).ready(function() {
 
     }
 
-    $("#chatInputField input").click(function(){
-      console.log("input field clicked");
-      window.scrollTo(0,document.body.scrollHeight); //DOES NOT WORK
+    $("#chatInputField input").click(function() {
+        console.log("input field clicked");
+        window.scrollTo(0, document.body.scrollHeight); //DOES NOT WORK
     });
 
     $("#sendTextButton").click(function() {
@@ -339,7 +341,7 @@ $(document).ready(function() {
                 if (messageObj.feature_image != null) {
                     $("#chatDetailBody").append('<div class="clearfix"><div class="chatPartnerText chatBox"> \
                                                    <div class="linkPreviewBox clearfix"> \
-                                                   <div class="imagePreview" style="background-image: url('+ messageObj.feature_image +');"></div> \
+                                                   <div class="imagePreview" style="background-image: url(' + messageObj.feature_image + ');"></div> \
                                                    <div class="headlinePreview">' + messageObj.headline + '</div> \
                                                    </div> \
                                                    <a href= ' + messageObj.text + ' class="linkText" target="_blank">' + messageObj.text + '</a></div></div>');
@@ -358,7 +360,7 @@ $(document).ready(function() {
                 if (messageObj.feature_image != null) {
                     $("#chatDetailBody").append('<div class="clearfix"><div class="thisUserText chatBox"> \
                                                    <div class="linkPreviewBox clearfix"> \
-                                                   <div class="imagePreview" style="background-image: url('+ messageObj.feature_image +');"></div> \
+                                                   <div class="imagePreview" style="background-image: url(' + messageObj.feature_image + ');"></div> \
                                                    <div class="headlinePreview">' + messageObj.headline + '</div> \
                                                    </div> \
                                                    <a href= ' + messageObj.text + ' class="linkText" target="_blank">' + messageObj.text + '</a></div></div>');
@@ -373,7 +375,7 @@ $(document).ready(function() {
                 $("#chatDetailBody").append('<div class="clearfix"><div class="thisUserText chatBox"><p>' + messageObj.text + '</p></div></div>');
             }
         }
-        window.scrollTo(0,document.body.scrollHeight);
+        window.scrollTo(0, document.body.scrollHeight);
     }
 
     /**********************************
@@ -494,3 +496,14 @@ function validURL(userInput) {
     else
         return true;
     }
+
+function PreviewImage() {
+    var oFReader = new FileReader();
+    oFReader.readAsDataURL(document.getElementById("uploadImage").files[0]);
+
+    oFReader.onload = function(oFREvent) {
+        // console.log(oFREvent.target.result);
+        imageBase64 = oFREvent.target.result;
+        document.getElementById("uploadPreview").src = oFREvent.target.result;
+    };
+};
