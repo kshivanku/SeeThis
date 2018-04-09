@@ -9,8 +9,8 @@ var allData;
 var thisUserName = undefined;
 var thisUsersocketID = null;
 var profilePicBase64;
-var serverUrl = "http://localhost:8000";
-// var serverUrl = "https://seethis.herokuapp.com/";
+// var serverUrl = "http://localhost:8000";
+var serverUrl = "https://seethis.herokuapp.com/";
 var currentPage = null;
 //currentPage--> introPage, chatTab, publicFeedTab, [fullNameofChatPartner]
 
@@ -244,6 +244,7 @@ $(document).ready(function() {
         showPage("chatDetail");
         fixHeader('chatDetail', chatPartnerFullName);
         showMessages(chatPartnerFullName);
+        markAllAsRead(chatPartnerFullName)
     })
 
     /********************************************
