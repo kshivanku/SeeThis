@@ -504,6 +504,7 @@ function PreviewImage() {
     oFReader.onload = function(oFREvent) {
         // console.log(oFREvent.target.result);
         imageBase64 = oFREvent.target.result;
-        document.getElementById("uploadPreview").src = oFREvent.target.result;
+        // document.getElementById("uploadPreview").src = oFREvent.target.result;
+        document.getElementById("uploadPreview").style.backgroundImage = 'url('+ oFREvent.target.result +')';
     };
 };

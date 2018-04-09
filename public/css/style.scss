@@ -130,7 +130,8 @@ input {
     width: 100px;
     height: 100px;
     display: block;
-    // border: 0.5px solid rgba(255, 255, 255, .54);
+    border: 1px solid rgba(255, 255, 255, .54);
+    background-size: contain;
   }
 
   #uploadImageButton {
@@ -140,23 +141,31 @@ input {
   }
 
   p{
+    font-weight: 300;
     font-size: 12px;
+    line-height: 15px;
+    text-align: left;
     color: $primary-white;
     opacity: 0.54;
-    font-weight: 300;
   }
 }
 
 ::-webkit-input-placeholder {
     /* Chrome/Opera/Safari */
+    font-weight: 300;
     font-size: 12px;
+    line-height: 15px;
+    text-align: left;
     color: $primary-white;
     opacity: 0.54;
 }
 
 ::-moz-placeholder {
     /* Firefox 19+ */
+    font-weight: 300;
     font-size: 12px;
+    line-height: 15px;
+    text-align: left;
     color: $primary-white;
     opacity: 0.54;
 }

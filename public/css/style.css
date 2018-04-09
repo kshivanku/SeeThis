@@ -117,6 +117,8 @@ input {
   width: 100px;
   height: 100px;
   display: block;
+  border: 1px solid rgba(255, 255, 255, 0.54);
+  background-size: contain;
 }
 #profilePictureArea #uploadImageButton {
   width: calc(100% - 116px);
@@ -124,22 +126,30 @@ input {
   visibility: hidden;
 }
 #profilePictureArea p {
+  font-weight: 300;
   font-size: 12px;
+  line-height: 15px;
+  text-align: left;
   color: #fff;
   opacity: 0.54;
-  font-weight: 300;
 }
 
 ::-webkit-input-placeholder {
   /* Chrome/Opera/Safari */
+  font-weight: 300;
   font-size: 12px;
+  line-height: 15px;
+  text-align: left;
   color: #fff;
   opacity: 0.54;
 }
 
 ::-moz-placeholder {
   /* Firefox 19+ */
+  font-weight: 300;
   font-size: 12px;
+  line-height: 15px;
+  text-align: left;
   color: #fff;
   opacity: 0.54;
 }
