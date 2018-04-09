@@ -53,22 +53,34 @@ io.sockets.on('connection', function(socket) {
                 var srcList = [];
                 var num_images = 0;
                 var probe_callback = 0;
-                $('img').each(function(i, element) {
-                    console.log($(this).attr('src'));
-                    if ($(this).attr('src') != null) {
-                        num_images += 1;
-                        probe($(this).attr('src'), function(err, result){
-                            if(err) {console.log(err)}
-                            srcList.push(result);
-                            probe_callback += 1;
-                            if (probe_callback == num_images) {
-                                console.log(srcList);
-                                newMessage.feature_image = findFeatureImage(srcList);
-                                io.sockets.connected[data.thisUsersocketID].emit('urlScrapedData', newMessage);
-                            }
-                        });
-                    }
-                })
+                var totalImageTagsFound = $('img').length;
+                var imagesWithNoSrc = 0;
+                if(totalImageTagsFound > 0) {
+                  $('img').each(function(i, element) {
+                      if ($(this).attr('src') != null) {
+                          num_images += 1;
+                          probe($(this).attr('src'), function(err, result){
+                              if(err) {console.log("INSIDE ERROR IN PROBE"); console.log(err);}
+                              srcList.push(result);
+                              probe_callback += 1;
+                              if (probe_callback == num_images) {
+                                  console.log(srcList);
+                                  newMessage.feature_image = findFeatureImage(srcList);
+                                  io.sockets.connected[data.thisUsersocketID].emit('urlScrapedData', newMessage);
+                              }
+                          });
+                      } else {
+                        imagesWithNoSrc += 1;
+                        if(totalImageTagsFound == imagesWithNoSrc) {
+                          io.sockets.connected[data.thisUsersocketID].emit('urlScrapedData', newMessage);
+                        }
+                      }
+                  })
+                }
+                else {
+                  console.log("no images found");
+                  io.sockets.connected[data.thisUsersocketID].emit('urlScrapedData', newMessage);
+                }
             }
         });
     })
@@ -100,7 +112,7 @@ function findFeatureImage(srcList) {
               }
             }
         }
-        console.log("FINAL IMAGE: " + final_image);
-        return final_image;
     }
+    console.log("FINAL IMAGE: " + final_image);
+    return final_image;
 }
