@@ -351,6 +351,7 @@ $(document).ready(function() {
                 appendMessageToChatWindow(data);
                 markAllAsRead(data.sender);
             } else if (currentPage == "chatTab") {
+                console.log("on chat tab");
                 populateChatTabBody();
             }
         }
@@ -376,7 +377,7 @@ $(document).ready(function() {
       var chatPairID = findChatPairRefID(chatPartnerFullName);
       var messages = allData.allChatPairs[chatPairID].messages;
       if (messages.length > 0 && messages[0] != "null") {
-        for(var i = messages.length - 1 ; i > 0 ; i--) {
+        for(var i = messages.length - 1 ; i >= 0 ; i--) {
           if(messages[i].sender == chatPartnerFullName) {
             messages[i].isRead = true;
           }
