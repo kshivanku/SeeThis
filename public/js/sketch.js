@@ -499,7 +499,7 @@ function validURL(userInput) {
 
 function PreviewImage() {
     var oFReader = new FileReader();
-    oFReader.readAsDataURL(document.getElementById("uploadImage").files[0]);
+    oFReader.readAsDataURL(document.getElementById("uploadImageButton").files[0]);
 
     oFReader.onload = function(oFREvent) {
         // console.log(oFREvent.target.result);
