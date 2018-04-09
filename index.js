@@ -65,7 +65,7 @@ io.sockets.on('connection', function(socket) {
                               srcList.push(result);
                               probe_callback += 1;
                               if (probe_callback == num_images) {
-                                  console.log(srcList);
+                                  // console.log(srcList);
                                   newMessage.feature_image = findFeatureImage(srcList);
                                   io.sockets.connected[data.thisUsersocketID].emit('urlScrapedData', newMessage);
                               }
