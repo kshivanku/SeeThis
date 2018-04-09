@@ -276,8 +276,8 @@ header {
 }
 #landingPage .lastMessageTime {
   float: right;
-  opacity: 0.54;
-  font-weight: 300;
+  font-weight: 500;
+  color: #4463F7;
 }
 
 .publicFeedCard {

@@ -317,8 +317,9 @@ header {
     .lastMessageTime {
       float: right;
       @extend %small_left;
-      opacity: 0.54;
-      font-weight: 300;
+      // opacity: 0.54;
+      font-weight: 500;
+      color: $primary-blue;
     }
 }
 
