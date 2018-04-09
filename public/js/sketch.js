@@ -166,12 +166,20 @@ $(document).ready(function() {
                 if (dbUserName != thisUserName) {
                     var dbUserProfilePicBase64 = allData.allUsers[allUsersRefIDs[i]].profilePicBase64;
                     var lastMessage = "";
+                    var lastMessageDate = null;
+                    var lastMessageRead = true;
+                    var numOfUnreadMessages = 0;
                     var chatPairID = findChatPairRefID(dbUserName);
                     var messages = allData.allChatPairs[chatPairID].messages;
                     if (messages[0] != "null") {
-                        lastMessage = allData.allChatPairs[chatPairID].messages[messages.length - 1].text;
+                        lastMessage = messages[messages.length - 1].text;
+                        lastMessageDate = messages[messages.length - 1].date;
+                        numOfUnreadMessages = getNumOfUnreadMessages(messages);
+                        if(numOfUnreadMessages > 0) {lastMessageRead = false};
                     } else {
-                        lastMessage = "no chats yet"
+                        lastMessage = "no chats yet";
+                        lastMessageDate = " ";
+                        lastMessageRead = true;
                     }
 
                     //GENERATE A RANDOM CARD ID WITH FULL NAME OF THE USER
@@ -182,20 +190,44 @@ $(document).ready(function() {
                     }
                     cardID += String(Math.floor(Math.random() * 100));
 
-                    $("#chatTabBody").append("<div class='chatCard padded clearfix' id=" + cardID + ">\
-                                                <div class='connectionDP' style='background-image: url(" + dbUserProfilePicBase64 + ");'></div>\
-                                                <div class='chatCardText'>\
-                                                  <p class='connectionName'>" + dbUserName + "</p>\
-                                                  <p class='lastMessage'>" + lastMessage + "</p>\
-                                                </div>\
-                                                <div class='lastChatMetaInfo'>\
-                                                  <div class='lastMessageTime'>12/08</div>\
-                                                  <div class='unread_count'>3</div>\
-                                                </div>\
-                                              </div>");
+                    if(!lastMessageRead) {
+                      $("#chatTabBody").append("<div class='chatCard padded clearfix' id=" + cardID + ">\
+                                                  <div class='connectionDP' style='background-image: url(" + dbUserProfilePicBase64 + ");'></div>\
+                                                  <div class='chatCardText'>\
+                                                    <p class='connectionName'>" + dbUserName + "</p>\
+                                                    <p class='lastMessage'>" + lastMessage + "</p>\
+                                                  </div>\
+                                                  <div class='lastChatMetaInfo'>\
+                                                    <div class='lastMessageDate lastMessageTimeWithUnread'>"+ lastMessageDate +"</div>\
+                                                    <div class='unread_count'>"+ numOfUnreadMessages +"</div>\
+                                                  </div>\
+                                                </div>");
+                    }
+                    else {
+                      $("#chatTabBody").append("<div class='chatCard padded clearfix' id=" + cardID + ">\
+                                                  <div class='connectionDP' style='background-image: url(" + dbUserProfilePicBase64 + ");'></div>\
+                                                  <div class='chatCardText'>\
+                                                    <p class='connectionName'>" + dbUserName + "</p>\
+                                                    <p class='lastMessage'>" + lastMessage + "</p>\
+                                                  </div>\
+                                                  <div class='lastChatMetaInfo'>\
+                                                    <div class='lastMessageDate lastMessageDateNoUnread'>"+ lastMessageDate +"</div>\
+                                                  </div>\
+                                                </div>");
+                    }
                 }
             }
         }
+    }
+
+    function getNumOfUnreadMessages(messages) {
+      var numOfUnreadMessages = 0;
+      for (var i = 0 ; i < messages.length ; i++) {
+        if(!messages[i].isRead && messages[i].receiver == thisUserName) {
+          numOfUnreadMessages += 1;
+        }
+      }
+      return numOfUnreadMessages;
     }
 
     $("#chatTabBody").on('click', '.chatCard', function() {
@@ -298,18 +330,14 @@ $(document).ready(function() {
             // });
         } else {
             appendMessageToChatWindow(newMessage);
-            sendMessageToPartner(newMessage);
+            uploadMessageToDB(newMessage);
         }
     });
 
     socket.on('urlScrapedData', gotScrapedData);
     function gotScrapedData(newMessage) {
         appendMessageToChatWindow(newMessage);
-        sendMessageToPartner(newMessage);
-    }
-
-    function sendMessageToPartner(newMessage) {
-        socket.emit('newChatText', newMessage);
+        uploadMessageToDB(newMessage);
     }
 
     socket.on('newChatText', function(data) {
@@ -320,15 +348,9 @@ $(document).ready(function() {
             if (currentPage == data.sender) {
                 data.isRead = true;
                 appendMessageToChatWindow(data);
-                uploadMessageToDB(data);
+                markAllAsRead(data.sender);
             } else if (currentPage == "chatTab") {
-                data.isRead = false;
-                uploadMessageToDB(data);
                 populateChatTabBody();
-            }
-            else {
-              data.isRead = false;
-              uploadMessageToDB(data);
             }
         }
     })
@@ -346,6 +368,20 @@ $(document).ready(function() {
         if (newMessage.isLink) {
             database.ref("allData/allLinks/").push(newMessage);
         }
+        socket.emit('newChatText', newMessage);
+    }
+
+    function markAllAsRead(chatPartnerFullName) {
+      var chatPairID = findChatPairRefID(chatPartnerFullName);
+      var messages = allData.allChatPairs[chatPairID].messages;
+      if (messages.length > 0 && messages[0] != "null") {
+        for(var i = messages.length - 1 ; i > 0 ; i--) {
+          if(messages[i].sender == chatPartnerFullName) {
+            messages[i].isRead = true;
+          }
+        }
+      }
+      database.ref("allData/allChatPairs/" + chatPairID + "/messages").set(messages);
     }
 
     function findChatPairRefID(chatPartnerFullName) {
@@ -542,6 +578,7 @@ function getDate() {
     if (mm < 10) {
         mm = '0' + mm
     }
-    today = mm + '/' + dd + '/' + yyyy;
+    // today = mm + '/' + dd + '/' + yyyy;
+    today = mm + '/' + dd;
     return today;
 }

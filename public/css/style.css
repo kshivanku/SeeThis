@@ -6,7 +6,7 @@
   text-align: left;
 }
 
-#chatDetail #chatDetailBody .linkText, #chatDetail #chatDetailBody .emptyPageText, .publicFeedCard .linkDetails .linkURL a, #landingPage .lastMessageTime, #landingPage .lastMessage, #profileColor {
+#chatDetail #chatDetailBody .linkText, #chatDetail #chatDetailBody .emptyPageText, .publicFeedCard .linkDetails .linkURL a, #landingPage .lastMessageDate, #landingPage .lastMessage, #profileColor {
   font-weight: 300;
   font-size: 12px;
   line-height: 15px;
@@ -274,8 +274,18 @@ header {
   margin-top: 4px;
   border-radius: 100%;
 }
-#landingPage .lastMessageTime {
+#landingPage .lastMessageDate {
   float: right;
+  font-weight: 500;
+  color: #4463F7;
+}
+#landingPage .lastMessageDateNoUnread {
+  opacity: 0.54;
+  font-weight: 300;
+  color: #656A7E;
+}
+#landingPage .lastMessageTimeWithUnread {
+  opacity: 1;
   font-weight: 500;
   color: #4463F7;
 }

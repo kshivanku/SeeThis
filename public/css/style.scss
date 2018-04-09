@@ -314,13 +314,25 @@ header {
       border-radius: 100%;
     }
 
-    .lastMessageTime {
+    .lastMessageDate {
       float: right;
       @extend %small_left;
       // opacity: 0.54;
       font-weight: 500;
       color: $primary-blue;
     }
+
+    .lastMessageDateNoUnread {
+      opacity: 0.54;
+      font-weight: 300;
+      color: $primary-black;
+    }
+    .lastMessageTimeWithUnread {
+      opacity: 1;
+      font-weight: 500;
+      color: $primary-blue;
+    }
+
 }
 
 .publicFeedCard {
