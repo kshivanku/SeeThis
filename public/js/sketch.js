@@ -352,7 +352,9 @@ $(document).ready(function() {
                 markAllAsRead(data.sender);
             } else if (currentPage == "chatTab") {
                 console.log("on chat tab");
-                populateChatTabBody();
+                showPage("landingPage");
+                fixHeader("landingPage");
+                showTab("chatTab");
             }
         }
     })
