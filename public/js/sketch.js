@@ -175,6 +175,7 @@ $(document).ready(function() {
                         lastMessage = messages[messages.length - 1].text;
                         lastMessageDate = messages[messages.length - 1].date;
                         numOfUnreadMessages = getNumOfUnreadMessages(messages);
+                        console.log(numOfUnreadMessages);
                         if(numOfUnreadMessages > 0) {lastMessageRead = false};
                     } else {
                         lastMessage = "no chats yet";
