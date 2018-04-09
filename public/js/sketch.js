@@ -212,31 +212,30 @@ $(document).ready(function() {
             }
             cardID += String(Math.floor(Math.random() * 100));
 
-        }
-
-        if (!allChatCards[i].lastMessageRead) {
-            $("#chatTabBody").append("<div class='chatCard padded clearfix' id=" + cardID + ">\
-                                    <div class='connectionDP' style='background-image: url(" + allChatCards[i].dbUserProfilePicBase64 + ");'></div>\
-                                    <div class='chatCardText'>\
-                                      <p class='connectionName'>" + allChatCards[i].dbUserName + "</p>\
-                                      <p class='lastMessage'>" + allChatCards[i].lastMessage + "</p>\
-                                    </div>\
-                                    <div class='lastChatMetaInfo'>\
-                                      <div class='lastMessageDate lastMessageTimeWithUnread'>" + allChatCards[i].lastMessageDate + "</div>\
-                                      <div class='unread_count'>" + allChatCards[i].numOfUnreadMessages + "</div>\
-                                    </div>\
-                                  </div>");
-        } else {
-            $("#chatTabBody").append("<div class='chatCard padded clearfix' id=" + cardID + ">\
-                                    <div class='connectionDP' style='background-image: url(" + allChatCards[i].dbUserProfilePicBase64 + ");'></div>\
-                                    <div class='chatCardText'>\
-                                      <p class='connectionName'>" + allChatCards[i].dbUserName + "</p>\
-                                      <p class='lastMessage'>" + allChatCards[i].lastMessage + "</p>\
-                                    </div>\
-                                    <div class='lastChatMetaInfo'>\
-                                      <div class='lastMessageDate lastMessageDateNoUnread'>" + allChatCards[i].lastMessageDate + "</div>\
-                                    </div>\
-                                  </div>");
+            if (!allChatCards[i].lastMessageRead) {
+                $("#chatTabBody").append("<div class='chatCard padded clearfix' id=" + cardID + ">\
+                                        <div class='connectionDP' style='background-image: url(" + allChatCards[i].dbUserProfilePicBase64 + ");'></div>\
+                                        <div class='chatCardText'>\
+                                          <p class='connectionName'>" + allChatCards[i].dbUserName + "</p>\
+                                          <p class='lastMessage'>" + allChatCards[i].lastMessage + "</p>\
+                                        </div>\
+                                        <div class='lastChatMetaInfo'>\
+                                          <div class='lastMessageDate lastMessageTimeWithUnread'>" + allChatCards[i].lastMessageDate + "</div>\
+                                          <div class='unread_count'>" + allChatCards[i].numOfUnreadMessages + "</div>\
+                                        </div>\
+                                      </div>");
+            } else {
+                $("#chatTabBody").append("<div class='chatCard padded clearfix' id=" + cardID + ">\
+                                        <div class='connectionDP' style='background-image: url(" + allChatCards[i].dbUserProfilePicBase64 + ");'></div>\
+                                        <div class='chatCardText'>\
+                                          <p class='connectionName'>" + allChatCards[i].dbUserName + "</p>\
+                                          <p class='lastMessage'>" + allChatCards[i].lastMessage + "</p>\
+                                        </div>\
+                                        <div class='lastChatMetaInfo'>\
+                                          <div class='lastMessageDate lastMessageDateNoUnread'>" + allChatCards[i].lastMessageDate + "</div>\
+                                        </div>\
+                                      </div>");
+            }
         }
     }
 
