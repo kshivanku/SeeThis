@@ -161,74 +161,93 @@ $(document).ready(function() {
         window.scrollTo(0, 0);
         var allUsersRefIDs = Object.keys(allData.allUsers);
         if (allUsersRefIDs.length > 1) {
+            var allChatCards = [];
             for (var i = 0; i < allUsersRefIDs.length; i++) {
                 var dbUserName = allData.allUsers[allUsersRefIDs[i]].fullName;
                 if (dbUserName != thisUserName) {
-                    var dbUserProfilePicBase64 = allData.allUsers[allUsersRefIDs[i]].profilePicBase64;
-                    var lastMessage = "";
-                    var lastMessageDate = null;
-                    var lastMessageRead = true;
-                    var numOfUnreadMessages = 0;
+                    var infoOnChatCard = {
+                        dbUserName: dbUserName,
+                        dbUserProfilePicBase64: allData.allUsers[allUsersRefIDs[i]].profilePicBase64,
+                        lastMessage: "",
+                        lastMessageDate: null,
+                        lastMessageTimeInMS: 0,
+                        lastMessageRead: true,
+                        numOfUnreadMessages: 0
+                    }
                     var chatPairID = findChatPairRefID(dbUserName);
                     var messages = allData.allChatPairs[chatPairID].messages;
                     if (messages[0] != "null") {
-                        lastMessage = messages[messages.length - 1].text;
-                        lastMessageDate = messages[messages.length - 1].date;
-                        numOfUnreadMessages = getNumOfUnreadMessages(messages);
-                        console.log(numOfUnreadMessages);
-                        if(numOfUnreadMessages > 0) {lastMessageRead = false};
+                        infoOnChatCard.lastMessage = messages[messages.length - 1].text;
+                        infoOnChatCard.lastMessageDate = messages[messages.length - 1].date;
+                        infoOnChatCard.lastMessageTimeInMS = messages[messages.length - 1].timeInMS;
+                        infoOnChatCard.numOfUnreadMessages = getNumOfUnreadMessages(messages);
+                        if (infoOnChatCard.numOfUnreadMessages > 0) {
+                            infoOnChatCard.lastMessageRead = false
+                        };
                     } else {
-                        lastMessage = "no chats yet";
-                        lastMessageDate = " ";
-                        lastMessageRead = true;
+                        infoOnChatCard.lastMessage = "no chats yet";
+                        infoOnChatCard.lastMessageDate = " ";
+                        infoOnChatCard.lastMessageRead = true;
+                        infoOnChatCard.lastMessageTimeInMS = 0;
                     }
-
-                    //GENERATE A RANDOM CARD ID WITH FULL NAME OF THE USER
-                    var subNameArray = dbUserName.split(" ");
-                    var cardID = "";
-                    for (var k = 0; k < subNameArray.length; k++) {
-                        cardID += subNameArray[k] + "_";
-                    }
-                    cardID += String(Math.floor(Math.random() * 100));
-
-                    if(!lastMessageRead) {
-                      $("#chatTabBody").append("<div class='chatCard padded clearfix' id=" + cardID + ">\
-                                                  <div class='connectionDP' style='background-image: url(" + dbUserProfilePicBase64 + ");'></div>\
-                                                  <div class='chatCardText'>\
-                                                    <p class='connectionName'>" + dbUserName + "</p>\
-                                                    <p class='lastMessage'>" + lastMessage + "</p>\
-                                                  </div>\
-                                                  <div class='lastChatMetaInfo'>\
-                                                    <div class='lastMessageDate lastMessageTimeWithUnread'>"+ lastMessageDate +"</div>\
-                                                    <div class='unread_count'>"+ numOfUnreadMessages +"</div>\
-                                                  </div>\
-                                                </div>");
-                    }
-                    else {
-                      $("#chatTabBody").append("<div class='chatCard padded clearfix' id=" + cardID + ">\
-                                                  <div class='connectionDP' style='background-image: url(" + dbUserProfilePicBase64 + ");'></div>\
-                                                  <div class='chatCardText'>\
-                                                    <p class='connectionName'>" + dbUserName + "</p>\
-                                                    <p class='lastMessage'>" + lastMessage + "</p>\
-                                                  </div>\
-                                                  <div class='lastChatMetaInfo'>\
-                                                    <div class='lastMessageDate lastMessageDateNoUnread'>"+ lastMessageDate +"</div>\
-                                                  </div>\
-                                                </div>");
-                    }
+                    allChatCards.push(infoOnChatCard);
                 }
             }
+            allChatCards.sort(function(a, b) {
+                return b.lastMessageTimeInMS - a.lastMessageTimeInMS
+            })
+            showChatCardsOnChatBody(allChatCards);
+        }
+    }
+
+    function showChatCardsOnChatBody(allChatCards) {
+
+        for (var i = 0; i < allChatCards.length; i++) {
+
+            //GENERATE A RANDOM CARD ID WITH FULL NAME OF THE USER
+            var subNameArray = allChatCards[i].dbUserName.split(" ");
+            var cardID = "";
+            for (var k = 0; k < subNameArray.length; k++) {
+                cardID += subNameArray[k] + "_";
+            }
+            cardID += String(Math.floor(Math.random() * 100));
+
+        }
+
+        if (!allChatCards[i].lastMessageRead) {
+            $("#chatTabBody").append("<div class='chatCard padded clearfix' id=" + cardID + ">\
+                                    <div class='connectionDP' style='background-image: url(" + allChatCards[i].dbUserProfilePicBase64 + ");'></div>\
+                                    <div class='chatCardText'>\
+                                      <p class='connectionName'>" + allChatCards[i].dbUserName + "</p>\
+                                      <p class='lastMessage'>" + allChatCards[i].lastMessage + "</p>\
+                                    </div>\
+                                    <div class='lastChatMetaInfo'>\
+                                      <div class='lastMessageDate lastMessageTimeWithUnread'>" + allChatCards[i].lastMessageDate + "</div>\
+                                      <div class='unread_count'>" + allChatCards[i].numOfUnreadMessages + "</div>\
+                                    </div>\
+                                  </div>");
+        } else {
+            $("#chatTabBody").append("<div class='chatCard padded clearfix' id=" + cardID + ">\
+                                    <div class='connectionDP' style='background-image: url(" + allChatCards[i].dbUserProfilePicBase64 + ");'></div>\
+                                    <div class='chatCardText'>\
+                                      <p class='connectionName'>" + allChatCards[i].dbUserName + "</p>\
+                                      <p class='lastMessage'>" + allChatCards[i].lastMessage + "</p>\
+                                    </div>\
+                                    <div class='lastChatMetaInfo'>\
+                                      <div class='lastMessageDate lastMessageDateNoUnread'>" + allChatCards[i].lastMessageDate + "</div>\
+                                    </div>\
+                                  </div>");
         }
     }
 
     function getNumOfUnreadMessages(messages) {
-      var numOfUnreadMessages = 0;
-      for (var i = 0 ; i < messages.length ; i++) {
-        if(!messages[i].isRead && messages[i].receiver == thisUserName) {
-          numOfUnreadMessages += 1;
+        var numOfUnreadMessages = 0;
+        for (var i = 0; i < messages.length; i++) {
+            if (!messages[i].isRead && messages[i].receiver == thisUserName) {
+                numOfUnreadMessages += 1;
+            }
         }
-      }
-      return numOfUnreadMessages;
+        return numOfUnreadMessages;
     }
 
     $("#chatTabBody").on('click', '.chatCard', function() {
@@ -374,22 +393,22 @@ $(document).ready(function() {
             database.ref("allData/allLinks/").push(newMessage);
         }
         //Wait 1/2 sec for DB to get updated
-        setTimeout(function(){
-          socket.emit('newChatText', newMessage);
+        setTimeout(function() {
+            socket.emit('newChatText', newMessage);
         }, 500);
     }
 
     function markAllAsRead(chatPartnerFullName) {
-      var chatPairID = findChatPairRefID(chatPartnerFullName);
-      var messages = allData.allChatPairs[chatPairID].messages;
-      if (messages.length > 0 && messages[0] != "null") {
-        for(var i = messages.length - 1 ; i >= 0 ; i--) {
-          if(messages[i].sender == chatPartnerFullName) {
-            messages[i].isRead = true;
-          }
+        var chatPairID = findChatPairRefID(chatPartnerFullName);
+        var messages = allData.allChatPairs[chatPairID].messages;
+        if (messages.length > 0 && messages[0] != "null") {
+            for (var i = messages.length - 1; i >= 0; i--) {
+                if (messages[i].sender == chatPartnerFullName) {
+                    messages[i].isRead = true;
+                }
+            }
         }
-      }
-      database.ref("allData/allChatPairs/" + chatPairID + "/messages").set(messages);
+        database.ref("allData/allChatPairs/" + chatPairID + "/messages").set(messages);
     }
 
     function findChatPairRefID(chatPartnerFullName) {
