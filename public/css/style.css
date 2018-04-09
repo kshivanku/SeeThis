@@ -191,6 +191,18 @@ header {
 }
 #landingPage header #logo {
   line-height: 56px;
+  float: left;
+}
+#landingPage header #userDP {
+  width: 24px;
+  height: 24px;
+  border-radius: 100%;
+  border: 1px solid #fff;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  float: right;
+  margin-top: 16px;
 }
 #landingPage header p {
   float: left;

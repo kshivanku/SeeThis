@@ -212,6 +212,19 @@ header {
         #logo {
             @extend %UI_Left_100;
             line-height: 56px;
+            float: left;
+        }
+
+        #userDP {
+          width: 24px;
+          height: 24px;
+          border-radius: 100%;
+          border: 1px solid $primary-white;
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+          float: right;
+          margin-top: 16px;
         }
 
         p {

@@ -88,6 +88,7 @@ $(document).ready(function() {
             thisUserName = newUser.fullName;
             makeChatPairs();
             showPage("landingPage");
+            fixHeader("landingPage");
             showTab("chatTab");
         }
     }
@@ -101,9 +102,11 @@ $(document).ready(function() {
                     userFound = true;
                     // if(allData.allUsers[allUsersRefIDs[i]].password == userDetails.password) {
                     thisUserName = allData.allUsers[allUsersRefIDs[i]].fullName;
+                    profilePicBase64 = allData.allUsers[allUsersRefIDs[i]].profilePicBase64;
                     localStorage.email = userDetails.email;
                     localStorage.registered = true;
                     showPage("landingPage");
+                    fixHeader("landingPage");
                     showTab("chatTab");
                     // }
                     // else {
@@ -203,7 +206,7 @@ $(document).ready(function() {
         }
         currentPage = chatPartnerFullName;
         showPage("chatDetail");
-        fixHeader(chatPartnerFullName);
+        fixHeader('chatDetail', chatPartnerFullName);
         showMessages(chatPartnerFullName);
     })
 
@@ -213,10 +216,12 @@ $(document).ready(function() {
 
     $("#chatDetail header").click(function() {
         showPage("landingPage");
+        fixHeader("landingPage");
         showTab("chatTab");
     })
 
-    function fixHeader(chatPartnerFullName) {
+    function fixHeader(pageID, chatPartnerFullName) {
+      if(pageID == 'chatDetail') {
         $("#chatDetail .connectionName").text(chatPartnerFullName);
         var connectionProfilePicBase64;
         var allUsersRef = Object.keys(allData.allUsers);
@@ -226,6 +231,10 @@ $(document).ready(function() {
             }
         }
         $("#chatDetail .connectionDP").css('background-image', 'url(' + connectionProfilePicBase64 + ')');
+      }
+      else if(pageID = 'landingPage') {
+        $('#userDP').css('background-image', 'url('+ profilePicBase64 +')');
+      }
     }
 
     function showMessages(chatPartnerFullName) {
@@ -469,6 +478,7 @@ $(document).ready(function() {
             $("#publicFeedTabBody").css("display", "block");
             populatePublicFeedTabBody();
         }
+        window.scrollTo(0,0);
     }
 });
 
