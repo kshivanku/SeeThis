@@ -387,7 +387,13 @@ header {
 
   .chatPairText {
     @extend %body_left_100;
-    margin-bottom: 8px;
+    // margin-bottom: 8px;
+  }
+
+  .linkMetaInfo {
+    @extend %small_left;
+    opacity: 0.54;
+    margin-bottom: 12px;
   }
 
   .userNames {

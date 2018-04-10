@@ -284,7 +284,7 @@ $(document).ready(function() {
         }
         else {
           return dateParts[1] + '/' + dateParts[2];
-        }    
+        }
     }
 
     $("#chatTabBody").on('click', '.chatCard', function() {
@@ -599,6 +599,7 @@ $(document).ready(function() {
                                               <div class="senderProfilePicBase64" style="background-image: url(' + findProfilePic(linkEntry.sender) + ');"></div>\
                                               <div class="linkSection">\
                                                 <p class="chatPairText"><span class="userNames">' + linkEntry.sender + '</span> shared with <span class="userNames">' + linkEntry.receiver + '</span ></p>\
+                                                <p class="linkMetaInfo">' + getDateForChatCard(linkEntry.date, linkEntry.timeOfDay) + '</p>\
                                                 <div class="linkDetails">\
                                                   <div class="linkPicture" style="background-image: url(' + feature_image + ');"></div>\
                                                   <div class="linkHeadline">' + linkEntry.headline + '</div>\

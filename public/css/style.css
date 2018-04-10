@@ -6,7 +6,7 @@
   text-align: left;
 }
 
-#chatDetail #chatDetailBody .chatMetaDeta p, #chatDetail #chatDetailBody .linkText, #chatDetail #chatDetailBody .emptyPageText, .publicFeedCard .linkDetails .linkURL a, #landingPage .lastMessageDate, #landingPage .lastMessage, #profileColor {
+#chatDetail #chatDetailBody .chatMetaDeta p, #chatDetail #chatDetailBody .linkText, #chatDetail #chatDetailBody .emptyPageText, .publicFeedCard .linkDetails .linkURL a, .publicFeedCard .linkMetaInfo, #landingPage .lastMessageDate, #landingPage .lastMessage, #profileColor {
   font-weight: 300;
   font-size: 12px;
   line-height: 15px;
@@ -330,8 +330,9 @@ header {
   background-position: center;
   background-repeat: no-repeat;
 }
-.publicFeedCard .chatPairText {
-  margin-bottom: 8px;
+.publicFeedCard .linkMetaInfo {
+  opacity: 0.54;
+  margin-bottom: 12px;
 }
 .publicFeedCard .userNames {
   font-weight: 700;
