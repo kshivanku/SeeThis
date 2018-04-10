@@ -112,6 +112,10 @@ $(document).ready(function() {
                     // else {
                     //   alert("Password is incorrect");
                     // }
+                    var newUserMessage = {
+                      username: thisUserName;
+                    }
+                    socket.emit('reportUserSignIn', newUserMessage);
                 }
             }
         }
@@ -135,6 +139,16 @@ $(document).ready(function() {
             }
         }
     }
+
+    socket.on('reportUserSignIn', function(data){
+      if(thisUserName != data.username) {
+        if(currentPage == 'chatTab') {
+          showPage("landingPage");
+          fixHeader("landingPage");
+          showTab("chatTab");
+        }
+      }
+    });
 
     /******************
     LANDING PAGE SCROLL

@@ -32,7 +32,12 @@ io.sockets.on('connection', function(socket) {
     socket.on('reportMessageStatusChange', function(data) {
       console.log('message status change report received');
       socket.broadcast.emit('reportMessageStatusChange', data);
-    })
+    });
+
+    socket.on('reportUserSignIn', fucnction(data) {
+      console.log('new user signed in');
+      socket.broadcast.emit('reportUserSignIn', data);
+    });
 
     socket.on('urlToScrape', function(data) {
         console.log('urlToScrape data received');
