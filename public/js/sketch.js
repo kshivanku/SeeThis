@@ -373,11 +373,17 @@ $(document).ready(function() {
         //See if date has changed between this message and the previous
         var chatPairID = findChatPairRefID(newMessage.receiver);
         var messages = allData.allChatPairs[chatPairID].messages;
-        if (messages[messages.length - 1].date == newMessage.date) {
-            newDate: false;
-        } else {
-            newDate: true
+        if(messages.length > 0) {
+          if (messages[messages.length - 1].date == newMessage.date) {
+              newMessage.newDate= false;
+          } else {
+              newMessage.newDate= true;
+          }
         }
+        else{
+          newMessage.newDate= true;
+        }
+
 
         textInput = textInput.toLowerCase();
         //In case there is something before the link. For example sometimes
