@@ -261,7 +261,7 @@ header {
 #landingPage .chatCardText {
   margin-left: 8px;
   margin-top: 22px;
-  width: calc(100% - 115px);
+  width: calc(100% - 130px);
 }
 #landingPage .connectionName {
   font-weight: 700;
@@ -277,7 +277,7 @@ header {
 #landingPage .lastChatMetaInfo {
   float: right;
   margin-top: 22px;
-  width: 45px;
+  width: 60px;
 }
 #landingPage .unread_count {
   float: right;
