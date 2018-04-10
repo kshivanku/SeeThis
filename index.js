@@ -34,7 +34,7 @@ io.sockets.on('connection', function(socket) {
       socket.broadcast.emit('reportMessageStatusChange', data);
     });
 
-    socket.on('reportUserSignUp', fucnction(data) {
+    socket.on('reportUserSignUp', function(data) {
       console.log('new user signed in');
       socket.broadcast.emit('reportUserSignUp', data);
     });
