@@ -82,6 +82,16 @@ body {
   clear: both;
 }
 
+.messageStatus {
+  height: 15px;
+  width: 15px;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  float: right;
+  margin-left: 8px;
+}
+
 #introPage {
   background: linear-gradient(to bottom, #4463F7 100%, #3655EE 100%);
   color: #fff;
@@ -284,6 +294,7 @@ header {
   float: right;
   font-weight: 500;
   color: #4463F7;
+  margin-bottom: 4px;
 }
 #landingPage .lastMessageDateNoUnread {
   opacity: 0.54;
@@ -475,15 +486,6 @@ header {
 }
 #chatDetail #chatDetailBody .chatMetaDeta {
   margin-top: 8px;
-}
-#chatDetail #chatDetailBody .chatMetaDeta .messageStatus {
-  height: 15px;
-  width: 15px;
-  background-position: center;
-  background-size: contain;
-  background-repeat: no-repeat;
-  float: right;
-  margin-left: 8px;
 }
 #chatDetail #chatDetailBody .chatMetaDeta p {
   opacity: 0.54;

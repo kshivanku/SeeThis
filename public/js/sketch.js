@@ -172,6 +172,7 @@ $(document).ready(function() {
                         lastMessageDate: null,
                         lastMessageTimeInMS: 0,
                         lastMessageRead: true,
+                        readStatusImage: "",
                         numOfUnreadMessages: 0
                     }
                     var chatPairID = findChatPairRefID(dbUserName);
@@ -182,13 +183,28 @@ $(document).ready(function() {
                         infoOnChatCard.lastMessageTimeInMS = messages[messages.length - 1].timeInMS;
                         infoOnChatCard.numOfUnreadMessages = getNumOfUnreadMessages(messages);
                         if (infoOnChatCard.numOfUnreadMessages > 0) {
-                            infoOnChatCard.lastMessageRead = false
-                        };
+                            infoOnChatCard.lastMessageRead = false;
+                        }
+                        else {
+                          infoOnChatCard.lastMessageRead = true;
+                        }
+                        if(messages[messages.length - 1].sender == thisUserName) {
+                          if(!messages[messages.length - 1].isRead) {
+                            infoOnChatCard.readStatusImage = 'messageStatus_delivered.png';
+                          }
+                          else {
+                            infoOnChatCard.readStatusImage = 'messageStatus_seen.png';
+                          }
+                        }
+                        else {
+                          infoOnChatCard.readStatusImage = null;
+                        }
                     } else {
                         infoOnChatCard.lastMessage = "no chats yet";
                         infoOnChatCard.lastMessageDate = " ";
                         infoOnChatCard.lastMessageRead = true;
                         infoOnChatCard.lastMessageTimeInMS = 0;
+                        infoOnChatCard.lastMessageSender = null;
                     }
                     allChatCards.push(infoOnChatCard);
                 }
@@ -222,6 +238,7 @@ $(document).ready(function() {
                                         <div class='lastChatMetaInfo'>\
                                           <div class='lastMessageDate lastMessageTimeWithUnread'>" + allChatCards[i].lastMessageDate + "</div>\
                                           <div class='unread_count'>" + allChatCards[i].numOfUnreadMessages + "</div>\
+                                          <div class='messageStatus' style='background-image: url(../images/" + allChatCards[i].readStatusImage + ");'></div> \
                                         </div>\
                                       </div>");
             } else {
@@ -233,6 +250,7 @@ $(document).ready(function() {
                                         </div>\
                                         <div class='lastChatMetaInfo'>\
                                           <div class='lastMessageDate lastMessageDateNoUnread'>" + allChatCards[i].lastMessageDate + "</div>\
+                                          <div class='messageStatus' style='background-image: url(../images/" + allChatCards[i].readStatusImage + ");'></div> \
                                         </div>\
                                       </div>");
             }
