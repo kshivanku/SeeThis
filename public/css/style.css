@@ -6,7 +6,7 @@
   text-align: left;
 }
 
-#chatDetail #chatDetailBody .linkText, #chatDetail #chatDetailBody .emptyPageText, .publicFeedCard .linkDetails .linkURL a, #landingPage .lastMessageDate, #landingPage .lastMessage, #profileColor {
+#chatDetail #chatDetailBody .chatMetaDeta p, #chatDetail #chatDetailBody .linkText, #chatDetail #chatDetailBody .emptyPageText, .publicFeedCard .linkDetails .linkURL a, #landingPage .lastMessageDate, #landingPage .lastMessage, #profileColor {
   font-weight: 300;
   font-size: 12px;
   line-height: 15px;
@@ -63,6 +63,11 @@ body {
   background-color: #F7F6F9;
 }
 
+#main_container {
+  max-width: 500px;
+  margin: auto;
+}
+
 .padded {
   padding: 0 16px;
 }
@@ -80,8 +85,9 @@ body {
 #introPage {
   background: linear-gradient(to bottom, #4463F7 100%, #3655EE 100%);
   color: #fff;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  min-height: 100vh;
+  padding-bottom: 80px;
 }
 #introPage #logo {
   font-weight: 700;
@@ -245,7 +251,7 @@ header {
 #landingPage .chatCardText {
   margin-left: 8px;
   margin-top: 22px;
-  width: calc(100vw - 134px);
+  width: calc(100% - 134px);
 }
 #landingPage .connectionName {
   font-weight: 700;
@@ -416,7 +422,6 @@ header {
 }
 #chatDetail #chatDetailBody .chatBox {
   max-width: 286px;
-  min-width: 80px;
   padding: 8px;
   border: 0.5px solid #e8e8e8;
   box-shadow: 0 0.5px 0 0 #e8e8e8;
@@ -467,4 +472,21 @@ header {
   color: #4463F7;
   font-weight: 500;
   text-decoration: none;
+}
+#chatDetail #chatDetailBody .chatMetaDeta {
+  margin-top: 8px;
+}
+#chatDetail #chatDetailBody .chatMetaDeta .messageStatus {
+  height: 15px;
+  width: 15px;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  float: right;
+}
+#chatDetail #chatDetailBody .chatMetaDeta p {
+  opacity: 0.54;
+  font-weight: 300;
+  float: right;
+  margin-right: 8px;
 }

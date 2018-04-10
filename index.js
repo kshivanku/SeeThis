@@ -29,6 +29,11 @@ io.sockets.on('connection', function(socket) {
         socket.broadcast.emit('newChatText', data);
     });
 
+    socket.on('reportMessageStatusChange', function(data) {
+      console.log('message status change report received');
+      socket.broadcast.emit('reportMessageStatusChange', data);
+    })
+
     socket.on('urlToScrape', function(data) {
         console.log('urlToScrape data received');
         var url = data.linkURL;

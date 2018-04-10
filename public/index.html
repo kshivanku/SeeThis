@@ -31,115 +31,117 @@
 </head>
 
 <body>
-    <!-- INTRO PAGE -->
-    <div id="introPage" class="padded">
-        <h1 id="logo">SeeThis</h1>
-        <div id="introNav">
-            <p id="signUpLabel" class="selected">SIGN UP</p>
-            <p id="signInLabel" class="deselected">SIGN IN</p>
-        </div>
-        <div>
-            <form id="signUpForm">
-                <fieldset>
-                    <div id="profilePictureArea" class="clearfix">
-                      <label for="uploadImageButton">
-                        <p>Select Profile Picture</p>
-                        <div id="uploadPreview"></div>
-                      </label>
-                      <input id="uploadImageButton" type="file" name="myPhoto" onchange="PreviewImage();" required/>
-                    </div>
-                    <input id="fullName" type="text" placeholder="Full Name" required>
-                    <input class="email" type="email" placeholder="Email" required>
-                    <!-- <input class="password" type="password" placeholder="Password" required> -->
-                    <!-- <div id="profileColor">
-                        <p>Your randomly chosen profile color</p>
-                    </div> -->
-                    <button id="signUpButton" class="signupSignin" type="submit">SIGN UP</button>
-                </fieldset>
-            </form>
-        </div>
-        <div>
-            <form id="signInForm">
-                <fieldset>
-                    <input class="email" type="email" placeholder="Email" required>
-                    <!-- <input class="password" type="password" placeholder="Password" required> -->
-                    <button id="signInButton" class="signupSignin" type="submit">SIGN IN</button>
-                </fieldset>
-            </form>
-        </div>
-    </div>
-
-    <!-- LANDING PAGE -->
-    <div id="landingPage">
-        <header>
-            <div class="clearfix padded">
-              <div id="logo">SeeThis</div>
-              <div id="userDP"></div>
-            </div>
-            <div id="landingNav" class="clearfix">
-                <p id="chatTab">CHATS</p>
-                <p id="publicFeedTab">PUBLIC FEED</p>
-            </div>
-        </header>
-        <div id="chatTabBody">
-            <div class="chatCard padded clearfix">
-                <div class="connectionDP"></div>
-                <div class="chatCardText">
-                    <p class="connectionName">Test Name</p>
-                    <p class="lastMessage">last message sent by this user</p>
-                </div>
-                <div class="lastChatMetaInfo">
-                  <div class="lastMessageDate"></div>
-                  <div class="unread_count">3</div>
-                </div>
-            </div>
-        </div>
-        <div id="publicFeedTabBody">
-            <div class="publicFeedCard clearfix">
-                <div class="senderProfileColor"></div>
-                <div class="linkSection">
-                    <p class="chatPairText"><span class="userNames">User sender</span> shared with <span class="userNames">Receiver User</span ></p>
-                <div class="linkDetails">
-                  <div class="linkPicture"></div>
-                  <div class="linkHeadline">Test Headline for something. This can be very short or very long it does not matter</div>
-                  <div class="linkURL"><a href="#" target="_blank">http://thisisalinkwhichcanalsobeveryshhortorverylong.something</a></div>
-                </div>
-              </div>
-            </div>
-        </div>
+    <div id="main_container">
+      <!-- INTRO PAGE -->
+      <div id="introPage" class="padded">
+          <h1 id="logo">SeeThis</h1>
+          <div id="introNav">
+              <p id="signUpLabel" class="selected">SIGN UP</p>
+              <p id="signInLabel" class="deselected">SIGN IN</p>
+          </div>
+          <div>
+              <form id="signUpForm">
+                  <fieldset>
+                      <div id="profilePictureArea" class="clearfix">
+                        <label for="uploadImageButton">
+                          <p>Select Profile Picture</p>
+                          <div id="uploadPreview"></div>
+                        </label>
+                        <input id="uploadImageButton" type="file" name="myPhoto" onchange="PreviewImage();" required/>
+                      </div>
+                      <input id="fullName" type="text" placeholder="Full Name" required>
+                      <input class="email" type="email" placeholder="Email" required>
+                      <!-- <input class="password" type="password" placeholder="Password" required> -->
+                      <!-- <div id="profileColor">
+                          <p>Your randomly chosen profile color</p>
+                      </div> -->
+                      <button id="signUpButton" class="signupSignin" type="submit">SIGN UP</button>
+                  </fieldset>
+              </form>
+          </div>
+          <div>
+              <form id="signInForm">
+                  <fieldset>
+                      <input class="email" type="email" placeholder="Email" required>
+                      <!-- <input class="password" type="password" placeholder="Password" required> -->
+                      <button id="signInButton" class="signupSignin" type="submit">SIGN IN</button>
+                  </fieldset>
+              </form>
+          </div>
       </div>
 
-        <!-- CHAT DETAIL -->
-        <div id="chatDetail">
-            <header>
-                <div class="connectionDP"></div>
-                <p class="connectionName">Test Name</p>
-            </header>
-            <div id="chatDetailBody">
-                <div class="clearfix">
-                    <div class="chatPartnerText chatBox">
+      <!-- LANDING PAGE -->
+      <div id="landingPage">
+          <header>
+              <div class="clearfix padded">
+                <div id="logo">SeeThis</div>
+                <div id="userDP"></div>
+              </div>
+              <div id="landingNav" class="clearfix">
+                  <p id="chatTab">CHATS</p>
+                  <p id="publicFeedTab">PUBLIC FEED</p>
+              </div>
+          </header>
+          <div id="chatTabBody">
+              <div class="chatCard padded clearfix">
+                  <div class="connectionDP"></div>
+                  <div class="chatCardText">
+                      <p class="connectionName">Test Name</p>
+                      <p class="lastMessage">last message sent by this user</p>
+                  </div>
+                  <div class="lastChatMetaInfo">
+                    <div class="lastMessageDate"></div>
+                    <div class="unread_count">3</div>
+                  </div>
+              </div>
+          </div>
+          <div id="publicFeedTabBody">
+              <div class="publicFeedCard clearfix">
+                  <div class="senderProfileColor"></div>
+                  <div class="linkSection">
+                      <p class="chatPairText"><span class="userNames">User sender</span> shared with <span class="userNames">Receiver User</span ></p>
+                  <div class="linkDetails">
+                    <div class="linkPicture"></div>
+                    <div class="linkHeadline">Test Headline for something. This can be very short or very long it does not matter</div>
+                    <div class="linkURL"><a href="#" target="_blank">http://thisisalinkwhichcanalsobeveryshhortorverylong.something</a></div>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+
+          <!-- CHAT DETAIL -->
+          <div id="chatDetail">
+              <header>
+                  <div class="connectionDP"></div>
+                  <p class="connectionName">Test Name</p>
+              </header>
+              <div id="chatDetailBody">
+                  <div class="clearfix">
+                      <div class="chatPartnerText chatBox">
+                          <div class="linkPreviewBox clearfix">
+                            <div class="imagePreview"></div>
+                            <div class="headlinePreview"></div>
+                          </div>
+                          <p class="linkText">Sample text</p>
+                      </div>
+                  </div>
+                  <div class="clearfix">
+                      <div class="thisUserText chatBox">
                         <div class="linkPreviewBox clearfix">
-                          <div class="imagePreview"></div>
-                          <div class="headlinePreview"></div>
+                          <div class="imagePreview"></div><!--
+                       --><div class="headlinePreview"></div>
                         </div>
                         <p class="linkText">Sample text</p>
-                    </div>
-                </div>
-                <div class="clearfix">
-                    <div class="thisUserText chatBox">
-                      <div class="linkPreviewBox clearfix">
-                        <div class="imagePreview"></div><!--
-                     --><div class="headlinePreview"></div>
                       </div>
-                      <p class="linkText">Sample text</p>
-                    </div>
-                </div>
-            </div>
-            <div id="chatInputField">
-                <input type="text" placeholder="type here">
-                <button id="sendTextButton" type="submit"></button>
-            </div>
-        </div>
+                  </div>
+              </div>
+              <div id="chatInputField">
+                  <input type="text" placeholder="type here">
+                  <button id="sendTextButton" type="submit"></button>
+              </div>
+          </div>
+      </div>
 </body>
 
 </html>

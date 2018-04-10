@@ -178,7 +178,7 @@ $(document).ready(function() {
                     var messages = allData.allChatPairs[chatPairID].messages;
                     if (messages[0] != "null") {
                         infoOnChatCard.lastMessage = messages[messages.length - 1].text;
-                        infoOnChatCard.lastMessageDate = messages[messages.length - 1].date;
+                        infoOnChatCard.lastMessageDate = getDateForChatCard(messages[messages.length - 1].date);
                         infoOnChatCard.lastMessageTimeInMS = messages[messages.length - 1].timeInMS;
                         infoOnChatCard.numOfUnreadMessages = getNumOfUnreadMessages(messages);
                         if (infoOnChatCard.numOfUnreadMessages > 0) {
@@ -249,6 +249,11 @@ $(document).ready(function() {
         return numOfUnreadMessages;
     }
 
+    function getDateForChatCard(fullDate) {
+        dateParts = fullDate.split('/');
+        return dateParts[1] + '/' + dateParts[2];
+    }
+
     $("#chatTabBody").on('click', '.chatCard', function() {
         // console.log($(this)[0].childNodes[1].childNodes[0].innerHTML);
         var chatPartnerNameArray = $(this)[0].id.split("_");
@@ -263,7 +268,7 @@ $(document).ready(function() {
         showPage("chatDetail");
         fixHeader('chatDetail', chatPartnerFullName);
         showMessages(chatPartnerFullName);
-        markAllAsRead(chatPartnerFullName)
+        markAllAsRead(chatPartnerFullName);
     })
 
     /********************************************
@@ -326,7 +331,9 @@ $(document).ready(function() {
             feature_image: null,
             date: getDate(),
             timeInMS: Date.now(),
-            isRead: false
+            timeOfDay: formatAMPM(),
+            isRead: false,
+            isDelivered: true
         }
         textInput = textInput.toLowerCase();
         //In case there is something before the link. For example sometimes
@@ -397,6 +404,8 @@ $(document).ready(function() {
         }, 500);
     }
 
+    //CHANGING MESSAGE STATUS
+
     function markAllAsRead(chatPartnerFullName) {
         var chatPairID = findChatPairRefID(chatPartnerFullName);
         var messages = allData.allChatPairs[chatPairID].messages;
@@ -408,7 +417,29 @@ $(document).ready(function() {
             }
         }
         database.ref("allData/allChatPairs/" + chatPairID + "/messages").set(messages);
+
+        var statusChangeMessage = {
+            "sender": chatPartnerFullName,
+            "receiver": thisUserName
+        }
+        setTimeout(function() {
+            socket.emit('reportMessageStatusChange', statusChangeMessage);
+        }, 500);
     }
+
+    socket.on('reportMessageStatusChange', function(data) {
+        if (data.sender == thisUserName) {
+            if (currentPage == 'chatTab') {
+                showPage("landingPage");
+                fixHeader("landingPage");
+                showTab("chatTab");
+            } else if (currentPage == data.receiver) {
+                showPage("chatDetail");
+                fixHeader('chatDetail', data.receiver);
+                showMessages(data.receiver);
+            }
+        }
+    });
 
     function findChatPairRefID(chatPartnerFullName) {
         var allChatPairsRef = Object.keys(allData.allChatPairs);
@@ -443,24 +474,54 @@ $(document).ready(function() {
         } else {
             if (messageObj.isLink) {
                 if (messageObj.feature_image != null) {
-                    $("#chatDetailBody").append('<div class="clearfix"><div class="thisUserText chatBox"> \
-                                                   <div class="linkPreviewBox clearfix"> \
-                                                   <div class="imagePreview" style="background-image: url(' + messageObj.feature_image + ');"></div> \
-                                                   <div class="headlinePreview">' + messageObj.headline + '</div> \
-                                                   </div> \
-                                                   <a href= ' + messageObj.text + ' class="linkText" target="_blank">' + messageObj.text + '</a></div></div>');
+                    $("#chatDetailBody").append('<div class="clearfix"> \
+                                                  <div class="thisUserText chatBox"> \
+                                                    <div class="linkPreviewBox clearfix"> \
+                                                      <div class="imagePreview" style="background-image: url(' + messageObj.feature_image + ');"></div> \
+                                                      <div class="headlinePreview">' + messageObj.headline + '</div> \
+                                                    </div> \
+                                                    <a href= ' + messageObj.text + ' class="linkText" target="_blank">' + messageObj.text + '</a> \
+                                                    <div class="chatMetaDeta clearfix"> \
+                                                      <div class="messageStatus" style="background-image: url(../images/' + getMessageStatusImage(messageObj.isRead) + ');"></div> \
+                                                      <p>' + messageObj.timeOfDay + '<p> \
+                                                    </div> \
+                                                   <div> \
+                                                 </div>');
                 } else {
-                    $("#chatDetailBody").append('<div class="clearfix"><div class="thisUserText chatBox"> \
-                                                   <div class="linkPreviewBox clearfix"> \
-                                                   <div class="headlinePreview">' + messageObj.headline + '</div> \
-                                                   </div> \
-                                                   <a href= ' + messageObj.text + ' class="linkText" target="_blank">' + messageObj.text + '</a></div></div>');
+                    $("#chatDetailBody").append('<div class="clearfix"> \
+                                                  <div class="thisUserText chatBox"> \
+                                                    <div class="linkPreviewBox clearfix"> \
+                                                      <div class="headlinePreview">' + messageObj.headline + '</div> \
+                                                    </div> \
+                                                    <a href= ' + messageObj.text + ' class="linkText" target="_blank">' + messageObj.text + '</a> \
+                                                    <div class="chatMetaDeta clearfix"> \
+                                                      <div class="messageStatus" style="background-image: url(../images/' + getMessageStatusImage(messageObj.isRead) + ');"></div> \
+                                                      <p>' + messageObj.timeOfDay + '<p> \
+                                                    </div> \
+                                                  </div> \
+                                                </div>');
                 }
             } else {
-                $("#chatDetailBody").append('<div class="clearfix"><div class="thisUserText chatBox"><p>' + messageObj.text + '</p></div></div>');
+                $("#chatDetailBody").append('<div class="clearfix"> \
+                                              <div class="thisUserText chatBox"> \
+                                                <p>' + messageObj.text + '</p> \
+                                                <div class="chatMetaDeta clearfix"> \
+                                                  <div class="messageStatus" style="background-image: url(../images/' + getMessageStatusImage(messageObj.isRead) + ');"></div> \
+                                                  <p>' + messageObj.timeOfDay + '<p> \
+                                                </div> \
+                                              </div> \
+                                             </div>');
             }
         }
         window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function getMessageStatusImage(readStatus) {
+        if (readStatus) {
+            return 'messageStatus_seen.png'
+        } else {
+            return 'messageStatus_delivered.png'
+        }
     }
 
     /**********************************
@@ -604,7 +665,53 @@ function getDate() {
     if (mm < 10) {
         mm = '0' + mm
     }
-    // today = mm + '/' + dd + '/' + yyyy;
-    today = mm + '/' + dd;
-    return today;
+
+    var day = today.getDay();
+    switch (day) {
+        case 0:
+            day = "Sunday";
+            break;
+        case 1:
+            day = "Monday";
+            break;
+        case 2:
+            day = "Tuesday";
+            break;
+        case 3:
+            day = "Wednesday";
+            break;
+        case 4:
+            day = "Thursday";
+            break;
+        case 5:
+            day = "Friday";
+            break;
+        case 6:
+            day = "Saturday";
+            break;
+        default:
+            day = " "
+            break;
+    }
+
+    var fullDate = day + ', ' + yyyy + '/' + mm + '/' + dd;
+    return fullDate;
+}
+
+function formatAMPM() {
+    var date = new Date();
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var ampm = hours >= 12
+        ? 'pm'
+        : 'am';
+    hours = hours % 12;
+    hours = hours
+        ? hours
+        : 12; // the hour '0' should be '12'
+    minutes = minutes < 10
+        ? '0' + minutes
+        : minutes;
+    var strTime = hours + ':' + minutes + ' ' + ampm;
+    return strTime;
 }

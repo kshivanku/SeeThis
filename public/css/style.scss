@@ -72,6 +72,11 @@ body {
     background-color: #F7F6F9;
 }
 
+#main_container {
+  max-width: 500px;
+  margin: auto;
+}
+
 .padded {
     padding: 0 16px;
 }
@@ -88,8 +93,9 @@ body {
 #introPage {
     background: linear-gradient(to bottom, #4463F7 100%, #3655EE 100%);
     color: $primary-white;
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    min-height: 100vh;
+    padding-bottom: 80px;
 
     #logo {
         font-weight: 700;
@@ -277,7 +283,7 @@ header {
     .chatCardText {
         margin-left: 8px;
         margin-top: 22px;
-        width: calc(100vw - 134px);
+        width: calc(100% - 134px);
     }
 
     .connectionName {
@@ -495,7 +501,7 @@ header {
 
         .chatBox {
             max-width: 286px;
-            min-width: 80px;
+            // min-width: 80px;
             padding: 8px;
             border: 0.5px solid rgba(232, 232, 232, 1.0);
             box-shadow: 0 0.5px 0 0 rgba(232, 232, 232, 1.0);
@@ -577,6 +583,26 @@ header {
           @extend %small_left;
           font-weight: 500;
           text-decoration: none;
+        }
+
+        .chatMetaDeta {
+          margin-top: 8px;
+
+          .messageStatus {
+            height: 15px;
+            width: 15px;
+            background-position: center;
+            background-size: contain;
+            background-repeat: no-repeat;
+            float: right;
+          }
+          p {
+            @extend %small_left;
+            opacity: 0.54;
+            font-weight: 300;
+            float:right;
+            margin-right: 8px;
+          }
         }
     }
 }
