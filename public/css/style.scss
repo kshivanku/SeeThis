@@ -320,10 +320,10 @@ header {
     .unread_count {
       float: right;
       background-color: $primary-blue;
-      width: 18px;
-      height: 18px;
+      width: 22px;
+      height: 2px;
       text-align: center;
-      line-height: 18px;
+      line-height: 22px;
       color: $primary-white;
       @extend %body_left_100;
       border-radius: 100%;
