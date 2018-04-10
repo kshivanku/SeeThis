@@ -282,10 +282,10 @@ header {
 #landingPage .unread_count {
   float: right;
   background-color: #4463F7;
-  width: 18px;
-  height: 18px;
+  width: 22px;
+  height: 2px;
   text-align: center;
-  line-height: 18px;
+  line-height: 22px;
   color: #fff;
   border-radius: 100%;
 }
