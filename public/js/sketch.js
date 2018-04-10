@@ -184,21 +184,18 @@ $(document).ready(function() {
                         infoOnChatCard.numOfUnreadMessages = getNumOfUnreadMessages(messages);
                         if (infoOnChatCard.numOfUnreadMessages > 0) {
                             infoOnChatCard.lastMessageRead = false;
+                        } else {
+                            infoOnChatCard.lastMessageRead = true;
                         }
-                        else {
-                          infoOnChatCard.lastMessageRead = true;
-                        }
-                        if(messages[messages.length - 1].sender == thisUserName) {
-                          infoOnChatCard.lastMessage = "You: " + infoOnChatCard.lastMessage;
-                          if(!messages[messages.length - 1].isRead) {
-                            infoOnChatCard.readStatusImage = 'messageStatus_delivered.png';
-                          }
-                          else {
-                            infoOnChatCard.readStatusImage = 'messageStatus_seen.png';
-                          }
-                        }
-                        else {
-                          infoOnChatCard.readStatusImage = null;
+                        if (messages[messages.length - 1].sender == thisUserName) {
+                            infoOnChatCard.lastMessage = "You: " + infoOnChatCard.lastMessage;
+                            if (!messages[messages.length - 1].isRead) {
+                                infoOnChatCard.readStatusImage = 'messageStatus_delivered.png';
+                            } else {
+                                infoOnChatCard.readStatusImage = 'messageStatus_seen.png';
+                            }
+                        } else {
+                            infoOnChatCard.readStatusImage = null;
                         }
                     } else {
                         infoOnChatCard.lastMessage = "no chats yet";
@@ -279,11 +276,10 @@ $(document).ready(function() {
         var givenDD = dateParts[2];
         var givenYY = dateParts[0].split(', ')[1];
 
-        if(mm == givenMM && dd == givenDD && yyyy == givenYY) {
-          return fullTime
-        }
-        else {
-          return dateParts[1] + '/' + dateParts[2];
+        if (mm == givenMM && dd == givenDD && yyyy == givenYY) {
+            return fullTime
+        } else {
+            return dateParts[1] + '/' + dateParts[2];
         }
     }
 
@@ -373,17 +369,15 @@ $(document).ready(function() {
         //See if date has changed between this message and the previous
         var chatPairID = findChatPairRefID(newMessage.receiver);
         var messages = allData.allChatPairs[chatPairID].messages;
-        if(messages.length > 0) {
-          if (messages[messages.length - 1].date == newMessage.date) {
-              newMessage.newDate= false;
-          } else {
-              newMessage.newDate= true;
-          }
+        if (messages.length > 0) {
+            if (messages[messages.length - 1].date == newMessage.date) {
+                newMessage.newDate = false;
+            } else {
+                newMessage.newDate = true;
+            }
+        } else {
+            newMessage.newDate = true;
         }
-        else{
-          newMessage.newDate= true;
-        }
-
 
         textInput = textInput.toLowerCase();
         //In case there is something before the link. For example sometimes
@@ -502,13 +496,10 @@ $(document).ready(function() {
     }
 
     function appendMessageToChatWindow(messageObj) {
+        if (messageObj.newDate) {
+            $("#chatDetailBody").append('<p class="emptyPageText" style="text-transform: capitalize">' + messageObj.date + '<p>');
+        }
         if (messageObj.sender == currentPage) {
-
-          if(messageObj.newDate) {
-            $("#chatDetailBody").append('<p class="emptyPageText" style="text-transform: capitalize">'+ messageObj.date +'<p>');
-          }
-
-
             if (messageObj.isLink) {
                 if (messageObj.feature_image != null) {
                     $("#chatDetailBody").append('<div class="clearfix"> \
