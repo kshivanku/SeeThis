@@ -112,10 +112,6 @@ $(document).ready(function() {
                     // else {
                     //   alert("Password is incorrect");
                     // }
-                    var newUserMessage = {
-                      username: thisUserName;
-                    }
-                    socket.emit('reportUserSignIn', newUserMessage);
                 }
             }
         }
@@ -138,9 +134,16 @@ $(document).ready(function() {
                 }
             }
         }
+        //wait 1/2 to let it make pairs
+        setTimeout(function() {
+          var newUserMessage = {
+            username: thisUserName;
+          }
+          socket.emit('reportUserSignUp', newUserMessage);
+        }, 500);
     }
 
-    socket.on('reportUserSignIn', function(data){
+    socket.on('reportUserSignUp', function(data){
       if(thisUserName != data.username) {
         if(currentPage == 'chatTab') {
           showPage("landingPage");
