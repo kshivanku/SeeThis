@@ -189,6 +189,7 @@ $(document).ready(function() {
                           infoOnChatCard.lastMessageRead = true;
                         }
                         if(messages[messages.length - 1].sender == thisUserName) {
+                          infoOnChatCard.lastMessage = "You: " + infoOnChatCard.lastMessage;
                           if(!messages[messages.length - 1].isRead) {
                             infoOnChatCard.readStatusImage = 'messageStatus_delivered.png';
                           }
