@@ -483,10 +483,10 @@ header {
   background-size: contain;
   background-repeat: no-repeat;
   float: right;
+  margin-left: 8px;
 }
 #chatDetail #chatDetailBody .chatMetaDeta p {
   opacity: 0.54;
   font-weight: 300;
   float: right;
-  margin-right: 8px;
 }
