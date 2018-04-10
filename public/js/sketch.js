@@ -179,7 +179,7 @@ $(document).ready(function() {
                     var messages = allData.allChatPairs[chatPairID].messages;
                     if (messages[0] != "null") {
                         infoOnChatCard.lastMessage = messages[messages.length - 1].text;
-                        infoOnChatCard.lastMessageDate = getDateForChatCard(messages[messages.length - 1].date);
+                        infoOnChatCard.lastMessageDate = getDateForChatCard(messages[messages.length - 1].date, messages[messages.length - 1].timeOfDay);
                         infoOnChatCard.lastMessageTimeInMS = messages[messages.length - 1].timeInMS;
                         infoOnChatCard.numOfUnreadMessages = getNumOfUnreadMessages(messages);
                         if (infoOnChatCard.numOfUnreadMessages > 0) {
@@ -268,9 +268,23 @@ $(document).ready(function() {
         return numOfUnreadMessages;
     }
 
-    function getDateForChatCard(fullDate) {
+    function getDateForChatCard(fullDate, fullTime) {
+        var today = new Date();
+        var mm = today.getMonth() + 1;
+        var dd = today.getDate();
+        var yyyy = today.getFullYear();
+
         dateParts = fullDate.split('/');
-        return dateParts[1] + '/' + dateParts[2];
+        var givenMM = dateParts[1];
+        var givenDD = dateParts[2];
+        var givenYY = dateParts[0].split(', ')[1];
+
+        if(mm == givenMM && dd == givenDD && yyyy == givenYY) {
+          return fullTime
+        }
+        else {
+          return dateParts[1] + '/' + dateParts[2];
+        }    
     }
 
     $("#chatTabBody").on('click', '.chatCard', function() {
