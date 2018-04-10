@@ -455,21 +455,40 @@ $(document).ready(function() {
         if (messageObj.sender == currentPage) {
             if (messageObj.isLink) {
                 if (messageObj.feature_image != null) {
-                    $("#chatDetailBody").append('<div class="clearfix"><div class="chatPartnerText chatBox"> \
-                                                   <div class="linkPreviewBox clearfix"> \
-                                                   <div class="imagePreview" style="background-image: url(' + messageObj.feature_image + ');"></div> \
-                                                   <div class="headlinePreview">' + messageObj.headline + '</div> \
-                                                   </div> \
-                                                   <a href= ' + messageObj.text + ' class="linkText" target="_blank">' + messageObj.text + '</a></div></div>');
+                    $("#chatDetailBody").append('<div class="clearfix"> \
+                                                  <div class="chatPartnerText chatBox"> \
+                                                    <div class="linkPreviewBox clearfix"> \
+                                                      <div class="imagePreview" style="background-image: url(' + messageObj.feature_image + ');"></div> \
+                                                      <div class="headlinePreview">' + messageObj.headline + '</div> \
+                                                    </div> \
+                                                    <a href= ' + messageObj.text + ' class="linkText" target="_blank">' + messageObj.text + '</a> \
+                                                    <div class="chatMetaDeta clearfix"> \
+                                                      <p>' + messageObj.timeOfDay + '<p> \
+                                                    </div> \
+                                                  </div> \
+                                                 </div>');
                 } else {
-                    $("#chatDetailBody").append('<div class="clearfix"><div class="chatPartnerText chatBox"> \
-                                                   <div class="linkPreviewBox clearfix"> \
-                                                   <div class="headlinePreview">' + messageObj.headline + '</div> \
-                                                   </div> \
-                                                   <a href= ' + messageObj.text + ' class="linkText" target="_blank">' + messageObj.text + '</a></div></div>');
+                    $("#chatDetailBody").append('<div class="clearfix"> \
+                                                  <div class="chatPartnerText chatBox"> \
+                                                    <div class="linkPreviewBox clearfix"> \
+                                                      <div class="headlinePreview">' + messageObj.headline + '</div> \
+                                                    </div> \
+                                                    <a href= ' + messageObj.text + ' class="linkText" target="_blank">' + messageObj.text + '</a> \
+                                                    <div class="chatMetaDeta clearfix"> \
+                                                      <p>' + messageObj.timeOfDay + '<p> \
+                                                    </div> \
+                                                  </div> \
+                                                </div>');
                 }
             } else {
-                $("#chatDetailBody").append('<div class="clearfix"><div class="chatPartnerText chatBox"><p>' + messageObj.text + '</p></div></div>');
+                $("#chatDetailBody").append('<div class="clearfix"> \
+                                              <div class="chatPartnerText chatBox"> \
+                                                <p>' + messageObj.text + '</p> \
+                                                <div class="chatMetaDeta clearfix"> \
+                                                  <p>' + messageObj.timeOfDay + '<p> \
+                                                </div> \
+                                              </div> \
+                                             </div>');
             }
         } else {
             if (messageObj.isLink) {
