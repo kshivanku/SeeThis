@@ -366,8 +366,19 @@ $(document).ready(function() {
             timeInMS: Date.now(),
             timeOfDay: formatAMPM(),
             isRead: false,
-            isDelivered: true
+            isDelivered: true,
+            newDate: false
         }
+
+        //See if date has changed between this message and the previous
+        var chatPairID = findChatPairRefID(newMessage.receiver);
+        var messages = allData.allChatPairs[chatPairID].messages;
+        if (messages[messages.length - 1].date == newMessage.date) {
+            newDate: false;
+        } else {
+            newDate: true
+        }
+
         textInput = textInput.toLowerCase();
         //In case there is something before the link. For example sometimes
         //title gets copied alond with the link
@@ -486,6 +497,12 @@ $(document).ready(function() {
 
     function appendMessageToChatWindow(messageObj) {
         if (messageObj.sender == currentPage) {
+
+          if(messageObj.newDate) {
+            $("#chatDetailBody").append('<p class="emptyPageText" style="text-transform: capitalize">'+ messageObj.date +'<p>');
+          }
+
+
             if (messageObj.isLink) {
                 if (messageObj.feature_image != null) {
                     $("#chatDetailBody").append('<div class="clearfix"> \
