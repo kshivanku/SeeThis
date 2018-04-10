@@ -137,7 +137,7 @@ $(document).ready(function() {
         //wait 1/2 to let it make pairs
         setTimeout(function() {
           var newUserMessage = {
-            username: thisUserName;
+            username: thisUserName
           }
           socket.emit('reportUserSignUp', newUserMessage);
         }, 500);
