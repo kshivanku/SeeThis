@@ -6,6 +6,7 @@ var allUsersRef = database.ref('allData/allUsers');
 var allLinksRef = database.ref('allData/allLinks');
 var allChatPairsRef = database.ref('allData/allChatPairs');
 var allData;
+var allDataReceived = false;
 var thisUserName = undefined;
 var thisUsersocketID = null;
 var profilePicBase64;
@@ -21,8 +22,16 @@ socket.on('sessionID', function(data) {
 
 //Always keep allData updated in sync with the Firebase DB
 allDataRef.on('value', function(data) {
+    console.log('allData set');
+    allDataReceived = true;
     allData = data.val();
+    enableSignIn();
 })
+
+function enableSignIn(){
+  document.getElementById("signInButton").style.opacity = "1.0";
+  document.getElementById("signInButton").innerHTML = "SIGN IN";
+}
 
 $(document).ready(function() {
 
@@ -67,7 +76,9 @@ $(document).ready(function() {
             email: email
             // password: password
         }
-        signIn(userDetails);
+        if(allDataReceived){
+          signIn(userDetails);
+        }
     })
 
     function signUp(newUser) {
@@ -677,6 +688,10 @@ $(document).ready(function() {
             $("#signInLabel").css("opacity", "1.0");
             if (localStorage.email) {
                 $("#signInForm .email").val(localStorage.email);
+            }
+            if(!allDataReceived) {
+              document.getElementById("signInButton").style.opacity = "0.54";
+              document.getElementById("signInButton").innerHTML = "Waitng for data...";
             }
         }
     }
